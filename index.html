@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    
+    <!-- LIENS PWA (Nécessaires pour l'installation) -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1a1612">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    
+    <title>Pastry English Pro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #1a1612;
+            --bg-secondary: #2d2520;
+            --bg-card: #3a322b;
+            --fg-primary: #f5f0eb;
+            --fg-secondary: #b8a99a;
+            --fg-muted: #8a7d72;
+            --accent: #e07a5f;
+            --accent-light: #f2a98b;
+            --success: #6b9b6b;
+            --error: #c45c5c;
+            --border: #4a423a;
+            --shadow: rgba(0,0,0,0.4);
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            background: var(--bg-primary);
+            color: var(--fg-primary);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #home-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            padding: 30px 20px;
+            text-align: center;
+            background: 
+                radial-gradient(ellipse at 20% 0%, rgba(224,122,95,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 100%, rgba(224,122,95,0.1) 0%, transparent 50%),
+                var(--bg-primary);
+        }
+
+        #home-screen h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 6vw, 2.6rem);
+            font-weight: 900;
+            color: var(--fg-primary);
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+
+        #home-screen .subtitle {
+            color: var(--fg-secondary);
+            font-size: 1rem;
+            margin-bottom: 40px;
+            font-weight: 400;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            width: 100%;
+            max-width: 380px;
+            margin-bottom: 40px;
+        }
+
+        .image-grid img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            opacity: 0.9;
+            transition: transform 0.3s ease;
+        }
+
+        .image-grid img:hover { transform: scale(1.02); }
+
+        .btn-start {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: var(--bg-primary);
+            border: none;
+            padding: 16px 48px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(224,122,95,0.3);
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .btn-start:active { transform: scale(0.96); }
+
+        #game-screen { display: none; flex-direction: column; height: 100%; }
+
+        header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 16px;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .header-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--fg-primary);
+        }
+
+        .btn-home {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--fg-secondary);
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .btn-home:hover { background: var(--border); color: var(--fg-primary); }
+
+        .progress-container {
+            width: 100%;
+            background: var(--bg-card);
+            border-radius: 20px;
+            height: 36px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid var(--border);
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light));
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .progress-text {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--fg-primary);
+            top: 9px;
+        }
+
+        .menu-scroll {
+            display: flex;
+            overflow-x: auto;
+            padding: 10px 16px;
+            gap: 8px;
+            background: var(--bg-secondary);
+            white-space: nowrap;
+            scrollbar-width: none;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .menu-scroll::-webkit-scrollbar { display: none; }
+
+        .menu-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--fg-secondary);
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .menu-btn.active {
+            background: var(--accent);
+            color: var(--bg-primary);
+            border-color: var(--accent);
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            overflow-y: auto;
+            background: 
+                radial-gradient(ellipse at 50% 0%, rgba(224,122,95,0.08) 0%, transparent 60%),
+                var(--bg-primary);
+        }
+
+        .game-area {
+            background: var(--bg-card);
+            width: 100%;
+            max-width: 480px;
+            padding: 24px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            text-align: center;
+            min-height: 320px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 0 8px 32px var(--shadow);
+            position: relative;
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .quiz-btn {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border);
+            color: var(--fg-primary);
+            padding: 14px 12px;
+            font-size: 0.95rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s ease;
+            text-align: center;
+        }
+
+        .quiz-btn:active { transform: scale(0.98); }
+        
+        .quiz-btn.correct {
+            background: var(--success);
+            border-color: var(--success);
+            color: white;
+        }
+        
+        .quiz-btn.wrong {
+            background: var(--error);
+            border-color: var(--error);
+            color: white;
+        }
+
+        .card-word {
+            font-size: clamp(1.8rem, 6vw, 2.4rem);
+            font-weight: 800;
+            color: var(--fg-primary);
+            margin: 12px 0;
+            min-height: 60px;
+            cursor: pointer;
+            line-height: 1.2;
+        }
+
+        .card-example {
+            font-style: italic;
+            color: var(--fg-secondary);
+            font-size: 0.95rem;
+            margin-top: 12px;
+            min-height: 36px;
+            line-height: 1.4;
+        }
+
+        .card-hint {
+            color: var(--fg-muted);
+            font-size: 0.8rem;
+            margin-top: 8px;
+        }
+
+        footer {
+            padding: 12px 16px;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-nav {
+            background: var(--bg-card);
+            color: var(--fg-primary);
+            border: 1px solid var(--border);
+            padding: 12px 16px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            flex: 1;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-nav:hover { background: var(--border); }
+
+        .btn-sound {
+            background: var(--accent);
+            color: var(--bg-primary);
+            flex: 0;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-nav:disabled {
+            background: var(--bg-card);
+            color: var(--fg-muted);
+            cursor: default;
+            opacity: 0.5;
+        }
+
+        .btn-action {
+            width: 100%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: var(--bg-primary);
+            border: none;
+        }
+
+        .quiz-question {
+            font-size: 1rem;
+            color: var(--fg-secondary);
+            margin-bottom: 8px;
+        }
+
+        .quiz-question b {
+            display: block;
+            font-size: 1.4rem;
+            color: var(--fg-primary);
+            margin-top: 8px;
+        }
+
+        #rush-input {
+            width: 100%;
+            margin-top: 16px;
+        }
+
+        .timer {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin-top: 16px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .mode-label {
+            font-size: 0.75rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .roleplay-context {
+            background: var(--bg-secondary);
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            text-align: left;
+            border-left: 3px solid var(--accent);
+        }
+
+        .roleplay-scenario {
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .roleplay-dialog {
+            background: var(--bg-card);
+            padding: 12px;
+            border-radius: 8px;
+            font-style: italic;
+            color: var(--fg-secondary);
+        }
+
+        .recipe-container {
+            display: flex;
+            width: 100%;
+            gap: 16px;
+            align-items: stretch;
+        }
+
+        .recipe-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-right: 1px solid var(--border);
+            padding-right: 16px;
+            text-align: right;
+        }
+
+        .recipe-steps {
+            flex: 1.5;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .recipe-step {
+            font-size: 0.85rem;
+            min-height: 40px;
+        }
+
+        .recipe-step.selected {
+            background: var(--accent) !important;
+            color: var(--bg-primary) !important;
+            border-color: var(--accent) !important;
+        }
+
+        /* Chef Mascot */
+        .chef-mascot {
+            position: absolute;
+            bottom: -8px;
+            right: -8px;
+            width: 70px;
+            height: 70px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            pointer-events: none;
+        }
+
+        .chef-mascot.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .chef-mascot svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        @keyframes chefWave {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-15deg); }
+            75% { transform: rotate(15deg); }
+        }
+
+        @keyframes chefBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .chef-body {
+            animation: chefBounce 2s ease-in-out infinite;
+        }
+
+        .chef-hat {
+            animation: chefWave 3s ease-in-out infinite;
+            transform-origin: bottom center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .game-area > * { animation: fadeIn 0.3s ease; }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+            .chef-mascot { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="home-screen">
+        <h1>Pastry English Pro</h1>
+        <p class="subtitle">Formation anglais pâtisserie - CAP / MC / BP / BTM</p>
+        <div class="image-grid">
+            <img src="https://images.unsplash.com/photo-1519915028121-7d3463d20b13?auto=format&fit=crop&w=400&q=80" alt="Patisserie professionnelle">
+            <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=400&q=80" alt="Macarons colores">
+        </div>
+        <button class="btn-start" onclick="demarrerApp()">Commencer la formation</button>
+    </div>
+
+    <div id="game-screen">
+        <header>
+            <div class="header-top">
+                <button class="btn-home" onclick="retourAccueil()" aria-label="Retour accueil">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                </button>
+                <span class="header-title">Pastry English Pro</span>
+                <div style="width:40px;"></div>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+                <div class="progress-text" id="progress-text">Level 1: Apprentice (0 XP)</div>
+            </div>
+        </header>
+
+        <nav class="menu-scroll" id="mode-menu" role="tablist">
+            <button class="menu-btn active" onclick="changerMode('flashcard')" role="tab">Cards</button>
+            <button class="menu-btn" onclick="changerMode('quiz')" role="tab">Quiz</button>
+            <button class="menu-btn" onclick="changerMode('listening')" role="tab">Audio</button>
+            <button class="menu-btn" onclick="changerMode('roleplay')" role="tab">Sales</button>
+            <button class="menu-btn" onclick="changerMode('world')" role="tab">World</button>
+            <button class="menu-btn" onclick="changerMode('recipe')" role="tab">Recipes</button>
+            <button class="menu-btn" onclick="changerMode('rush')" role="tab">Rush</button>
+        </nav>
+        
+        <nav class="menu-scroll" id="theme-menu" role="tablist"></nav>
+
+        <main>
+            <div class="game-area" id="game-container" role="tabpanel">
+                <div class="chef-mascot" id="chef-mascot">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <g class="chef-hat">
+                            <ellipse cx="50" cy="25" rx="28" ry="20" fill="#f5f0eb"/>
+                            <rect x="25" y="30" width="50" height="15" fill="#f5f0eb"/>
+                            <ellipse cx="50" cy="22" rx="22" ry="15" fill="#ffffff"/>
+                        </g>
+                        <g class="chef-body">
+                            <circle cx="50" cy="52" r="18" fill="#f2d5c4"/>
+                            <circle cx="44" cy="50" r="2.5" fill="#333"/>
+                            <circle cx="56" cy="50" r="2.5" fill="#333"/>
+                            <path d="M 44 58 Q 50 64 56 58" stroke="#333" stroke-width="2" fill="none"/>
+                            <path d="M 32 70 Q 32 90 50 95 Q 68 90 68 70 L 68 75 L 32 75 Z" fill="#f5f0eb"/>
+                            <circle cx="50" cy="80" r="2" fill="#333"/>
+                            <circle cx="50" cy="88" r="2" fill="#333"/>
+                            <path d="M 40 70 L 50 78 L 60 70" fill="var(--accent)"/>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="nav-buttons" id="controls-area"></div>
+        </footer>
+    </div>
+
+    <script>
+        // ==========================================
+        // DATABASE - 5 CATEGORIES
+        // ==========================================
+        const database = {
+            "Basic Ingredients": [
+                { fr: "La farine", en: "Flour", exemple: "Sieve the flour into a large bowl." },
+                { fr: "Le sucre semoule", en: "Caster sugar", exemple: "Cream the butter with caster sugar." },
+                { fr: "Le sucre glace", en: "Icing sugar", exemple: "Dust the cake with icing sugar." },
+                { fr: "Le sucre inverti", en: "Invert sugar", exemple: "Invert sugar keeps pastries moist." },
+                { fr: "Le glucose", en: "Glucose syrup", exemple: "Add glucose to prevent crystallization." },
+                { fr: "Le miel", en: "Honey", exemple: "Warm the honey before incorporating." },
+                { fr: "La cassonade", en: "Brown sugar", exemple: "Brown sugar adds caramel notes." },
+                { fr: "Le beurre", en: "Butter", exemple: "Use softened butter for better texture." },
+                { fr: "Le beurre noisette", en: "Hazelnut butter", exemple: "Cook butter until nutty brown." },
+                { fr: "La margarine", en: "Margarine", exemple: "Margarine is used for laminating." },
+                { fr: "La crème liquide", en: "Liquid cream", exemple: "Whip cold liquid cream to peaks." },
+                { fr: "La crème épaisse", en: "Thick cream", exemple: "Add thick cream for richness." },
+                { fr: "Le lait entier", en: "Whole milk", exemple: "Bring whole milk to a boil." },
+                { fr: "Le lait en poudre", en: "Milk powder", exemple: "Milk powder enriches the dough." },
+                { fr: "L'oeuf entier", en: "Whole egg", exemple: "Beat whole eggs until fluffy." },
+                { fr: "Le jaune d'oeuf", en: "Egg yolk", exemple: "Use egg yolks for custards." },
+                { fr: "Le blanc d'oeuf", en: "Egg white", exemple: "Whisk egg whites to stiff peaks." },
+                { fr: "L'eau", en: "Water", exemple: "Add ice-cold water gradually." },
+                { fr: "Le sel", en: "Salt", exemple: "A pinch of salt enhances flavors." }
+            ],
+            "Chocolate & Fillings": [
+                { fr: "Le chocolat noir", en: "Dark chocolate", exemple: "Temper dark chocolate at 31 degrees." },
+                { fr: "Le chocolat au lait", en: "Milk chocolate", exemple: "Milk chocolate is sweeter and creamier." },
+                { fr: "Le chocolat blanc", en: "White chocolate", exemple: "White chocolate burns easily." },
+                { fr: "Le cacao en poudre", en: "Cocoa powder", exemple: "Use Dutch-processed cocoa powder." },
+                { fr: "Les pistoles", en: "Chocolate pistoles", exemple: "Melt pistoles over a bain-marie." },
+                { fr: "La poudre d'amandes", en: "Almond flour", exemple: "Use fine almond flour for macarons." },
+                { fr: "La poudre de noisettes", en: "Hazelnut flour", exemple: "Toast hazelnut flour first." },
+                { fr: "La pâte de pistache", en: "Pistachio paste", exemple: "Add pistachio paste for flavor." },
+                { fr: "Le praliné", en: "Praline paste", exemple: "Fold praline paste into mousse." },
+                { fr: "La noix de coco râpée", en: "Shredded coconut", exemple: "Toast shredded coconut until golden." },
+                { fr: "Les amandes effilées", en: "Sliced almonds", exemple: "Decorate with sliced almonds." },
+                { fr: "Les noisettes concassées", en: "Crushed hazelnuts", exemple: "Sprinkle crushed hazelnuts on top." },
+                { fr: "Les pistaches", en: "Pistachios", exemple: "Chopped pistachios add crunch." },
+                { fr: "Les raisins secs", en: "Raisins", exemple: "Soak raisins in rum overnight." },
+                { fr: "Les fruits confits", en: "Candied fruits", exemple: "Dice candied fruits evenly." }
+            ],
+            "Fruits & Flavors": [
+                { fr: "La gousse de vanille", en: "Vanilla bean", exemple: "Split and scrape the vanilla bean." },
+                { fr: "L'extrait de vanille", en: "Vanilla extract", exemple: "Add vanilla extract at the end." },
+                { fr: "La cannelle", en: "Cinnamon", exemple: "Ground cinnamon adds warmth." },
+                { fr: "La cardamome", en: "Cardamom", exemple: "Crush cardamom pods before using." },
+                { fr: "Le gingembre", en: "Ginger", exemple: "Use fresh grated ginger." },
+                { fr: "La muscade", en: "Nutmeg", exemple: "Grate fresh nutmeg on top." },
+                { fr: "Le zeste de citron", en: "Lemon zest", exemple: "Zest organic lemons only." },
+                { fr: "Le zeste d'orange", en: "Orange zest", exemple: "Blanch orange zest to remove bitterness." },
+                { fr: "La fleur d'oranger", en: "Orange blossom water", exemple: "Orange blossom water flavors madeleines." },
+                { fr: "L'eau de rose", en: "Rose water", exemple: "Add a few drops of rose water." },
+                { fr: "Le citron vert", en: "Lime", exemple: "Lime zest and juice for tanginess." },
+                { fr: "La framboise", en: "Raspberry", exemple: "Fresh raspberries for decoration." },
+                { fr: "La fraise", en: "Strawberry", exemple: "Hull strawberries before slicing." },
+                { fr: "La mangue", en: "Mango", exemple: "Use ripe mango puree." },
+                { fr: "Le fruit de la passion", en: "Passion fruit", exemple: "Passion fruit curd is delicious." },
+                { fr: "L'abricot", en: "Apricot", exemple: "Apricot glaze adds shine." },
+                { fr: "La pomme", en: "Apple", exemple: "Thinly slice apples for tarts." },
+                { fr: "La poire", en: "Pear", exemple: "Poach pears in spiced syrup." },
+                { fr: "La rhubarbe", en: "Rhubarb", exemple: "Cook rhubarb with sugar." }
+            ],
+            "Professional Tools": [
+                { fr: "Le fouet", en: "Whisk", exemple: "Use a balloon whisk for whipping." },
+                { fr: "La maryse", en: "Spatula", exemple: "Scrape the bowl with a spatula." },
+                { fr: "La corne", en: "Bench scraper", exemple: "Divide dough with bench scraper." },
+                { fr: "Le batteur", en: "Stand mixer", exemple: "Attach the paddle to the mixer." },
+                { fr: "Le fouet à main", en: "Hand mixer", exemple: "Portable hand mixer for small batches." },
+                { fr: "Le moule à tarte", en: "Tart pan", exemple: "Use a fluted tart pan." },
+                { fr: "Le cercle à entremets", en: "Cake ring", exemple: "Set the cake ring on a tray." },
+                { fr: "La poche à douille", en: "Piping bag", exemple: "Fill the piping bag halfway." },
+                { fr: "La douille unie", en: "Round tip", exemple: "Small round tip for details." },
+                { fr: "La douille étoile", en: "Star tip", exemple: "Star tip creates rosettes." },
+                { fr: "Le rouleau à pâtisserie", en: "Rolling pin", exemple: "Use a French rolling pin." },
+                { fr: "La balance électronique", en: "Digital scale", exemple: "Tare the scale before weighing." },
+                { fr: "Le thermomètre sonde", en: "Probe thermometer", exemple: "Check core temperature precisely." },
+                { fr: "Le chinois", en: "Fine sieve", exemple: "Pass through a fine sieve." },
+                { fr: "L'étamine", en: "Cheesecloth", exemple: "Strain through cheesecloth." },
+                { fr: "La guitare", en: "Guitar cutter", exemple: "Cut even pieces with the guitar." },
+                { fr: "Le piano", en: "Marble workbench", exemple: "Work on a cool marble surface." },
+                { fr: "La feuille guitare", en: "Acetate sheet", exemple: "Place acetate for glossy finish." },
+                { fr: "Le four à sole", en: "Deck oven", exemple: "Deck oven gives crispy bottoms." },
+                { fr: "La cellule", en: "Blast freezer", exemple: "Rapid freeze in blast freezer." }
+            ],
+            "Basic Techniques": [
+                { fr: "Macaroner", en: "Macaronage", exemple: "Fold until macaronage is achieved." },
+                { fr: "Monter les blancs", en: "Whip egg whites", exemple: "Whip whites to stiff peaks." },
+                { fr: "Incorporer", en: "Fold in", exemple: "Fold in the flour gently." },
+                { fr: "Tempérer", en: "Temper", exemple: "Temper chocolate for shine." },
+                { fr: "Mijoter", en: "Simmer", exemple: "Simmer the fruit compote slowly." },
+                { fr: "Réduire", en: "Reduce", exemple: "Reduce the syrup by half." },
+                { fr: "Chemiser", en: "Line", exemple: "Line the mold with parchment." },
+                { fr: "Masquer", en: "Crumb coat", exemple: "Apply a thin crumb coat first." },
+                { fr: "Chablonner", en: "Coat bottom", exemple: "Coat the biscuit with chocolate." },
+                { fr: "Laminer", en: "Laminate", exemple: "Laminate the puff pastry dough." },
+                { fr: "Donner un tour", en: "Give a fold", exemple: "Give a single fold to the dough." },
+                { fr: "Abaisser", en: "Roll out", exemple: "Roll out to 3 millimeters thick." },
+                { fr: "Dorer", en: "Egg wash", exemple: "Egg wash before baking." },
+                { fr: "Pincer", en: "Crimp", exemple: "Crimp the tart edges neatly." },
+                { fr: "Cuire à blanc", en: "Blind bake", exemple: "Blind bake with pie weights." },
+                { fr: "Monter une crème", en: "Whip cream", exemple: "Whip cream to medium peaks." },
+                { fr: "Chantrer", en: "Flute", exemple: "Flute the pie crust edges." },
+                { fr: "Glacer", en: "Glaze", exemple: "Glaze with apricot jam." },
+                { fr: "Pocher", en: "Pipe", exemple: "Pipe onto a baking sheet." },
+                { fr: "Saucer", en: "Sauce", exemple: "Sauce the dessert plate." }
+            ]
+        };
+
+        // ==========================================
+        // WORLD PASTRIES QUIZ
+        // ==========================================
+        const worldPastriesData = [
+            { question: "Mochi (Japan)", options: ["Rice cake", "Bread roll", "Cookie", "Cream puff"], answer: "Rice cake" },
+            { question: "Baklava (Turkey)", options: ["Nut pastry", "Fruit tart", "Layer cake", "Ice cream"], answer: "Nut pastry" },
+            { question: "Pavlova (Australia)", options: ["Meringue cake", "Pudding", "Fruit pie", "Brownie"], answer: "Meringue cake" },
+            { question: "Basque Cheesecake (Spain)", options: ["Burnt surface", "Chocolate top", "Fruit layer", "No cheese"], answer: "Burnt surface" },
+            { question: "Pastel de Nata (Portugal)", options: ["Custard tart", "Meat pie", "Doughnut", "Bread"], answer: "Custard tart" },
+            { question: "Knafeh (Middle East)", options: ["Cheese pastry", "Nut cake", "Fruit jelly", "Rice pudding"], answer: "Cheese pastry" },
+            { question: "Churros (Spain)", options: ["Fried dough", "Baked bread", "Steamed bun", "Cake"], answer: "Fried dough" },
+            { question: "Cronut (USA)", options: ["Croissant-donut", "Muffin hybrid", "Bagel cross", "Waffle cone"], answer: "Croissant-donut" },
+            { question: "Bingsu (Korea)", options: ["Shaved ice", "Hot soup", "Fried cake", "Steamed bread"], answer: "Shaved ice" },
+            { question: "Lamington (Australia)", options: ["Sponge cube", "Meringue", "Fruit pie", "Cookie bar"], answer: "Sponge cube" },
+            { question: "Berliner (Germany)", options: ["Filled donut", "Sausage roll", "Pretzel", "Tart"], answer: "Filled donut" },
+            { question: "Panettone (Italy)", options: ["Christmas bread", "Cheese cake", "Pasta dish", "Fruit pie"], answer: "Christmas bread" },
+            { question: "Stollen (Germany)", options: ["Fruit bread", "Cookie", "Cream cake", "Souffle"], answer: "Fruit bread" },
+            { question: "Sacher Torte (Austria)", options: ["Chocolate cake", "Fruit pie", "Cream puff", "Meringue"], answer: "Chocolate cake" },
+            { question: "Dobos Torte (Hungary)", options: ["Layer cake", "Cheesecake", "Doughnut", "Cookie"], answer: "Layer cake" },
+            { question: "Medovik (Russia)", options: ["Honey cake", "Meat pie", "Rice cake", "Bread loaf"], answer: "Honey cake" },
+            { question: "Tiramisu (Italy)", options: ["Coffee dessert", "Cheese pie", "Fruit jelly", "Pudding cup"], answer: "Coffee dessert" },
+            { question: "Cannoli (Italy)", options: ["Fried tube", "Bread stick", "Cookie bar", "Cake roll"], answer: "Fried tube" },
+            { question: "Mille-feuille (France)", options: ["Thousand layers", "Meringue base", "Cream pie", "Fruit tart"], answer: "Thousand layers" },
+            { question: "Kouign-Amann (France)", options: ["Butter cake", "Bread loaf", "Cookie", "Souffle"], answer: "Butter cake" }
+        ];
+
+        // ==========================================
+        // LISTENING EXERCISES - DIVERSIFIED
+        // ==========================================
+        const listeningData = [
+            { audio: "Whisk the egg whites until stiff peaks form.", options: ["Whisk whites", "Fold flour", "Melt butter", "Boil milk"], answer: "Whisk whites" },
+            { audio: "Sift the flour and cocoa powder together.", options: ["Sieve flour", "Mix eggs", "Whip cream", "Chop chocolate"], answer: "Sieve flour" },
+            { audio: "Fold the meringue into the almond mixture.", options: ["Fold meringue", "Whisk yolks", "Knead dough", "Roll pastry"], answer: "Fold meringue" },
+            { audio: "Pipe the choux pastry onto a baking tray.", options: ["Pipe choux", "Spread cream", "Cut fruit", "Grate zest"], answer: "Pipe choux" },
+            { audio: "Temper the dark chocolate to 31 degrees.", options: ["Temper chocolate", "Melt butter", "Boil sugar", "Whip cream"], answer: "Temper chocolate" },
+            { audio: "Line the tart pan with parchment paper.", options: ["Line pan", "Grease mold", "Flour surface", "Preheat oven"], answer: "Line pan" },
+            { audio: "Blind bake the tart shell for 15 minutes.", options: ["Blind bake", "Glaze top", "Fill shell", "Cool down"], answer: "Blind bake" },
+            { audio: "Caramelize the sugar until golden brown.", options: ["Caramelize sugar", "Whip cream", "Fold flour", "Chill bowl"], answer: "Caramelize sugar" },
+            { audio: "Soak the gelatin sheets in cold water.", options: ["Soak gelatin", "Melt chocolate", "Boil cream", "Whisk eggs"], answer: "Soak gelatin" },
+            { audio: "Bring the heavy cream to a gentle boil.", options: ["Boil cream", "Melt butter", "Whip whites", "Fold nuts"], answer: "Boil cream" },
+            { audio: "Dust the work surface with icing sugar.", options: ["Dust sugar", "Grease pan", "Line tray", "Preheat oven"], answer: "Dust sugar" },
+            { audio: "Knead the dough until smooth and elastic.", options: ["Knead dough", "Whip cream", "Fold meringue", "Roll pastry"], answer: "Knead dough" },
+            { audio: "Laminate the puff pastry with butter.", options: ["Laminate dough", "Chill cream", "Whisk yolks", "Pipe shells"], answer: "Laminate dough" },
+            { audio: "Egg wash the brioche before baking.", options: ["Egg wash", "Glaze fruit", "Dust sugar", "Pipe cream"], answer: "Egg wash" },
+            { audio: "Chill the mousse in the blast freezer.", options: ["Chill mousse", "Bake tart", "Whip cream", "Fold flour"], answer: "Chill mousse" },
+            { audio: "Pass the custard through a fine sieve.", options: ["Strain custard", "Whip whites", "Melt butter", "Roll dough"], answer: "Strain custard" },
+            { audio: "Toast the hazelnuts until fragrant.", options: ["Toast nuts", "Grate chocolate", "Boil milk", "Whisk eggs"], answer: "Toast nuts" },
+            { audio: "Fold the whipped cream into the ganache.", options: ["Fold cream", "Temper chocolate", "Caramelize sugar", "Pipe mousse"], answer: "Fold cream" },
+            { audio: "Glaze the entremets with mirror glaze.", options: ["Glaze cake", "Dust sugar", "Fill mold", "Chill base"], answer: "Glaze cake" },
+            { audio: "Scrape the vanilla seeds from the pod.", options: ["Scrape vanilla", "Grate zest", "Chop chocolate", "Crush nuts"], answer: "Scrape vanilla" }
+        ];
+
+        // ==========================================
+        // ROLEPLAY SCENARIOS - 15 IN ENGLISH
+        // ==========================================
+        const roleplayData = [
+            {
+                scenario: "Counter Sales",
+                context: "Customer: 'Is this tart very sweet?'",
+                options: ["Yes, extremely sweet.", "It has balanced, subtle flavors.", "I don't know, I haven't tried it."],
+                correct: 1, 
+                feedback: "Always describe flavor profiles accurately and professionally."
+            },
+            {
+                scenario: "Allergen Inquiry",
+                context: "Customer: 'Does this contain any nuts?'",
+                options: ["Maybe, I'm not sure.", "Let me check the recipe in the kitchen for you.", "No nuts at all, definitely safe."],
+                correct: 1, 
+                feedback: "Never guess with allergens. Always verify in the kitchen."
+            },
+            {
+                scenario: "Custom Order",
+                context: "Customer: 'Can I order a birthday cake for 20 people?'",
+                options: ["We're too busy right now.", "Certainly! We can prepare it for tomorrow.", "We don't do custom orders."],
+                correct: 1, 
+                feedback: "Accept orders professionally with clear timing."
+            },
+            {
+                scenario: "Complaint Handling",
+                context: "Customer: 'This croissant isn't fresh. It's too dry.'",
+                options: ["That's how croissants are supposed to be.", "I apologize. Let me replace it with a fresh one.", "You should have eaten it sooner."],
+                correct: 1, 
+                feedback: "Always offer a solution when a customer is unsatisfied."
+            },
+            {
+                scenario: "Recommendation",
+                context: "Customer: 'What do you recommend with a cappuccino?'",
+                options: ["Everything is good here.", "Our chocolate eclair pairs beautifully with coffee.", "I don't drink coffee, so I can't say."],
+                correct: 1, 
+                feedback: "Make specific, enthusiastic suggestions."
+            },
+            {
+                scenario: "Storage Advice",
+                context: "Customer: 'How should I store these macarons?'",
+                options: ["Just leave them on the counter.", "Keep them refrigerated in an airtight container.", "Freeze them immediately."],
+                correct: 1, 
+                feedback: "Provide accurate storage instructions for best quality."
+            },
+            {
+                scenario: "Dietary Restriction",
+                context: "Customer: 'Do you have any gluten-free options?'",
+                options: ["No, everything has gluten here.", "We have flourless chocolate cake and macarons.", "Gluten-free isn't real, it's a trend."],
+                correct: 1, 
+                feedback: "Know your dietary options and present them positively."
+            },
+            {
+                scenario: "Price Inquiry",
+                context: "Customer: 'Why is this cake so expensive?'",
+                options: ["It's not expensive, you're cheap.", "We use premium ingredients like Valrhona chocolate and real vanilla.", "Everything has gone up in price lately."],
+                correct: 1, 
+                feedback: "Explain value through ingredients and craftsmanship."
+            },
+            {
+                scenario: "Wait Time",
+                context: "Customer: 'How long for a fresh croissant?'",
+                options: ["The next batch comes out in 15 minutes.", "We're done baking for today.", "Just take what's on the shelf."],
+                correct: 0, 
+                feedback: "Give accurate wait times to manage expectations."
+            },
+            {
+                scenario: "Gift Wrapping",
+                context: "Customer: 'Can you wrap this as a gift?'",
+                options: ["We don't do gift wrapping.", "Absolutely! I'll use our gift box and ribbon.", "Just use a paper bag."],
+                correct: 1, 
+                feedback: "Offer premium presentation for gift purchases."
+            },
+            {
+                scenario: "Tasting Request",
+                context: "Customer: 'Can I taste a sample of this?'",
+                options: ["No tasting allowed in the shop.", "Of course! Let me cut a small piece for you.", "You have to buy it first."],
+                correct: 1, 
+                feedback: "Samples can lead to larger purchases."
+            },
+            {
+                scenario: "Ingredient Question",
+                context: "Customer: 'What type of butter do you use?'",
+                options: ["Regular butter from the supermarket.", "We use French AOP butter with 82% fat content.", "I don't know, butter is butter."],
+                correct: 1, 
+                feedback: "Highlight quality ingredients to build trust."
+            },
+            {
+                scenario: "Reservation",
+                context: "Customer: 'Do I need a reservation for afternoon tea?'",
+                options: ["No, just walk in anytime.", "Yes, we recommend booking especially on weekends.", "We don't do afternoon tea."],
+                correct: 1, 
+                feedback: "Clear reservation policy avoids disappointment."
+            },
+            {
+                scenario: "Seasonal Item",
+                context: "Customer: 'When will your galette des rois be available?'",
+                options: ["Check our website, I don't know.", "It's available from early January for Epiphany.", "We don't make that here."],
+                correct: 1, 
+                feedback: "Know your seasonal calendar and communicate it clearly."
+            },
+            {
+                scenario: "Quantity Discount",
+                context: "Customer: 'If I buy 24 macarons, is there a discount?'",
+                options: ["No discounts, full price only.", "Yes, our box of 24 comes with a 10% discount.", "You have to buy 50 for any discount."],
+                correct: 1, 
+                feedback: "Know your volume pricing and offer it proactively."
+            }
+        ];
+
+        // ==========================================
+        // RECIPES IN ENGLISH
+        // ==========================================
+        const recipes = [
+            { 
+                title: "Pastry Cream", 
+                steps: ["Boil the milk", "Whisk yolks and sugar", "Add cornstarch", "Pour hot milk", "Cook until thick", "Cool with plastic film"] 
+            },
+            { 
+                title: "Macaron Shells", 
+                steps: ["Sift almond flour", "Make French meringue", "Fold dry ingredients", "Macaronage the batter", "Pipe onto trays", "Rest 20 minutes", "Bake 12 minutes"] 
+            },
+            { 
+                title: "Chocolate Ganache", 
+                steps: ["Chop the chocolate", "Boil heavy cream", "Pour over chocolate", "Stir from center", "Emulsify well", "Cool before using"] 
+            },
+            { 
+                title: "Puff Pastry", 
+                steps: ["Make the detrempe", "Rest one hour", "Incorporate butter", "Give first fold", "Rest 30 minutes", "Give remaining folds", "Roll to 3mm"] 
+            },
+            {
+                title: "Choux Pastry",
+                steps: ["Boil water and butter", "Add flour at once", "Dry on medium heat", "Cool slightly", "Add eggs gradually", "Pipe desired shapes", "Bake until golden"]
+            },
+            {
+                title: "Swiss Meringue",
+                steps: ["Combine whites and sugar", "Heat over bain-marie", "Reach 60 degrees", "Whip to stiff peaks", "Use immediately", "Pipe or spread"]
+            }
+        ];
+
+        // ==========================================
+        // STATE & PROGRESSION
+        // ==========================================
+        let currentMode = "flashcard";
+        let currentTheme = "Basic Ingredients";
+        let deck = [];
+        let index = 0;
+        let isFlipped = false;
+        let totalXP = parseInt(localStorage.getItem('pastryXP')) || 0;
+        
+        let rushTimer = null;
+        let rushTimeLeft = 0;
+        let rushItem = null;
+        let listeningItem = null;
+        let roleplayItem = null;
+        let worldItem = null;
+        let currentRecipe = null;
+        let userSteps = [];
+        let selectedStepIndex = null;
+
+        function getLevel(xp) {
+            if(xp < 100) return { level: 1, name: "Apprentice", nextXP: 100 };
+            if(xp < 300) return { level: 2, name: "Commis", nextXP: 300 };
+            if(xp < 600) return { level: 3, name: "Pastry Chef", nextXP: 600 };
+            if(xp < 1200) return { level: 4, name: "Head Chef", nextXP: 1200 };
+            return { level: 5, name: "MOF", nextXP: xp };
+        }
+
+        // ==========================================
+        // INITIALIZATION
+        // ==========================================
+        window.onload = function() {
+            updateProgressBar();
+        };
+
+        function demarrerApp() {
+            document.getElementById('home-screen').style.display = 'none';
+            document.getElementById('game-screen').style.display = 'flex';
+            initGame();
+        }
+
+        function retourAccueil() {
+            if(rushTimer) clearInterval(rushTimer);
+            window.speechSynthesis.cancel();
+            document.getElementById('game-screen').style.display = 'none';
+            document.getElementById('home-screen').style.display = 'flex';
+        }
+
+        function initGame() {
+            genererThemeMenu();
+            chargerTheme(currentTheme);
+        }
+
+        function addXP(amount) {
+            totalXP += amount;
+            localStorage.setItem('pastryXP', totalXP);
+            updateProgressBar();
+        }
+
+        function updateProgressBar() {
+            let lvlInfo = getLevel(totalXP);
+            const bar = document.getElementById('progress-bar');
+            const text = document.getElementById('progress-text');
+            
+            let prevThreshold = 0;
+            if(lvlInfo.level === 2) prevThreshold = 100;
+            else if(lvlInfo.level === 3) prevThreshold = 300;
+            else if(lvlInfo.level === 4) prevThreshold = 600;
+            else if(lvlInfo.level === 5) prevThreshold = 1200;
+            
+            let progress = ((totalXP - prevThreshold) / (lvlInfo.nextXP - prevThreshold)) * 100;
+            if(progress > 100) progress = 100;
+            if(progress < 0) progress = 0;
+
+            if(bar) {
+                bar.style.width = progress + "%";
+                text.innerHTML = "Lv." + lvlInfo.level + " " + lvlInfo.name + " (" + totalXP + " XP)";
+            }
+        }
+
+        // Chef Mascot Control
+        function showChef(show) {
+            const chef = document.getElementById('chef-mascot');
+            if(chef) {
+                if(show) {
+                    chef.classList.add('visible');
+                } else {
+                    chef.classList.remove('visible');
+                }
+            }
+        }
+
+        // ==========================================
+        // NAVIGATION
+        // ==========================================
+        function genererThemeMenu() {
+            const menu = document.getElementById('theme-menu');
+            menu.innerHTML = '';
+            let showThemeMenu = (currentMode === 'flashcard' || currentMode === 'quiz');
+            menu.style.display = showThemeMenu ? 'flex' : 'none';
+
+            if(showThemeMenu) {
+                for (let key in database) {
+                    let btn = document.createElement('button');
+                    btn.className = 'menu-btn' + (key === currentTheme ? ' active' : '');
+                    btn.innerText = key;
+                    btn.onclick = function() { 
+                        currentTheme = key; 
+                        genererThemeMenu(); 
+                        chargerTheme(key); 
+                    };
+                    menu.appendChild(btn);
+                }
+            }
+        }
+
+        function chargerTheme(theme) {
+            deck = database[theme] ? database[theme].slice() : [];
+            melanger(deck);
+            index = 0;
+            isFlipped = false;
+            afficherElement();
+        }
+
+        function changerMode(mode) {
+            if(rushTimer) clearInterval(rushTimer);
+            currentMode = mode;
+            
+            document.querySelectorAll('#mode-menu .menu-btn').forEach(function(btn) {
+                btn.classList.remove('active');
+            });
+            
+            const modeLabels = {
+                'flashcard': 'Cards',
+                'quiz': 'Quiz', 
+                'listening': 'Audio',
+                'roleplay': 'Sales',
+                'world': 'World',
+                'recipe': 'Recipes',
+                'rush': 'Rush'
+            };
+            
+            document.querySelectorAll('#mode-menu .menu-btn').forEach(function(btn) {
+                if(btn.innerText.includes(modeLabels[mode])) {
+                    btn.classList.add('active');
+                }
+            });
+
+            genererThemeMenu();
+            index = 0;
+
+            if(mode === 'recipe') initRecipeMode();
+            else if(mode === 'rush') initRushMode();
+            else if(mode === 'listening') initListeningMode();
+            else if(mode === 'roleplay') initRoleplayMode();
+            else if(mode === 'world') initWorldMode();
+            else {
+                deck = database[currentTheme] ? database[currentTheme].slice() : [];
+                melanger(deck);
+                afficherElement();
+            }
+        }
+
+        // Fisher-Yates Shuffle
+        function melanger(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                const temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+        }
+
+        // ==========================================
+        // AUDIO FUNCTION
+        // ==========================================
+        function parler(texte) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(texte);
+            utterance.lang = 'en-GB';
+            utterance.rate = 0.9;
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // ==========================================
+        // FLASHCARD & QUIZ MODES
+        // ==========================================
+        function afficherElement() {
+            const container = document.getElementById('game-container');
+            const controls = document.getElementById('controls-area');
+            
+            if(!deck || deck.length === 0) {
+                container.innerHTML = '<p>No data available.</p>';
+                return;
+            }
+            
+            const item = deck[index];
+
+            if (currentMode === 'flashcard') {
+                let displayWord = isFlipped ? item.en : item.fr;
+                let displayEx = isFlipped ? item.exemple : "Tap to flip";
+                
+                showChef(true);
+                
+                container.innerHTML = 
+                    '<div class="mode-label">Flashcard</div>' +
+                    '<div class="card-word" onclick="toggleCarte()">' + displayWord + '</div>' +
+                    '<div class="card-example">' + displayEx + '</div>' +
+                    '<div class="card-hint">' + (index + 1) + ' / ' + deck.length + '</div>';
+                
+                controls.innerHTML = 
+                    '<button class="btn-nav" onclick="cartePrecedente()" ' + (index === 0 ? 'disabled' : '') + '>Previous</button>' +
+                    '<button class="btn-sound" onclick="parler(\'' + item.en.replace(/'/g, "\\'") + '\')" aria-label="Listen">' +
+                        '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>' +
+                    '</button>' +
+                    '<button class="btn-nav" onclick="carteSuivante()">Next</button>';
+            } 
+            else if (currentMode === 'quiz') {
+                showChef(true);
+                
+                let options = [item.en];
+                const allWords = [];
+                for(let cat in database) {
+                    database[cat].forEach(function(w) { allWords.push(w.en); });
+                }
+                
+                while (options.length < 4) {
+                    let random = allWords[Math.floor(Math.random() * allWords.length)];
+                    if (options.indexOf(random) === -1) options.push(random);
+                }
+                
+                melanger(options);
+                
+                container.innerHTML = 
+                    '<div class="mode-label">Quiz</div>' +
+                    '<div class="quiz-question">Translate:<b>' + item.fr + '</b></div>' +
+                    '<div class="quiz-options">' +
+                        options.map(function(opt) { 
+                            return '<button class="quiz-btn" onclick="verifierQuiz(\'' + opt.replace(/'/g, "\\'") + '\', \'' + item.en.replace(/'/g, "\\'") + '\')">' + opt + '</button>'; 
+                        }).join('') +
+                    '</div>';
+                    
+                controls.innerHTML = '<button class="btn-nav btn-action" onclick="quizSkip()">Skip</button>';
+            }
+        }
+
+        function toggleCarte() {
+            isFlipped = !isFlipped;
+            afficherElement();
+            if(isFlipped) parler(deck[index].en);
+        }
+        
+        function carteSuivante() { 
+            if (index >= deck.length - 1) { 
+                melanger(deck); 
+                index = 0; 
+            } else { 
+                index++; 
+            } 
+            isFlipped = false; 
+            afficherElement(); 
+        }
+        
+        function cartePrecedente() { 
+            if (index > 0) { 
+                index--; 
+                isFlipped = false; 
+                afficherElement(); 
+            } 
+        }
+        
+        function verifierQuiz(selection, reponse) {
+            const buttons = document.querySelectorAll('.quiz-btn');
+            let isCorrect = (selection === reponse);
+            
+            buttons.forEach(function(btn) {
+                btn.disabled = true;
+                if (btn.innerText === reponse) btn.classList.add('correct');
+                if (btn.innerText === selection && !isCorrect) btn.classList.add('wrong');
+            });
+            
+            if (isCorrect) addXP(10);
+            
+            const controls = document.getElementById('controls-area');
+            controls.innerHTML = '<button class="btn-nav btn-action" onclick="quizNext()" style="background:' + (isCorrect ? 'var(--success)' : 'var(--error)') + ';">' + (isCorrect ? 'Correct! +10 XP' : 'Answer: ' + reponse) + '</button>';
+        }
+        
+        function quizNext() {
+            if (index >= deck.length - 1) { melanger(deck); index = 0; } else { index++; }
+            afficherElement();
+        }
+        
+        function quizSkip() { 
+            if (index >= deck.length - 1) { melanger(deck); index = 0; } else { index++; } 
+            afficherElement(); 
+        }
+
+        // ==========================================
+        // LISTENING MODE
+        // ==========================================
+        function initListeningMode() {
+            listeningItem = listeningData[Math.floor(Math.random() * listeningData.length)];
+            renderListening(false);
+        }
+        
+        function renderListening(answered) {
+            showChef(false);
+            
+            let shuffledOptions = listeningItem.options.slice();
+            melanger(shuffledOptions);
+            
+            const container = document.getElementById('game-container');
+            container.innerHTML = 
+                '<div class="mode-label">Listening Comprehension</div>' +
+                '<p style="color:var(--fg-secondary); margin: 12px 0;">Listen and choose the correct action.</p>' +
+                '<button class="btn-sound" style="margin:0 auto 16px; width:80px; height:80px;" onclick="parler(\'' + listeningItem.audio + '\')" aria-label="Listen">' +
+                    '<svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>' +
+                '</button>' +
+                '<div class="quiz-options">' +
+                    shuffledOptions.map(function(opt) { 
+                        let classes = 'quiz-btn';
+                        if(answered) {
+                            if(opt === listeningItem.answer) classes += ' correct';
+                        }
+                        return '<button class="' + classes + '" onclick="checkListening(\'' + opt.replace(/'/g, "\\'") + '\')" ' + (answered ? 'disabled' : '') + '>' + opt + '</button>'; 
+                    }).join('') +
+                '</div>';
+                
+            document.getElementById('controls-area').innerHTML = answered ? '<button class="btn-nav btn-action" onclick="initListeningMode()">Next</button>' : '';
+        }
+        
+        function checkListening(choice) { 
+            if(choice === listeningItem.answer) addXP(15); 
+            renderListening(true); 
+        }
+
+        // ==========================================
+        // ROLEPLAY MODE
+        // ==========================================
+        function initRoleplayMode() {
+            roleplayItem = roleplayData[Math.floor(Math.random() * roleplayData.length)];
+            renderRoleplay(-1);
+        }
+        
+        function renderRoleplay(selectedIndex) {
+            showChef(true);
+            
+            const container = document.getElementById('game-container');
+            const isFinished = selectedIndex !== -1;
+            const correctIndex = roleplayItem.correct;
+            
+            container.innerHTML = 
+                '<div class="mode-label">Sales Situation</div>' +
+                '<div class="roleplay-context">' +
+                    '<div class="roleplay-scenario">' + roleplayItem.scenario + '</div>' +
+                    '<div class="roleplay-dialog">"' + roleplayItem.context + '"</div>' +
+                '</div>' +
+                '<p style="font-size:0.9em; color:var(--fg-muted); margin-bottom:12px;">Choose the best response:</p>' +
+                '<div style="display:flex; flex-direction:column; gap:8px;">' +
+                    roleplayItem.options.map(function(opt, i) { 
+                        let style = '';
+                        if(isFinished && i === correctIndex) style = 'border-color:var(--success); background:rgba(107,155,107,0.2);';
+                        if(isFinished && i === selectedIndex && i !== correctIndex) style = 'border-color:var(--error); background:rgba(196,92,92,0.2);';
+                        return '<button class="quiz-btn" style="min-height:50px; width:100%; ' + style + '" onclick="checkRoleplay(' + i + ')" ' + (isFinished ? 'disabled' : '') + '>' + opt + '</button>'; 
+                    }).join('') +
+                '</div>' +
+                (isFinished ? '<p style="margin-top:16px; color:var(--fg-secondary); font-size:0.9rem; font-style:italic;">' + roleplayItem.feedback + '</p>' : '');
+                
+            document.getElementById('controls-area').innerHTML = isFinished ? '<button class="btn-nav btn-action" onclick="initRoleplayMode()">Next Scenario</button>' : '';
+        }
+        
+        function checkRoleplay(idx) { 
+            if(idx === roleplayItem.correct) addXP(20); 
+            renderRoleplay(idx); 
+        }
+
+        // ==========================================
+        // WORLD MODE
+        // ==========================================
+        function initWorldMode() {
+            worldItem = worldPastriesData[Math.floor(Math.random() * worldPastriesData.length)];
+            renderWorld(-1);
+        }
+        
+        function renderWorld(selected) {
+            showChef(false);
+            
+            const container = document.getElementById('game-container');
+            let shuffledOptions = worldItem.options.slice();
+            melanger(shuffledOptions);
+            const isFinished = selected !== -1;
+            
+            container.innerHTML = 
+                '<div class="mode-label">World Pastry Tour</div>' +
+                '<p style="color:var(--fg-secondary); margin: 8px 0;">What is this pastry?</p>' +
+                '<div style="font-size:1.6rem; font-weight:700; color:var(--fg-primary); margin: 12px 0;">' + worldItem.question + '</div>' +
+                '<div class="quiz-options">' +
+                    shuffledOptions.map(function(opt) { 
+                        let classes = 'quiz-btn';
+                        if(isFinished) {
+                            if(opt === worldItem.answer) classes += ' correct';
+                            else if(opt === selected) classes += ' wrong';
+                        }
+                        return '<button class="' + classes + '" onclick="checkWorld(\'' + opt.replace(/'/g, "\\'") + '\')" ' + (isFinished ? 'disabled' : '') + '>' + opt + '</button>'; 
+                    }).join('') +
+                '</div>';
+                
+            document.getElementById('controls-area').innerHTML = isFinished ? '<button class="btn-nav btn-action" onclick="initWorldMode()">Next</button>' : '';
+        }
+        
+        function checkWorld(choice) { 
+            if(choice === worldItem.answer) addXP(15); 
+            renderWorld(choice); 
+        }
+
+        // ==========================================
+        // RECIPE MODE
+        // ==========================================
+        function initRecipeMode() {
+            currentRecipe = recipes[Math.floor(Math.random() * recipes.length)];
+            userSteps = currentRecipe.steps.slice().sort(function() { return Math.random() - 0.5; });
+            selectedStepIndex = null;
+            renderRecipe();
+        }
+        
+        function renderRecipe() {
+            showChef(true);
+            
+            const container = document.getElementById('game-container');
+            container.style.justifyContent = "flex-start";
+            
+            container.innerHTML = 
+                '<div class="recipe-container">' +
+                    '<div class="recipe-info">' +
+                        '<div style="font-size:1.5rem; margin-bottom:8px;">Recipe</div>' +
+                        '<div style="font-weight:700; font-size:1.2rem; color:var(--accent);">' + currentRecipe.title + '</div>' +
+                        '<p style="font-size:0.75rem; color:var(--fg-muted); margin-top:12px;">Click two steps to swap them.</p>' +
+                    '</div>' +
+                    '<div class="recipe-steps">' +
+                        userSteps.map(function(step, i) { 
+                            return '<div class="quiz-btn recipe-step ' + (selectedStepIndex === i ? 'selected' : '') + '" onclick="selectStep(' + i + ')">' + step + '</div>'; 
+                        }).join('') +
+                    '</div>' +
+                '</div>';
+                
+            document.getElementById('controls-area').innerHTML = '<button class="btn-nav btn-action" onclick="initRecipeMode()">New Recipe</button>';
+        }
+        
+        function selectStep(idx) { 
+            if (selectedStepIndex === null) { 
+                selectedStepIndex = idx; 
+            } else { 
+                let temp = userSteps[selectedStepIndex]; 
+                userSteps[selectedStepIndex] = userSteps[idx]; 
+                userSteps[idx] = temp; 
+                selectedStepIndex = null; 
+            } 
+            renderRecipe(); 
+            checkRecipeWin(); 
+        }
+        
+        function checkRecipeWin() { 
+            const isCorrect = userSteps.every(function(step, i) { return step === currentRecipe.steps[i]; }); 
+            if (isCorrect) { 
+                addXP(30); 
+                setTimeout(function() { 
+                    alert("Recipe validated! +30 XP"); 
+                    initRecipeMode(); 
+                }, 300); 
+            } 
+        }
+
+        // ==========================================
+        // RUSH MODE
+        // ==========================================
+        function normalizeAnswer(str) {
+            str = str.toLowerCase();
+            str = str.replace(/^(the|a|an|le|la|les|l')\s/, '');
+            if(str.indexOf('/') !== -1) { str = str.split('/')[0].trim(); }
+            return str.trim();
+        }
+
+        function initRushMode() {
+            showChef(false);
+            
+            const container = document.getElementById('game-container');
+            container.style.justifyContent = "center";
+            container.innerHTML = 
+                '<div class="mode-label">Rush Challenge</div>' +
+                '<h3 style="color:var(--fg-primary); margin-bottom:8px;">Pastry Rush</h3>' +
+                '<p style="color:var(--fg-secondary); margin-bottom:20px;">Type the English word (article optional)</p>' +
+                '<div id="rush-prompt" class="card-word">?</div>' +
+                '<input type="text" id="rush-input" class="quiz-btn" style="background:var(--bg-secondary); border:2px solid var(--accent); color:var(--fg-primary); text-align:center; font-size:1.1rem;" placeholder="Type here..." autocomplete="off">' +
+                '<div class="timer" id="rush-timer">15.0</div>';
+                
+            document.getElementById('controls-area').innerHTML = '<button class="btn-nav btn-action" onclick="startRushRound()">Start</button>';
+        }
+        
+        function startRushRound() {
+            let allItems = [];
+            for(let cat in database) {
+                database[cat].forEach(function(item) { allItems.push(item); });
+            }
+            rushItem = allItems[Math.floor(Math.random() * allItems.length)];
+            document.getElementById('rush-prompt').innerText = rushItem.fr;
+            document.getElementById('rush-prompt').style.color = "var(--fg-primary)"; 
+            document.getElementById('rush-input').value = "";
+            document.getElementById('rush-input').focus();
+            rushTimeLeft = 15.0;
+            document.getElementById('controls-area').innerHTML = "";
+            
+            if(rushTimer) clearInterval(rushTimer);
+            rushTimer = setInterval(function() { 
+                rushTimeLeft -= 0.1; 
+                if(rushTimeLeft < 0) rushTimeLeft = 0;
+                document.getElementById('rush-timer').innerText = rushTimeLeft.toFixed(1); 
+                if(rushTimeLeft <= 0) { 
+                    clearInterval(rushTimer); 
+                    rushLose(); 
+                } 
+            }, 100);
+        }
+        
+        document.addEventListener('input', function(e) {
+            if(e.target.id === 'rush-input' && rushItem) {
+                let userVal = normalizeAnswer(e.target.value);
+                let correctVal = normalizeAnswer(rushItem.en);
+                if(userVal === correctVal) { 
+                    clearInterval(rushTimer); 
+                    rushWin(); 
+                }
+            }
+        });
+
+        function rushWin() { 
+            addXP(20); 
+            document.getElementById('rush-prompt').innerText = "Correct! " + rushItem.en; 
+            document.getElementById('rush-prompt').style.color = "var(--success)"; 
+            document.getElementById('controls-area').innerHTML = '<button class="btn-nav btn-action" onclick="startRushRound()">Next (+20 XP)</button>'; 
+            rushItem = null; 
+        }
+        
+        function rushLose() { 
+            document.getElementById('rush-prompt').innerText = "Time's up! " + rushItem.en; 
+            document.getElementById('rush-prompt').style.color = "var(--error)"; 
+            document.getElementById('rush-input').value = rushItem.en; 
+            document.getElementById('controls-area').innerHTML = '<button class="btn-nav btn-action" onclick="startRushRound()">Try Again</button>'; 
+            rushItem = null; 
+        }
+    </script>
+
+    <!-- SERVICE WORKER REGISTRATION -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('Service Worker enregistré'))
+                    .catch(err => console.log('Erreur SW:', err));
+            });
+        }
+    </script>
+
+</body>
+</html>
