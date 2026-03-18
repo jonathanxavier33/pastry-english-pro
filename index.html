@@ -32,14 +32,17 @@
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
         
-        body {
+              body {
             font-family: 'Source Sans 3', sans-serif;
             background: var(--bg-primary);
             color: var(--fg-primary);
             display: flex;
             flex-direction: column;
-            height: 100vh;
+            height: 100vh; /* Ancien système */
+            height: 100dvh; /* Nouveau système : prend en compte la barre d'adresse mobile */
             overflow: hidden;
+            position: fixed; /* Bloque le scroll global */
+            width: 100%;
         }
 
         #home-screen {
