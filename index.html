@@ -2,18 +2,17 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    
-    <!-- LIENS PWA -->
-    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Pastry English">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#1a1612">
-    <link rel="apple-touch-icon" href="icons/icon-192.png">
-    
+    <meta name="format-detection" content="telephone=no">
     <title>Pastry English Pro</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧁</text></svg>">
+    
     <style>
         :root {
             --bg-primary: #1a1612;
@@ -28,28 +27,46 @@
             --error: #c45c5c;
             --border: #4a423a;
             --shadow: rgba(0,0,0,0.4);
+            --gold: #D4AF37;
+            --gold-light: #F4E4BA;
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
+        * { 
+            box-sizing: border-box; 
+            -webkit-tap-highlight-color: transparent; 
+            margin: 0; 
+            padding: 0; 
+        }
+        
+        html, body {
+            touch-action: manipulation;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
         
         body {
-            font-family: 'Source Sans 3', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
             background: var(--bg-primary);
             color: var(--fg-primary);
             display: flex;
             flex-direction: column;
-            height: 100vh;
-            height: 100dvh;
-            overflow: hidden;
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+            overflow-x: hidden;
         }
 
+        /* ACCUEIL */
         #home-screen {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100%;
-            padding: 30px 20px;
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+            padding: 20px;
+            padding-top: env(safe-area-inset-top, 20px);
+            padding-bottom: env(safe-area-inset-bottom, 20px);
             text-align: center;
             background: 
                 radial-gradient(ellipse at 20% 0%, rgba(224,122,95,0.15) 0%, transparent 50%),
@@ -58,65 +75,96 @@
         }
 
         #home-screen h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(1.8rem, 6vw, 2.6rem);
+            font-size: clamp(1.6rem, 5vw, 2.2rem);
             font-weight: 900;
             color: var(--fg-primary);
-            margin-bottom: 8px;
-            letter-spacing: -0.02em;
+            margin-bottom: 6px;
         }
 
-        #home-screen .subtitle {
-            color: var(--fg-secondary);
-            font-size: 1rem;
-            margin-bottom: 40px;
-            font-weight: 400;
+        .subtitle { 
+            color: var(--fg-secondary); 
+            font-size: 0.95rem; 
+            margin-bottom: 20px; 
         }
 
         .image-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 10px;
             width: 100%;
-            max-width: 380px;
-            margin-bottom: 40px;
+            max-width: 340px;
+            margin-bottom: 20px;
         }
 
         .image-grid img {
             width: 100%;
-            height: 140px;
+            height: 120px;
             object-fit: cover;
             border-radius: 12px;
             border: 1px solid var(--border);
-            opacity: 0.9;
-            transition: transform 0.3s ease;
         }
 
-        .image-grid img:hover { transform: scale(1.02); }
+        .home-stats {
+            background: var(--bg-card);
+            border-radius: 14px;
+            padding: 14px;
+            margin-bottom: 16px;
+            width: 100%;
+            max-width: 320px;
+            border: 1px solid var(--border);
+        }
+
+        .home-level {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .home-level-icon { font-size: 1.8rem; }
+        .home-level-info { text-align: left; }
+        .home-level-name { font-weight: bold; color: var(--accent); font-size: 0.9rem; }
+        .home-level-xp { font-size: 0.8rem; color: var(--fg-secondary); }
 
         .btn-start {
             background: linear-gradient(135deg, var(--accent), var(--accent-light));
             color: var(--bg-primary);
             border: none;
-            padding: 16px 48px;
-            font-size: 1.1rem;
+            padding: 16px 36px;
+            font-size: 1rem;
             font-weight: 700;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 8px 24px rgba(224,122,95,0.3);
-            transition: all 0.2s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            -webkit-appearance: none;
+            appearance: none;
+            min-height: 50px;
+            box-shadow: 0 4px 16px rgba(224,122,95,0.3);
         }
 
         .btn-start:active { transform: scale(0.96); }
 
-        #game-screen { display: none; flex-direction: column; height: 100%; }
+        .btn-exam {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: var(--bg-primary);
+            border: none;
+            padding: 12px 28px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            -webkit-appearance: none;
+            appearance: none;
+            min-height: 44px;
+            margin-top: 10px;
+        }
 
+        #game-screen { display: none; flex-direction: column; min-height: 100vh; min-height: -webkit-fill-available; }
+
+        /* HEADER */
         header {
             background: var(--bg-secondary);
             border-bottom: 1px solid var(--border);
             padding: 12px 16px;
+            padding-top: max(12px, env(safe-area-inset-top));
             flex-shrink: 0;
         }
 
@@ -124,12 +172,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .header-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 700;
             color: var(--fg-primary);
         }
@@ -138,56 +185,175 @@
             background: var(--bg-card);
             border: 1px solid var(--border);
             color: var(--fg-secondary);
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             border-radius: 10px;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             cursor: pointer;
+            -webkit-appearance: none;
+            appearance: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.2s ease;
         }
 
-        .btn-home:hover { background: var(--border); color: var(--fg-primary); }
+        /* BARRE DE PROGRESSION */
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .level-info { display: flex; align-items: center; gap: 8px; }
+        .level-icon { font-size: 1.3rem; }
+        .level-text { text-align: left; }
+        .level-name { font-weight: bold; font-size: 0.85rem; color: var(--accent); }
+        .level-title { font-size: 0.7rem; color: var(--fg-muted); }
+
+        .xp-info { text-align: right; }
+        .xp-count { font-weight: bold; color: var(--gold); font-size: 0.85rem; }
+        .xp-next { font-size: 0.65rem; color: var(--fg-muted); }
 
         .progress-container {
             width: 100%;
             background: var(--bg-card);
-            border-radius: 20px;
-            height: 36px;
+            border-radius: 12px;
+            height: 26px;
             overflow: hidden;
             position: relative;
-            border: 1px solid var(--border);
+            border: 2px solid var(--border);
         }
 
         .progress-bar {
             height: 100%;
             background: linear-gradient(90deg, var(--accent), var(--accent-light));
+            position: relative;
             transition: width 0.5s ease;
             width: 0%;
         }
 
-        .progress-text {
+        .progress-pastry {
             position: absolute;
-            width: 100%;
-            text-align: center;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--fg-primary);
-            top: 9px;
+            top: -2px;
+            right: -16px;
+            transform: translateX(-100%);
+            transition: left 0.5s ease;
+            font-size: 1.2rem;
+            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.4));
+            z-index: 10;
         }
 
+        /* NOUVEAU: Labels des niveaux sur la barre de progression */
+        .level-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 6px;
+            padding: 0 2px;
+        }
+
+        .level-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            position: relative;
+        }
+
+        .level-label-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .level-label-name {
+            font-size: 0.55rem;
+            color: var(--fg-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            white-space: nowrap;
+        }
+
+        .level-label.passed .level-label-dot {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            border-color: var(--accent);
+            box-shadow: 0 0 8px rgba(224,122,95,0.5);
+        }
+
+        .level-label.passed .level-label-name {
+            color: var(--accent);
+        }
+
+        .level-label.current .level-label-dot {
+            border-color: var(--gold);
+            box-shadow: 0 0 10px rgba(212,175,55,0.6);
+            animation: pulse 2s infinite;
+        }
+
+        .level-label.current .level-label-name {
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Ancien style pour compatibilité */
+        .level-dots { display: flex; justify-content: space-between; margin-top: 6px; padding: 0 2px; }
+        
+        .level-dot {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .level-dot-circle {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+        }
+
+        .level-dot.passed .level-dot-circle {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            border-color: var(--accent);
+        }
+
+        .level-dot.current .level-dot-circle {
+            border-color: var(--gold);
+        }
+
+        .level-dot-name { font-size: 0.5rem; color: var(--fg-muted); font-weight: 600; }
+        .level-dot.passed .level-dot-name, .level-dot.current .level-dot-name { color: var(--accent); }
+
+        /* MENUS */
         .menu-scroll {
             display: flex;
             overflow-x: auto;
-            padding: 10px 16px;
-            gap: 8px;
+            padding: 8px 12px;
+            gap: 6px;
             background: var(--bg-secondary);
             white-space: nowrap;
             scrollbar-width: none;
             border-bottom: 1px solid var(--border);
             flex-shrink: 0;
+            -webkit-overflow-scrolling: touch;
         }
 
         .menu-scroll::-webkit-scrollbar { display: none; }
@@ -196,12 +362,15 @@
             background: var(--bg-card);
             border: 1px solid var(--border);
             color: var(--fg-secondary);
-            padding: 8px 14px;
+            padding: 10px 14px;
             border-radius: 20px;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s ease;
+            -webkit-appearance: none;
+            appearance: none;
+            flex-shrink: 0;
+            min-height: 40px;
         }
 
         .menu-btn.active {
@@ -210,14 +379,14 @@
             border-color: var(--accent);
         }
 
+        /* MAIN */
         main {
             flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
-            padding: 16px;
-            padding-bottom: 20px;
+            padding: 12px;
+            padding-bottom: max(12px, env(safe-area-inset-bottom));
             overflow-y: auto;
             background: 
                 radial-gradient(ellipse at 50% 0%, rgba(224,122,95,0.08) 0%, transparent 60%),
@@ -227,64 +396,86 @@
         .game-area {
             background: var(--bg-card);
             width: 100%;
-            max-width: 480px;
-            padding: 24px;
-            border-radius: 20px 20px 0 0;
+            max-width: 100%;
+            padding: 18px;
+            border-radius: 16px;
             border: 1px solid var(--border);
-            border-bottom: none;
             text-align: center;
-            min-height: 320px;
+            min-height: 280px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            box-shadow: 0 -8px 32px var(--shadow);
+            box-shadow: 0 4px 20px var(--shadow);
+        }
+
+        /* NOUVEAU: Compteur de cartes/questions */
+        .card-counter {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            background: var(--bg-secondary);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--fg-secondary);
+            border: 1px solid var(--border);
+        }
+
+        .game-area {
             position: relative;
         }
 
-        .quiz-options {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 20px;
+        /* NOUVEAU: Numéro de quiz */
+        .quiz-number {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: var(--bg-primary);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        /* BOUTONS QUIZ */
+        .quiz-options { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 8px; 
+            margin-top: 14px; 
         }
 
         .quiz-btn {
             background: var(--bg-secondary);
             border: 2px solid var(--border);
             color: var(--fg-primary);
-            padding: 14px 12px;
-            font-size: 0.95rem;
+            padding: 14px 10px;
+            font-size: 1rem;
             border-radius: 12px;
             cursor: pointer;
             font-weight: 600;
-            min-height: 60px;
+            min-height: 54px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.15s ease;
+            -webkit-appearance: none;
+            appearance: none;
             text-align: center;
+            line-height: 1.3;
         }
 
         .quiz-btn:active { transform: scale(0.98); }
-        
-        .quiz-btn.correct {
-            background: var(--success);
-            border-color: var(--success);
-            color: white;
-        }
-        
-        .quiz-btn.wrong {
-            background: var(--error);
-            border-color: var(--error);
-            color: white;
-        }
+        .quiz-btn.correct { background: var(--success); border-color: var(--success); color: white; }
+        .quiz-btn.wrong { background: var(--error); border-color: var(--error); color: white; }
+        .quiz-btn:disabled { opacity: 0.7; cursor: default; }
 
         .card-word {
-            font-size: clamp(1.8rem, 6vw, 2.4rem);
+            font-size: clamp(1.6rem, 5vw, 2rem);
             font-weight: 800;
             color: var(--fg-primary);
-            margin: 12px 0;
-            min-height: 60px;
+            margin: 10px 0;
+            min-height: 50px;
             cursor: pointer;
             line-height: 1.2;
         }
@@ -293,33 +484,23 @@
             font-style: italic;
             color: var(--fg-secondary);
             font-size: 0.95rem;
-            margin-top: 12px;
-            min-height: 36px;
+            margin-top: 10px;
+            min-height: 32px;
             line-height: 1.4;
         }
 
-        .card-hint {
-            color: var(--fg-muted);
-            font-size: 0.8rem;
-            margin-top: 8px;
-        }
+        .card-hint { color: var(--fg-muted); font-size: 0.8rem; margin-top: 6px; }
 
-        footer {
+        .controls-area {
             width: 100%;
-            max-width: 480px;
-            background: var(--bg-card);
-            padding: 15px 20px;
-            padding-bottom: 30px;
-            border-radius: 0 0 20px 20px;
-            border: 1px solid var(--border);
-            border-top: none;
+            margin-top: 14px;
         }
 
-        .nav-buttons {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
+        .nav-buttons { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            gap: 8px; 
         }
 
         .btn-nav {
@@ -329,74 +510,51 @@
             padding: 12px 16px;
             border-radius: 25px;
             font-weight: 600;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             flex: 1;
             cursor: pointer;
-            transition: all 0.2s ease;
+            -webkit-appearance: none;
+            appearance: none;
+            min-height: 48px;
         }
-
-        .btn-nav:hover { background: var(--border); }
 
         .btn-sound {
             background: var(--accent);
             color: var(--bg-primary);
             flex: 0;
-            width: 48px;
-            height: 48px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             padding: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             border: none;
             cursor: pointer;
-            transition: all 0.2s ease;
+            -webkit-appearance: none;
+            appearance: none;
         }
 
-        .btn-nav:disabled {
-            background: var(--bg-card);
-            color: var(--fg-muted);
-            cursor: default;
-            opacity: 0.5;
+        .btn-nav:disabled { opacity: 0.5; cursor: default; }
+        .btn-action { 
+            width: 100%; 
+            background: linear-gradient(135deg, var(--accent), var(--accent-light)); 
+            color: var(--bg-primary); 
+            border: none; 
         }
+        .btn-success { background: linear-gradient(135deg, var(--success), #8bc38b) !important; }
+        .btn-gold { background: linear-gradient(135deg, var(--gold), var(--gold-light)) !important; }
 
-        .btn-action {
-            width: 100%;
-            background: linear-gradient(135deg, var(--accent), var(--accent-light));
-            color: var(--bg-primary);
-            border: none;
-        }
+        .quiz-question { font-size: 1rem; color: var(--fg-secondary); margin-bottom: 6px; }
+        .quiz-question b { display: block; font-size: 1.3rem; color: var(--fg-primary); margin-top: 6px; }
 
-        .quiz-question {
-            font-size: 1rem;
-            color: var(--fg-secondary);
-            margin-bottom: 8px;
-        }
-
-        .quiz-question b {
-            display: block;
-            font-size: 1.4rem;
-            color: var(--fg-primary);
-            margin-top: 8px;
-        }
-
-        #rush-input {
-            width: 100%;
-            margin-top: 16px;
-        }
-
-        .timer {
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--accent);
-            margin-top: 16px;
-            font-variant-numeric: tabular-nums;
-        }
+        .timer { font-size: 1.8rem; font-weight: 800; color: var(--accent); margin-top: 10px; font-variant-numeric: tabular-nums; }
+        .timer.warning { color: var(--error); }
 
         .mode-label {
-            font-size: 0.75rem;
-            color: var(--accent);
+            font-size: 0.7rem;
+            color: var(--gold);
             text-transform: uppercase;
             letter-spacing: 0.1em;
             font-weight: 700;
@@ -405,191 +563,267 @@
 
         .roleplay-context {
             background: var(--bg-secondary);
-            padding: 16px;
-            border-radius: 12px;
-            margin-bottom: 16px;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 12px;
             text-align: left;
             border-left: 3px solid var(--accent);
         }
 
-        .roleplay-scenario {
-            font-weight: 700;
+        .roleplay-scenario { font-weight: 700; color: var(--accent); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 4px; }
+        .roleplay-dialog { background: var(--bg-card); padding: 8px; border-radius: 6px; font-style: italic; color: var(--fg-secondary); font-size: 0.9rem; }
+
+        .recipe-container { display: flex; width: 100%; gap: 12px; align-items: stretch; }
+        .recipe-info { flex: 1; display: flex; flex-direction: column; justify-content: center; border-right: 1px solid var(--border); padding-right: 12px; text-align: right; }
+        .recipe-steps { flex: 1.5; display: flex; flex-direction: column; gap: 5px; }
+        .recipe-step { font-size: 0.85rem; min-height: 42px; }
+        .recipe-step.selected { background: var(--accent) !important; color: var(--bg-primary) !important; border-color: var(--accent) !important; }
+
+        /* EXAM STYLES */
+        .exam-intro {
+            text-align: left;
+            padding: 14px;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            margin-bottom: 12px;
+        }
+
+        .exam-intro h3 { color: var(--gold); margin-bottom: 6px; font-size: 1rem; }
+        .exam-intro p { color: var(--fg-secondary); font-size: 0.85rem; line-height: 1.4; }
+
+        .writing-area {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        .writing-textarea {
+            width: 100%;
+            min-height: 100px;
+            background: transparent;
+            border: none;
+            color: var(--fg-primary);
+            font-family: inherit;
+            font-size: 0.95rem;
+            resize: vertical;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .word-count { font-size: 0.75rem; color: var(--fg-muted); text-align: right; margin-top: 6px; }
+        .word-count.ok { color: var(--success); font-weight: bold; }
+
+        .correction-box {
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            padding: 14px;
+            margin-top: 10px;
+            text-align: left;
+        }
+
+        .score-display { text-align: center; padding: 14px; background: var(--bg-card); border-radius: 10px; margin: 10px 0; }
+        .score-big { font-size: 2.2rem; font-weight: bold; color: var(--gold); }
+        .score-label { font-size: 0.85rem; color: var(--fg-secondary); }
+
+        .feedback-section { margin-top: 10px; padding: 10px; border-radius: 8px; }
+        .feedback-correct { background: rgba(107,155,107,0.2); border-left: 3px solid var(--success); }
+        .feedback-wrong { background: rgba(196,92,92,0.2); border-left: 3px solid var(--error); }
+
+        /* NOUVEAU: Styles pour la correction IA */
+        .ai-correction-section {
+            background: linear-gradient(135deg, rgba(224,122,95,0.1), rgba(242,169,139,0.1));
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 12px;
+            text-align: left;
+        }
+
+        .ai-correction-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
             color: var(--accent);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            margin-bottom: 8px;
+            font-weight: 700;
         }
 
-        .roleplay-dialog {
-            background: var(--bg-card);
-            padding: 12px;
-            border-radius: 8px;
-            font-style: italic;
-            color: var(--fg-secondary);
+        .ai-correction-content {
+            color: var(--fg-primary);
+            font-size: 0.9rem;
+            line-height: 1.6;
         }
 
-        .recipe-container {
-            display: flex;
-            width: 100%;
-            gap: 16px;
-            align-items: stretch;
+        .ai-correction-content .error-highlight {
+            background: rgba(196,92,92,0.3);
+            padding: 2px 4px;
+            border-radius: 4px;
+            text-decoration: line-through;
         }
 
-        .recipe-info {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            border-right: 1px solid var(--border);
-            padding-right: 16px;
-            text-align: right;
+        .ai-correction-content .correction-highlight {
+            background: rgba(107,155,107,0.3);
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-weight: 600;
         }
 
-        .recipe-steps {
-            flex: 1.5;
-            display: flex;
-            flex-direction: column;
+        .ai-score {
+            display: inline-flex;
+            align-items: center;
             gap: 6px;
-        }
-
-        .recipe-step {
+            background: var(--bg-card);
+            padding: 6px 12px;
+            border-radius: 20px;
+            margin-top: 10px;
             font-size: 0.85rem;
-            min-height: 40px;
         }
 
-        .recipe-step.selected {
-            background: var(--accent) !important;
-            color: var(--bg-primary) !important;
-            border-color: var(--accent) !important;
+        .ai-score-score {
+            font-weight: 700;
+            color: var(--gold);
         }
 
-        /* Chef Mascot */
-        .chef-mascot {
-            position: absolute;
-            bottom: -8px;
-            right: -8px;
-            width: 70px;
-            height: 70px;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease;
-            pointer-events: none;
+        .btn-ai-correct {
+            background: linear-gradient(135deg, #8B5CF6, #A78BFA);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 10px;
+            font-size: 0.85rem;
         }
 
-        .chef-mascot.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .btn-ai-correct:hover {
+            transform: scale(1.02);
         }
 
-        .chef-mascot svg {
+        .btn-ai-correct:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .api-key-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px;
+            margin-top: 10px;
+        }
+
+        .api-key-input {
             width: 100%;
-            height: 100%;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px;
+            color: var(--fg-primary);
+            font-size: 0.85rem;
+            margin-top: 6px;
         }
 
-        @keyframes chefWave {
-            0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(-15deg); }
-            75% { transform: rotate(15deg); }
+        .api-key-input::placeholder {
+            color: var(--fg-muted);
         }
 
-        @keyframes chefBounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
+        .loading-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--fg-muted);
+            border-radius: 50%;
+            border-top-color: var(--accent);
+            animation: spin 1s linear infinite;
         }
 
-        .chef-body {
-            animation: chefBounce 2s ease-in-out infinite;
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
-        .chef-hat {
-            animation: chefWave 3s ease-in-out infinite;
-            transform-origin: bottom center;
+        /* Responsive adjustments */
+        @media (max-width: 360px) {
+            .quiz-btn { font-size: 0.9rem; padding: 12px 8px; }
+            .card-word { font-size: 1.5rem; }
+            .menu-btn { padding: 8px 12px; font-size: 0.8rem; }
+            .level-label-name { font-size: 0.45rem; }
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .game-area > * { animation: fadeIn 0.3s ease; }
-
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                transition-duration: 0.01ms !important;
+        /* iOS specific fixes */
+        @supports (-webkit-touch-callout: none) {
+            .btn-start, .btn-action, .quiz-btn, .menu-btn, .btn-nav, .btn-sound {
+                min-height: 44px;
             }
-            .chef-mascot { display: none; }
         }
     </style>
 </head>
 <body>
 
+    <!-- ACCUEIL -->
     <div id="home-screen">
+        <div style="font-size: 3rem; margin-bottom: 6px;">🧁</div>
         <h1>Pastry English Pro</h1>
-        <p class="subtitle">Formation anglais pâtisserie - CAP / MC / BP / BTM</p>
+        <p class="subtitle">Formation anglais pâtisserie - CAP / MC / BP</p>
+        
         <div class="image-grid">
-            <img src="https://images.unsplash.com/photo-1519915028121-7d3463d20b13?auto=format&fit=crop&w=400&q=80" alt="Patisserie professionnelle">
-            <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=400&q=80" alt="Macarons colores">
+            <img src="https://images.unsplash.com/photo-1519915028121-7d3463d20b13?auto=format&fit=crop&w=400&q=80" alt="Patisserie">
+            <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=400&q=80" alt="Macarons">
         </div>
-        <button class="btn-start" onclick="demarrerApp()">Commencer la formation</button>
+
+        <div class="home-stats" id="home-stats" style="display: none;"></div>
+
+        <button class="btn-start" id="start-btn">Commencer la formation</button>
+        <button class="btn-exam" id="exam-btn">📝 Mode Examen CAP</button>
+
+        <p style="font-size: 0.7rem; color: var(--fg-muted); margin-top: 16px;">
+            📱 Ajoutez à votre écran d'accueil
+        </p>
     </div>
 
+    <!-- JEU -->
     <div id="game-screen">
         <header>
             <div class="header-top">
-                <button class="btn-home" onclick="retourAccueil()" aria-label="Retour accueil">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                    </svg>
-                </button>
+                <button class="btn-home" id="back-btn">←</button>
                 <span class="header-title">Pastry English Pro</span>
-                <div style="width:40px;"></div>
+                <div style="width:44px;"></div>
             </div>
-            <div class="progress-container">
-                <div class="progress-bar" id="progress-bar"></div>
-                <div class="progress-text" id="progress-text">Level 1: Apprentice (0 XP)</div>
-            </div>
-        </header>
 
-        <nav class="menu-scroll" id="mode-menu" role="tablist">
-            <button class="menu-btn active" onclick="changerMode('flashcard')" role="tab">Cards</button>
-            <button class="menu-btn" onclick="changerMode('quiz')" role="tab">Quiz</button>
-            <button class="menu-btn" onclick="changerMode('listening')" role="tab">Audio</button>
-            <button class="menu-btn" onclick="changerMode('roleplay')" role="tab">Sales</button>
-            <button class="menu-btn" onclick="changerMode('world')" role="tab">World</button>
-            <button class="menu-btn" onclick="changerMode('recipe')" role="tab">Recipes</button>
-            <button class="menu-btn" onclick="changerMode('rush')" role="tab">Rush</button>
-        </nav>
-        
-        <nav class="menu-scroll" id="theme-menu" role="tablist"></nav>
-
-        <main>
-            <div class="game-area" id="game-container" role="tabpanel">
-                <div class="chef-mascot" id="chef-mascot">
-                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <g class="chef-hat">
-                            <ellipse cx="50" cy="25" rx="28" ry="20" fill="#f5f0eb"/>
-                            <rect x="25" y="30" width="50" height="15" fill="#f5f0eb"/>
-                            <ellipse cx="50" cy="22" rx="22" ry="15" fill="#ffffff"/>
-                        </g>
-                        <g class="chef-body">
-                            <circle cx="50" cy="52" r="18" fill="#f2d5c4"/>
-                            <circle cx="44" cy="50" r="2.5" fill="#333"/>
-                            <circle cx="56" cy="50" r="2.5" fill="#333"/>
-                            <path d="M 44 58 Q 50 64 56 58" stroke="#333" stroke-width="2" fill="none"/>
-                            <path d="M 32 70 Q 32 90 50 95 Q 68 90 68 70 L 68 75 L 32 75 Z" fill="#f5f0eb"/>
-                            <circle cx="50" cy="80" r="2" fill="#333"/>
-                            <circle cx="50" cy="88" r="2" fill="#333"/>
-                            <path d="M 40 70 L 50 78 L 60 70" fill="var(--accent)"/>
-                        </g>
-                    </svg>
+            <div class="progress-header">
+                <div class="level-info">
+                    <span class="level-icon" id="lvl-icon">👨‍🍳</span>
+                    <div class="level-text">
+                        <div class="level-name" id="lvl-name">Niveau 1 · Apprentice</div>
+                        <div class="level-title" id="lvl-title">Débutant en pâtisserie</div>
+                    </div>
+                </div>
+                <div class="xp-info">
+                    <div class="xp-count" id="xp-count">0 XP</div>
+                    <div class="xp-next" id="xp-next">100 XP niveau suivant</div>
                 </div>
             </div>
-            
-            <footer>
-                <div class="nav-buttons" id="controls-area"></div>
-            </footer>
+
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar">
+                    <div class="progress-pastry" id="progress-pastry">🧁</div>
+                </div>
+            </div>
+
+            <div class="level-labels" id="level-labels"></div>
+        </header>
+
+        <nav class="menu-scroll" id="mode-menu"></nav>
+        <nav class="menu-scroll" id="theme-menu"></nav>
+
+        <main>
+            <div class="game-area" id="game-area"></div>
+            <div class="controls-area" id="controls-area"></div>
         </main>
     </div>
 
@@ -599,139 +833,114 @@
         // ==========================================
         const database = {
             "Basic Ingredients": [
-                { fr: "La farine", en: "Flour", exemple: "Sieve the flour into a large bowl." },
-                { fr: "Le sucre semoule", en: "Caster sugar", exemple: "Cream the butter with caster sugar." },
-                { fr: "Le sucre glace", en: "Icing sugar", exemple: "Dust the cake with icing sugar." },
+                { fr: "La farine", en: "Flour", exemple: "Sieve the flour into a bowl." },
+                { fr: "Le sucre semoule", en: "Caster sugar", exemple: "Cream butter with caster sugar." },
+                { fr: "Le sucre glace", en: "Icing sugar", exemple: "Dust with icing sugar." },
                 { fr: "Le sucre inverti", en: "Invert sugar", exemple: "Invert sugar keeps pastries moist." },
                 { fr: "Le glucose", en: "Glucose syrup", exemple: "Add glucose to prevent crystallization." },
-                { fr: "Le miel", en: "Honey", exemple: "Warm the honey before incorporating." },
+                { fr: "Le miel", en: "Honey", exemple: "Warm the honey first." },
                 { fr: "La cassonade", en: "Brown sugar", exemple: "Brown sugar adds caramel notes." },
-                { fr: "Le beurre", en: "Butter", exemple: "Use softened butter for better texture." },
+                { fr: "Le beurre", en: "Butter", exemple: "Use softened butter." },
                 { fr: "Le beurre noisette", en: "Hazelnut butter", exemple: "Cook butter until nutty brown." },
-                { fr: "La margarine", en: "Margarine", exemple: "Margarine is used for laminating." },
-                { fr: "La crème liquide", en: "Liquid cream", exemple: "Whip cold liquid cream to peaks." },
+                { fr: "La crème liquide", en: "Liquid cream", exemple: "Whip cold liquid cream." },
                 { fr: "La crème épaisse", en: "Thick cream", exemple: "Add thick cream for richness." },
                 { fr: "Le lait entier", en: "Whole milk", exemple: "Bring whole milk to a boil." },
-                { fr: "Le lait en poudre", en: "Milk powder", exemple: "Milk powder enriches the dough." },
                 { fr: "L'oeuf entier", en: "Whole egg", exemple: "Beat whole eggs until fluffy." },
-                { fr: "Le jaune d'oeuf", en: "Egg yolk", exemple: "Use egg yolks for custards." },
-                { fr: "Le blanc d'oeuf", en: "Egg white", exemple: "Whisk egg whites to stiff peaks." },
-                { fr: "L'eau", en: "Water", exemple: "Add ice-cold water gradually." },
+                { fr: "Le jaune d'oeuf", en: "Egg yolk", exemple: "Use yolks for custards." },
+                { fr: "Le blanc d'oeuf", en: "Egg white", exemple: "Whisk whites to stiff peaks." },
+                { fr: "L'eau", en: "Water", exemple: "Add ice-cold water." },
                 { fr: "Le sel", en: "Salt", exemple: "A pinch of salt enhances flavors." }
             ],
             "Chocolate & Fillings": [
-                { fr: "Le chocolat noir", en: "Dark chocolate", exemple: "Temper dark chocolate at 31 degrees." },
-                { fr: "Le chocolat au lait", en: "Milk chocolate", exemple: "Milk chocolate is sweeter and creamier." },
+                { fr: "Le chocolat noir", en: "Dark chocolate", exemple: "Temper dark chocolate at 31°C." },
+                { fr: "Le chocolat au lait", en: "Milk chocolate", exemple: "Milk chocolate is sweeter." },
                 { fr: "Le chocolat blanc", en: "White chocolate", exemple: "White chocolate burns easily." },
-                { fr: "Le cacao en poudre", en: "Cocoa powder", exemple: "Use Dutch-processed cocoa powder." },
-                { fr: "Les pistoles", en: "Chocolate pistoles", exemple: "Melt pistoles over a bain-marie." },
+                { fr: "Le cacao en poudre", en: "Cocoa powder", exemple: "Use Dutch-processed cocoa." },
+                { fr: "Les pistoles", en: "Chocolate pistoles", exemple: "Melt pistoles over bain-marie." },
                 { fr: "La poudre d'amandes", en: "Almond flour", exemple: "Use fine almond flour for macarons." },
                 { fr: "La poudre de noisettes", en: "Hazelnut flour", exemple: "Toast hazelnut flour first." },
                 { fr: "La pâte de pistache", en: "Pistachio paste", exemple: "Add pistachio paste for flavor." },
-                { fr: "Le praliné", en: "Praline paste", exemple: "Fold praline paste into mousse." },
-                { fr: "La noix de coco râpée", en: "Shredded coconut", exemple: "Toast shredded coconut until golden." },
+                { fr: "Le praliné", en: "Praline paste", exemple: "Fold praline into mousse." },
+                { fr: "La noix de coco râpée", en: "Shredded coconut", exemple: "Toast coconut until golden." },
                 { fr: "Les amandes effilées", en: "Sliced almonds", exemple: "Decorate with sliced almonds." },
-                { fr: "Les noisettes concassées", en: "Crushed hazelnuts", exemple: "Sprinkle crushed hazelnuts on top." },
-                { fr: "Les pistaches", en: "Pistachios", exemple: "Chopped pistachios add crunch." },
-                { fr: "Les raisins secs", en: "Raisins", exemple: "Soak raisins in rum overnight." },
+                { fr: "Les noisettes concassées", en: "Crushed hazelnuts", exemple: "Sprinkle crushed hazelnuts." },
+                { fr: "Les raisins secs", en: "Raisins", exemple: "Soak raisins in rum." },
                 { fr: "Les fruits confits", en: "Candied fruits", exemple: "Dice candied fruits evenly." }
             ],
             "Fruits & Flavors": [
-                { fr: "La gousse de vanille", en: "Vanilla bean", exemple: "Split and scrape the vanilla bean." },
+                { fr: "La gousse de vanille", en: "Vanilla bean", exemple: "Split and scrape the bean." },
                 { fr: "L'extrait de vanille", en: "Vanilla extract", exemple: "Add vanilla extract at the end." },
-                { fr: "La cannelle", en: "Cinnamon", exemple: "Ground cinnamon adds warmth." },
-                { fr: "La cardamome", en: "Cardamom", exemple: "Crush cardamom pods before using." },
+                { fr: "La cannelle", en: "Cinnamon", exemple: "Cinnamon adds warmth." },
+                { fr: "La cardamome", en: "Cardamom", exemple: "Crush cardamom pods." },
                 { fr: "Le gingembre", en: "Ginger", exemple: "Use fresh grated ginger." },
-                { fr: "La muscade", en: "Nutmeg", exemple: "Grate fresh nutmeg on top." },
+                { fr: "La muscade", en: "Nutmeg", exemple: "Grate fresh nutmeg." },
                 { fr: "Le zeste de citron", en: "Lemon zest", exemple: "Zest organic lemons only." },
-                { fr: "Le zeste d'orange", en: "Orange zest", exemple: "Blanch orange zest to remove bitterness." },
-                { fr: "La fleur d'oranger", en: "Orange blossom water", exemple: "Orange blossom water flavors madeleines." },
-                { fr: "L'eau de rose", en: "Rose water", exemple: "Add a few drops of rose water." },
-                { fr: "Le citron vert", en: "Lime", exemple: "Lime zest and juice for tanginess." },
+                { fr: "Le zeste d'orange", en: "Orange zest", exemple: "Blanch orange zest." },
+                { fr: "La fleur d'oranger", en: "Orange blossom water", exemple: "Flavors madeleines." },
+                { fr: "L'eau de rose", en: "Rose water", exemple: "Add a few drops." },
                 { fr: "La framboise", en: "Raspberry", exemple: "Fresh raspberries for decoration." },
-                { fr: "La fraise", en: "Strawberry", exemple: "Hull strawberries before slicing." },
+                { fr: "La fraise", en: "Strawberry", exemple: "Hull strawberries first." },
                 { fr: "La mangue", en: "Mango", exemple: "Use ripe mango puree." },
                 { fr: "Le fruit de la passion", en: "Passion fruit", exemple: "Passion fruit curd is delicious." },
-                { fr: "L'abricot", en: "Apricot", exemple: "Apricot glaze adds shine." },
-                { fr: "La pomme", en: "Apple", exemple: "Thinly slice apples for tarts." },
-                { fr: "La poire", en: "Pear", exemple: "Poach pears in spiced syrup." },
-                { fr: "La rhubarbe", en: "Rhubarb", exemple: "Cook rhubarb with sugar." }
+                { fr: "L'abricot", en: "Apricot", exemple: "Apricot glaze adds shine." }
             ],
             "Professional Tools": [
-                { fr: "Le fouet", en: "Whisk", exemple: "Use a balloon whisk for whipping." },
-                { fr: "La maryse", en: "Spatula", exemple: "Scrape the bowl with a spatula." },
+                { fr: "Le fouet", en: "Whisk", exemple: "Use a balloon whisk." },
+                { fr: "La maryse", en: "Spatula", exemple: "Scrape the bowl with spatula." },
                 { fr: "La corne", en: "Bench scraper", exemple: "Divide dough with bench scraper." },
-                { fr: "Le batteur", en: "Stand mixer", exemple: "Attach the paddle to the mixer." },
-                { fr: "Le fouet à main", en: "Hand mixer", exemple: "Portable hand mixer for small batches." },
+                { fr: "Le batteur", en: "Stand mixer", exemple: "Attach the paddle." },
+                { fr: "Le fouet à main", en: "Hand mixer", exemple: "Portable for small batches." },
                 { fr: "Le moule à tarte", en: "Tart pan", exemple: "Use a fluted tart pan." },
-                { fr: "Le cercle à entremets", en: "Cake ring", exemple: "Set the cake ring on a tray." },
-                { fr: "La poche à douille", en: "Piping bag", exemple: "Fill the piping bag halfway." },
+                { fr: "Le cercle à entremets", en: "Cake ring", exemple: "Set the ring on a tray." },
+                { fr: "La poche à douille", en: "Piping bag", exemple: "Fill the bag halfway." },
                 { fr: "La douille unie", en: "Round tip", exemple: "Small round tip for details." },
                 { fr: "La douille étoile", en: "Star tip", exemple: "Star tip creates rosettes." },
                 { fr: "Le rouleau à pâtisserie", en: "Rolling pin", exemple: "Use a French rolling pin." },
-                { fr: "La balance électronique", en: "Digital scale", exemple: "Tare the scale before weighing." },
-                { fr: "Le thermomètre sonde", en: "Probe thermometer", exemple: "Check core temperature precisely." },
+                { fr: "La balance électronique", en: "Digital scale", exemple: "Tare before weighing." },
+                { fr: "Le thermomètre sonde", en: "Probe thermometer", exemple: "Check core temperature." },
                 { fr: "Le chinois", en: "Fine sieve", exemple: "Pass through a fine sieve." },
-                { fr: "L'étamine", en: "Cheesecloth", exemple: "Strain through cheesecloth." },
-                { fr: "La guitare", en: "Guitar cutter", exemple: "Cut even pieces with the guitar." },
-                { fr: "Le piano", en: "Marble workbench", exemple: "Work on a cool marble surface." },
-                { fr: "La feuille guitare", en: "Acetate sheet", exemple: "Place acetate for glossy finish." },
-                { fr: "Le four à sole", en: "Deck oven", exemple: "Deck oven gives crispy bottoms." },
-                { fr: "La cellule", en: "Blast freezer", exemple: "Rapid freeze in blast freezer." }
+                { fr: "La guitare", en: "Guitar cutter", exemple: "Cut even pieces." },
+                { fr: "La cellule", en: "Blast freezer", exemple: "Rapid freeze." }
             ],
             "Basic Techniques": [
-                { fr: "Macaroner", en: "Macaronage", exemple: "Fold until macaronage is achieved." },
-                { fr: "Monter les blancs", en: "Whip egg whites", exemple: "Whip whites to stiff peaks." },
+                { fr: "Macaroner", en: "Macaronage", exemple: "Fold until macaronage." },
+                { fr: "Monter les blancs", en: "Whip egg whites", exemple: "Whip to stiff peaks." },
                 { fr: "Incorporer", en: "Fold in", exemple: "Fold in the flour gently." },
                 { fr: "Tempérer", en: "Temper", exemple: "Temper chocolate for shine." },
-                { fr: "Mijoter", en: "Simmer", exemple: "Simmer the fruit compote slowly." },
+                { fr: "Mijoter", en: "Simmer", exemple: "Simmer the compote slowly." },
                 { fr: "Réduire", en: "Reduce", exemple: "Reduce the syrup by half." },
                 { fr: "Chemiser", en: "Line", exemple: "Line the mold with parchment." },
-                { fr: "Masquer", en: "Crumb coat", exemple: "Apply a thin crumb coat first." },
-                { fr: "Chablonner", en: "Coat bottom", exemple: "Coat the biscuit with chocolate." },
-                { fr: "Laminer", en: "Laminate", exemple: "Laminate the puff pastry dough." },
-                { fr: "Donner un tour", en: "Give a fold", exemple: "Give a single fold to the dough." },
-                { fr: "Abaisser", en: "Roll out", exemple: "Roll out to 3 millimeters thick." },
+                { fr: "Masquer", en: "Crumb coat", exemple: "Apply thin crumb coat first." },
+                { fr: "Chablonner", en: "Coat bottom", exemple: "Coat biscuit with chocolate." },
+                { fr: "Laminer", en: "Laminate", exemple: "Laminate puff pastry." },
+                { fr: "Donner un tour", en: "Give a fold", exemple: "Give a single fold." },
+                { fr: "Abaisser", en: "Roll out", exemple: "Roll out to 3mm thick." },
                 { fr: "Dorer", en: "Egg wash", exemple: "Egg wash before baking." },
-                { fr: "Pincer", en: "Crimp", exemple: "Crimp the tart edges neatly." },
-                { fr: "Cuire à blanc", en: "Blind bake", exemple: "Blind bake with pie weights." },
-                { fr: "Monter une crème", en: "Whip cream", exemple: "Whip cream to medium peaks." },
-                { fr: "Chantrer", en: "Flute", exemple: "Flute the pie crust edges." },
+                { fr: "Pincer", en: "Crimp", exemple: "Crimp the tart edges." },
+                { fr: "Cuire à blanc", en: "Blind bake", exemple: "Blind bake with weights." },
                 { fr: "Glacer", en: "Glaze", exemple: "Glaze with apricot jam." },
-                { fr: "Pocher", en: "Pipe", exemple: "Pipe onto a baking sheet." },
-                { fr: "Saucer", en: "Sauce", exemple: "Sauce the dessert plate." }
+                { fr: "Pocher", en: "Pipe", exemple: "Pipe onto baking sheet." }
             ]
         };
 
         // ==========================================
-        // WORLD PASTRIES QUIZ
+        // DONNÉES COMPLÉMENTAIRES
         // ==========================================
         const worldPastriesData = [
             { question: "Mochi (Japan)", options: ["Rice cake", "Bread roll", "Cookie", "Cream puff"], answer: "Rice cake" },
             { question: "Baklava (Turkey)", options: ["Nut pastry", "Fruit tart", "Layer cake", "Ice cream"], answer: "Nut pastry" },
             { question: "Pavlova (Australia)", options: ["Meringue cake", "Pudding", "Fruit pie", "Brownie"], answer: "Meringue cake" },
-            { question: "Basque Cheesecake (Spain)", options: ["Burnt surface", "Chocolate top", "Fruit layer", "No cheese"], answer: "Burnt surface" },
             { question: "Pastel de Nata (Portugal)", options: ["Custard tart", "Meat pie", "Doughnut", "Bread"], answer: "Custard tart" },
             { question: "Knafeh (Middle East)", options: ["Cheese pastry", "Nut cake", "Fruit jelly", "Rice pudding"], answer: "Cheese pastry" },
             { question: "Churros (Spain)", options: ["Fried dough", "Baked bread", "Steamed bun", "Cake"], answer: "Fried dough" },
             { question: "Cronut (USA)", options: ["Croissant-donut", "Muffin hybrid", "Bagel cross", "Waffle cone"], answer: "Croissant-donut" },
-            { question: "Bingsu (Korea)", options: ["Shaved ice", "Hot soup", "Fried cake", "Steamed bread"], answer: "Shaved ice" },
-            { question: "Lamington (Australia)", options: ["Sponge cube", "Meringue", "Fruit pie", "Cookie bar"], answer: "Sponge cube" },
-            { question: "Berliner (Germany)", options: ["Filled donut", "Sausage roll", "Pretzel", "Tart"], answer: "Filled donut" },
             { question: "Panettone (Italy)", options: ["Christmas bread", "Cheese cake", "Pasta dish", "Fruit pie"], answer: "Christmas bread" },
-            { question: "Stollen (Germany)", options: ["Fruit bread", "Cookie", "Cream cake", "Souffle"], answer: "Fruit bread" },
-            { question: "Sacher Torte (Austria)", options: ["Chocolate cake", "Fruit pie", "Cream puff", "Meringue"], answer: "Chocolate cake" },
-            { question: "Dobos Torte (Hungary)", options: ["Layer cake", "Cheesecake", "Doughnut", "Cookie"], answer: "Layer cake" },
-            { question: "Medovik (Russia)", options: ["Honey cake", "Meat pie", "Rice cake", "Bread loaf"], answer: "Honey cake" },
             { question: "Tiramisu (Italy)", options: ["Coffee dessert", "Cheese pie", "Fruit jelly", "Pudding cup"], answer: "Coffee dessert" },
             { question: "Cannoli (Italy)", options: ["Fried tube", "Bread stick", "Cookie bar", "Cake roll"], answer: "Fried tube" },
             { question: "Mille-feuille (France)", options: ["Thousand layers", "Meringue base", "Cream pie", "Fruit tart"], answer: "Thousand layers" },
             { question: "Kouign-Amann (France)", options: ["Butter cake", "Bread loaf", "Cookie", "Souffle"], answer: "Butter cake" }
         ];
 
-        // ==========================================
-        // LISTENING EXERCISES
-        // ==========================================
         const listeningData = [
             { audio: "Whisk the egg whites until stiff peaks form.", options: ["Whisk whites", "Fold flour", "Melt butter", "Boil milk"], answer: "Whisk whites" },
             { audio: "Sift the flour and cocoa powder together.", options: ["Sieve flour", "Mix eggs", "Whip cream", "Chop chocolate"], answer: "Sieve flour" },
@@ -742,721 +951,1112 @@
             { audio: "Blind bake the tart shell for 15 minutes.", options: ["Blind bake", "Glaze top", "Fill shell", "Cool down"], answer: "Blind bake" },
             { audio: "Caramelize the sugar until golden brown.", options: ["Caramelize sugar", "Whip cream", "Fold flour", "Chill bowl"], answer: "Caramelize sugar" },
             { audio: "Soak the gelatin sheets in cold water.", options: ["Soak gelatin", "Melt chocolate", "Boil cream", "Whisk eggs"], answer: "Soak gelatin" },
-            { audio: "Bring the heavy cream to a gentle boil.", options: ["Boil cream", "Melt butter", "Whip whites", "Fold nuts"], answer: "Boil cream" },
-            { audio: "Dust the work surface with icing sugar.", options: ["Dust sugar", "Grease pan", "Line tray", "Preheat oven"], answer: "Dust sugar" },
-            { audio: "Knead the dough until smooth and elastic.", options: ["Knead dough", "Whip cream", "Fold meringue", "Roll pastry"], answer: "Knead dough" },
-            { audio: "Laminate the puff pastry with butter.", options: ["Laminate dough", "Chill cream", "Whisk yolks", "Pipe shells"], answer: "Laminate dough" },
-            { audio: "Egg wash the brioche before baking.", options: ["Egg wash", "Glaze fruit", "Dust sugar", "Pipe cream"], answer: "Egg wash" },
-            { audio: "Chill the mousse in the blast freezer.", options: ["Chill mousse", "Bake tart", "Whip cream", "Fold flour"], answer: "Chill mousse" },
-            { audio: "Pass the custard through a fine sieve.", options: ["Strain custard", "Whip whites", "Melt butter", "Roll dough"], answer: "Strain custard" },
-            { audio: "Toast the hazelnuts until fragrant.", options: ["Toast nuts", "Grate chocolate", "Boil milk", "Whisk eggs"], answer: "Toast nuts" },
-            { audio: "Fold the whipped cream into the ganache.", options: ["Fold cream", "Temper chocolate", "Caramelize sugar", "Pipe mousse"], answer: "Fold cream" },
-            { audio: "Glaze the entremets with mirror glaze.", options: ["Glaze cake", "Dust sugar", "Fill mold", "Chill base"], answer: "Glaze cake" },
-            { audio: "Scrape the vanilla seeds from the pod.", options: ["Scrape vanilla", "Grate zest", "Chop chocolate", "Crush nuts"], answer: "Scrape vanilla" }
+            { audio: "Bring the heavy cream to a gentle boil.", options: ["Boil cream", "Melt butter", "Whip whites", "Fold nuts"], answer: "Boil cream" }
         ];
 
-        // ==========================================
-        // ROLEPLAY SCENARIOS
-        // ==========================================
         const roleplayData = [
-            {
-                scenario: "Counter Sales",
-                context: "Customer: 'Is this tart very sweet?'",
-                options: ["Yes, extremely sweet.", "It has balanced, subtle flavors.", "I don't know, I haven't tried it."],
-                correct: 1, 
-                feedback: "Always describe flavor profiles accurately and professionally."
-            },
-            {
-                scenario: "Allergen Inquiry",
-                context: "Customer: 'Does this contain any nuts?'",
-                options: ["Maybe, I'm not sure.", "Let me check the recipe in the kitchen for you.", "No nuts at all, definitely safe."],
-                correct: 1, 
-                feedback: "Never guess with allergens. Always verify in the kitchen."
-            },
-            {
-                scenario: "Custom Order",
-                context: "Customer: 'Can I order a birthday cake for 20 people?'",
-                options: ["We're too busy right now.", "Certainly! We can prepare it for tomorrow.", "We don't do custom orders."],
-                correct: 1, 
-                feedback: "Accept orders professionally with clear timing."
-            },
-            {
-                scenario: "Complaint Handling",
-                context: "Customer: 'This croissant isn't fresh. It's too dry.'",
-                options: ["That's how croissants are supposed to be.", "I apologize. Let me replace it with a fresh one.", "You should have eaten it sooner."],
-                correct: 1, 
-                feedback: "Always offer a solution when a customer is unsatisfied."
-            },
-            {
-                scenario: "Recommendation",
-                context: "Customer: 'What do you recommend with a cappuccino?'",
-                options: ["Everything is good here.", "Our chocolate eclair pairs beautifully with coffee.", "I don't drink coffee, so I can't say."],
-                correct: 1, 
-                feedback: "Make specific, enthusiastic suggestions."
-            },
-            {
-                scenario: "Storage Advice",
-                context: "Customer: 'How should I store these macarons?'",
-                options: ["Just leave them on the counter.", "Keep them refrigerated in an airtight container.", "Freeze them immediately."],
-                correct: 1, 
-                feedback: "Provide accurate storage instructions for best quality."
-            },
-            {
-                scenario: "Dietary Restriction",
-                context: "Customer: 'Do you have any gluten-free options?'",
-                options: ["No, everything has gluten here.", "We have flourless chocolate cake and macarons.", "Gluten-free isn't real, it's a trend."],
-                correct: 1, 
-                feedback: "Know your dietary options and present them positively."
-            },
-            {
-                scenario: "Price Inquiry",
-                context: "Customer: 'Why is this cake so expensive?'",
-                options: ["It's not expensive, you're cheap.", "We use premium ingredients like Valrhona chocolate and real vanilla.", "Everything has gone up in price lately."],
-                correct: 1, 
-                feedback: "Explain value through ingredients and craftsmanship."
-            },
-            {
-                scenario: "Wait Time",
-                context: "Customer: 'How long for a fresh croissant?'",
-                options: ["The next batch comes out in 15 minutes.", "We're done baking for today.", "Just take what's on the shelf."],
-                correct: 0, 
-                feedback: "Give accurate wait times to manage expectations."
-            },
-            {
-                scenario: "Gift Wrapping",
-                context: "Customer: 'Can you wrap this as a gift?'",
-                options: ["We don't do gift wrapping.", "Absolutely! I'll use our gift box and ribbon.", "Just use a paper bag."],
-                correct: 1, 
-                feedback: "Offer premium presentation for gift purchases."
-            },
-            {
-                scenario: "Tasting Request",
-                context: "Customer: 'Can I taste a sample of this?'",
-                options: ["No tasting allowed in the shop.", "Of course! Let me cut a small piece for you.", "You have to buy it first."],
-                correct: 1, 
-                feedback: "Samples can lead to larger purchases."
-            },
-            {
-                scenario: "Ingredient Question",
-                context: "Customer: 'What type of butter do you use?'",
-                options: ["Regular butter from the supermarket.", "We use French AOP butter with 82% fat content.", "I don't know, butter is butter."],
-                correct: 1, 
-                feedback: "Highlight quality ingredients to build trust."
-            },
-            {
-                scenario: "Reservation",
-                context: "Customer: 'Do I need a reservation for afternoon tea?'",
-                options: ["No, just walk in anytime.", "Yes, we recommend booking especially on weekends.", "We don't do afternoon tea."],
-                correct: 1, 
-                feedback: "Clear reservation policy avoids disappointment."
-            },
-            {
-                scenario: "Seasonal Item",
-                context: "Customer: 'When will your galette des rois be available?'",
-                options: ["Check our website, I don't know.", "It's available from early January for Epiphany.", "We don't make that here."],
-                correct: 1, 
-                feedback: "Know your seasonal calendar and communicate it clearly."
-            },
-            {
-                scenario: "Quantity Discount",
-                context: "Customer: 'If I buy 24 macarons, is there a discount?'",
-                options: ["No discounts, full price only.", "Yes, our box of 24 comes with a 10% discount.", "You have to buy 50 for any discount."],
-                correct: 1, 
-                feedback: "Know your volume pricing and offer it proactively."
-            }
+            { scenario: "Counter Sales", context: "Customer: 'Is this tart very sweet?'", options: ["Yes, extremely sweet.", "It has balanced, subtle flavors.", "I don't know."], correct: 1, feedback: "Describe flavors accurately and professionally." },
+            { scenario: "Allergen Inquiry", context: "Customer: 'Does this contain any nuts?'", options: ["Maybe, I'm not sure.", "Let me check the recipe for you.", "No nuts at all."], correct: 1, feedback: "Never guess with allergens. Always verify." },
+            { scenario: "Custom Order", context: "Customer: 'Can I order a birthday cake for 20 people?'", options: ["We're too busy.", "Certainly! Ready for tomorrow.", "We don't do custom orders."], correct: 1, feedback: "Accept orders with clear timing." },
+            { scenario: "Complaint", context: "Customer: 'This croissant isn't fresh.'", options: ["That's how they are.", "I apologize. Let me replace it.", "You should eat it sooner."], correct: 1, feedback: "Offer solutions when customers are unsatisfied." },
+            { scenario: "Recommendation", context: "Customer: 'What pairs well with cappuccino?'", options: ["Everything is good.", "Our chocolate eclair pairs beautifully.", "I don't drink coffee."], correct: 1, feedback: "Make specific, enthusiastic suggestions." },
+            { scenario: "Storage", context: "Customer: 'How should I store macarons?'", options: ["Leave on counter.", "Refrigerate in airtight container.", "Freeze immediately."], correct: 1, feedback: "Provide accurate storage instructions." },
+            { scenario: "Dietary", context: "Customer: 'Do you have gluten-free options?'", options: ["No, everything has gluten.", "We have flourless chocolate cake.", "Gluten-free isn't real."], correct: 1, feedback: "Know your dietary options." },
+            { scenario: "Price", context: "Customer: 'Why is this cake so expensive?'", options: ["It's not expensive.", "We use premium ingredients like Valrhona.", "Everything costs more now."], correct: 1, feedback: "Explain value through quality ingredients." }
         ];
 
-        // ==========================================
-        // RECIPES
-        // ==========================================
         const recipes = [
-            { 
-                title: "Pastry Cream", 
-                steps: ["Boil the milk", "Whisk yolks and sugar", "Add cornstarch", "Pour hot milk", "Cook until thick", "Cool with plastic film"] 
-            },
-            { 
-                title: "Macaron Shells", 
-                steps: ["Sift almond flour", "Make French meringue", "Fold dry ingredients", "Macaronage the batter", "Pipe onto trays", "Rest 20 minutes", "Bake 12 minutes"] 
-            },
-            { 
-                title: "Chocolate Ganache", 
-                steps: ["Chop the chocolate", "Boil heavy cream", "Pour over chocolate", "Stir from center", "Emulsify well", "Cool before using"] 
-            },
-            { 
-                title: "Puff Pastry", 
-                steps: ["Make the detrempe", "Rest one hour", "Incorporate butter", "Give first fold", "Rest 30 minutes", "Give remaining folds", "Roll to 3mm"] 
-            },
-            {
-                title: "Choux Pastry",
-                steps: ["Boil water and butter", "Add flour at once", "Dry on medium heat", "Cool slightly", "Add eggs gradually", "Pipe desired shapes", "Bake until golden"]
-            },
-            {
-                title: "Swiss Meringue",
-                steps: ["Combine whites and sugar", "Heat over bain-marie", "Reach 60 degrees", "Whip to stiff peaks", "Use immediately", "Pipe or spread"]
-            }
+            { title: "Pastry Cream", steps: ["Boil the milk", "Whisk yolks and sugar", "Add cornstarch", "Pour hot milk", "Cook until thick", "Cool with film"] },
+            { title: "Macaron Shells", steps: ["Sift almond flour", "Make French meringue", "Fold dry ingredients", "Macaronage batter", "Pipe onto trays", "Rest 20 minutes", "Bake 12 minutes"] },
+            { title: "Chocolate Ganache", steps: ["Chop the chocolate", "Boil heavy cream", "Pour over chocolate", "Stir from center", "Emulsify well", "Cool before using"] },
+            { title: "Choux Pastry", steps: ["Boil water and butter", "Add flour at once", "Dry on medium heat", "Cool slightly", "Add eggs gradually", "Pipe shapes", "Bake until golden"] }
         ];
 
+        // EXAM DATA
+        const examSubjects = {
+            "Hygiène": {
+                icon: "🧼",
+                questions: [
+                    { type: "mcq", question: "What does HACCP stand for?", options: ["Hazard Analysis Critical Control Points", "Health And Cooking Control", "Hygiene And Cleanliness Program", "Healthy Food Certification"], correct: 0 },
+                    { type: "mcq", question: "After handling raw eggs, what should you do?", options: ["Wipe hands on apron", "Continue working", "Wash hands thoroughly", "Use sanitizer only"], correct: 2 },
+                    { type: "mcq", question: "What is the ideal temperature for a pastry kitchen?", options: ["15-17°C", "18-20°C", "21-23°C", "24-26°C"], correct: 1 },
+                    { type: "mcq", question: "Which PPE is required in pastry kitchen?", options: ["Safety helmet", "Hair net and apron", "Goggles only", "Earplugs"], correct: 1 },
+                    { type: "writing", prompt: "Write an email (50-70 words) to your team about food safety. Include: washing hands, cleaning surfaces, proper storage.", wordMin: 50, wordMax: 70, modelAnswer: "Dear Team, I would like to remind everyone about food safety. Please wash your hands regularly, especially after handling raw ingredients. Clean and sanitize all work surfaces throughout the day. Ensure proper food storage by keeping raw and cooked products separate. Thank you for your cooperation. Best regards, The Pastry Chef" }
+                ]
+            },
+            "Ingrédients": {
+                icon: "🥚",
+                questions: [
+                    { type: "mcq", question: "What percentage of fat does butter contain?", options: ["70%", "80%", "90%", "60%"], correct: 1 },
+                    { type: "mcq", question: "What is the main function of eggs in sponge cake?", options: ["Add color", "Provide structure and aeration", "Make it sweeter", "Reduce cooking time"], correct: 1 },
+                    { type: "mcq", question: "Which sugar is best for meringues?", options: ["Brown sugar", "Icing sugar", "Caster sugar", "Raw sugar"], correct: 2 },
+                    { type: "mcq", question: "What type of flour is used for puff pastry?", options: ["Cake flour", "Bread flour", "All-purpose flour", "Self-rising flour"], correct: 2 },
+                    { type: "writing", prompt: "A customer asks about ingredients in your chocolate cake. Write a response (50-70 words) explaining: main ingredients, allergens, what makes your recipe special.", wordMin: 50, wordMax: 70, modelAnswer: "Our chocolate cake is made with dark chocolate, butter, eggs, flour, and sugar. Please note it contains allergens: eggs, gluten (wheat), and milk. What makes it special is our use of 70% Belgian chocolate, giving a rich and intense flavor." }
+                ]
+            },
+            "Service": {
+                icon: "🤝",
+                questions: [
+                    { type: "mcq", question: "How should you greet customers?", options: ["Wait for them to speak", "Continue working", "Greet with a smile", "Ask what they want"], correct: 2 },
+                    { type: "mcq", question: "A customer has a complaint. What should you do?", options: ["Ignore them", "Apologize and offer solution", "Say it's not your fault", "Ask them to leave"], correct: 1 },
+                    { type: "mcq", question: "Customer asks for gluten-free option. What to say?", options: ["We don't have any", "Let me show you our selection", "Not popular", "Try another shop"], correct: 1 },
+                    { type: "mcq", question: "How to describe a new pastry to customer?", options: ["Just point to it", "Describe flavors and textures", "Tell them to try it", "Read the label"], correct: 1 },
+                    { type: "writing", prompt: "Customer wants to order a custom birthday cake. Write a conversation (60-80 words) about: occasion, size/flavor, decoration, pickup date.", wordMin: 60, wordMax: 80, modelAnswer: "Pastry Chef: Good morning! How can I help you?\nCustomer: I'd like to order a birthday cake.\nChef: Wonderful! How many people?\nCustomer: About 15.\nChef: What flavor? We have chocolate, vanilla, strawberry.\nCustomer: Chocolate please. Can you add pink flowers?\nChef: Of course! When do you need it?\nCustomer: Saturday afternoon.\nChef: Perfect! Ready Saturday at 2 PM." }
+                ]
+            }
+        };
+
         // ==========================================
-        // STATE & PROGRESSION
+        // CONFIGURATION DES NIVEAUX
         // ==========================================
-        let currentMode = "flashcard";
-        let currentTheme = "Basic Ingredients";
+        const LEVELS = {
+            1: { name: "Apprentice", title: "Débutant en pâtisserie", icon: "👨‍🍳", shortName: "APP", xp: 0 },
+            2: { name: "Commis", title: "Assistant pâtissier", icon: "🥐", shortName: "COM", xp: 100 },
+            3: { name: "Pastry Chef", title: "Pâtissier confirmé", icon: "🎂", shortName: "CHEF", xp: 300 },
+            4: { name: "Head Chef", title: "Chef pâtissier", icon: "🏆", shortName: "HEAD", xp: 600 },
+            5: { name: "MOF", title: "Meilleur Ouvrier de France", icon: "👑", shortName: "MOF", xp: 1200 }
+        };
+
+        // ==========================================
+        // ÉTAT - Variables persistantes pour éviter les bugs
+        // ==========================================
+        let xp = 0;
+        let mode = "flashcard";
+        let theme = "Basic Ingredients";
         let deck = [];
-        let index = 0;
-        let isFlipped = false;
-        let totalXP = parseInt(localStorage.getItem('pastryXP')) || 0;
-        
+        let idx = 0;
+        let flipped = false;
+
+        // Compteurs pour les quiz
+        let quizNumber = 0;
+        let totalQuizzes = 0;
+
         let rushTimer = null;
         let rushTimeLeft = 0;
         let rushItem = null;
-        let listeningItem = null;
-        let roleplayItem = null;
-        let worldItem = null;
+
+        // Variables pour garder les items sélectionnés
+        let currentListeningItem = null;
+        let currentListeningItemIndex = 0;
+        let currentListeningOptions = null;
+        let currentRoleplayItem = null;
+        let currentRoleplayIndex = 0;
+        let currentWorldItem = null;
+        let currentWorldIndex = 0;
+        let currentWorldOptions = null;
         let currentRecipe = null;
+        let currentRecipeIndex = 0;
         let userSteps = [];
         let selectedStepIndex = null;
 
-        function getLevel(xp) {
-            if(xp < 100) return { level: 1, name: "Apprentice", nextXP: 100 };
-            if(xp < 300) return { level: 2, name: "Commis", nextXP: 300 };
-            if(xp < 600) return { level: 3, name: "Pastry Chef", nextXP: 600 };
-            if(xp < 1200) return { level: 4, name: "Head Chef", nextXP: 1200 };
-            return { level: 5, name: "MOF", nextXP: xp };
-        }
+        // Exam state
+        let examMode = false;
+        let currentExamSubject = null;
+        let examQuestions = [];
+        let examIndex = 0;
+        let examAnswers = [];
+        let examTimeLeft = 0;
+        let examTimer = null;
+
+        // API Key pour la correction IA
+        let apiKey = '';
+        try { apiKey = localStorage.getItem('pastryApiKey') || ''; } catch(e) { apiKey = ''; }
+
+        // Charger XP
+        try { xp = parseInt(localStorage.getItem('pastryXP')) || 0; } catch(e) { xp = 0; }
 
         // ==========================================
-        // INITIALIZATION
+        // UTILITAIRES
         // ==========================================
-        window.onload = function() {
-            updateProgressBar();
-        };
-
-        function demarrerApp() {
-            document.getElementById('home-screen').style.display = 'none';
-            document.getElementById('game-screen').style.display = 'flex';
-            initGame();
-        }
-
-        function retourAccueil() {
-            if(rushTimer) clearInterval(rushTimer);
-            window.speechSynthesis.cancel();
-            document.getElementById('game-screen').style.display = 'none';
-            document.getElementById('home-screen').style.display = 'flex';
-        }
-
-        function initGame() {
-            genererThemeMenu();
-            chargerTheme(currentTheme);
-        }
-
-        function addXP(amount) {
-            totalXP += amount;
-            localStorage.setItem('pastryXP', totalXP);
-            updateProgressBar();
-        }
-
-        function updateProgressBar() {
-            let lvlInfo = getLevel(totalXP);
-            const bar = document.getElementById('progress-bar');
-            const text = document.getElementById('progress-text');
-            
-            let prevThreshold = 0;
-            if(lvlInfo.level === 2) prevThreshold = 100;
-            else if(lvlInfo.level === 3) prevThreshold = 300;
-            else if(lvlInfo.level === 4) prevThreshold = 600;
-            else if(lvlInfo.level === 5) prevThreshold = 1200;
-            
-            let progress = ((totalXP - prevThreshold) / (lvlInfo.nextXP - prevThreshold)) * 100;
-            if(progress > 100) progress = 100;
-            if(progress < 0) progress = 0;
-
-            if(bar) {
-                bar.style.width = progress + "%";
-                text.innerHTML = "Lv." + lvlInfo.level + " " + lvlInfo.name + " (" + totalXP + " XP)";
+        function shuffle(arr) {
+            const a = [...arr];
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
             }
+            return a;
         }
 
-        // Chef Mascot Control
-        function showChef(show) {
-            const chef = document.getElementById('chef-mascot');
-            if(chef) {
-                if(show) {
-                    chef.classList.add('visible');
-                } else {
-                    chef.classList.remove('visible');
+        function speak(text) {
+            try {
+                window.speechSynthesis.cancel();
+                const u = new SpeechSynthesisUtterance(text);
+                u.lang = 'en-GB';
+                u.rate = 0.9;
+                window.speechSynthesis.speak(u);
+            } catch(e) { console.log('Speech not available'); }
+        }
+
+        function addXP(n) {
+            xp += n;
+            try { localStorage.setItem('pastryXP', xp); } catch(e) {}
+            updateProgress();
+        }
+
+        function getLevel() {
+            for (let i = 5; i >= 1; i--) {
+                if (xp >= LEVELS[i].xp) {
+                    return { lvl: i, ...LEVELS[i], next: LEVELS[i+1] };
                 }
+            }
+            return { lvl: 1, ...LEVELS[1], next: LEVELS[2] };
+        }
+
+        function countWords(text) {
+            return text.trim().split(/\s+/).filter(w => w.length > 0).length;
+        }
+
+        // ==========================================
+        // PROGRESSION - Avec noms des niveaux
+        // ==========================================
+        function updateProgress() {
+            const L = getLevel();
+            
+            document.getElementById('lvl-icon').textContent = L.icon;
+            document.getElementById('lvl-name').textContent = `Niveau ${L.lvl} · ${L.name}`;
+            document.getElementById('lvl-title').textContent = L.title;
+            document.getElementById('xp-count').textContent = `${xp} XP`;
+            
+            if (L.next) {
+                document.getElementById('xp-next').textContent = `${L.next.xp - xp} XP niveau suivant`;
+            } else {
+                document.getElementById('xp-next').textContent = "Niveau maximum !";
+            }
+
+            const prevXp = LEVELS[L.lvl].xp;
+            const nextXp = L.next ? L.next.xp : L.xp;
+            const pct = L.next ? Math.min(100, ((xp - prevXp) / (nextXp - prevXp)) * 100) : 100;
+            
+            document.getElementById('progress-bar').style.width = pct + '%';
+
+            // NOUVEAU: Afficher les noms des niveaux sur la barre de progression
+            let labels = '';
+            for (let i = 1; i <= 5; i++) {
+                const passed = xp >= LEVELS[i].xp;
+                const current = i === L.lvl;
+                labels += `<div class="level-label ${passed ? 'passed' : ''} ${current ? 'current' : ''}">
+                    <div class="level-label-dot">${LEVELS[i].icon}</div>
+                    <span class="level-label-name">${LEVELS[i].shortName}</span>
+                </div>`;
+            }
+            document.getElementById('level-labels').innerHTML = labels;
+        }
+
+        function updateHomeStats() {
+            const stats = document.getElementById('home-stats');
+            if (xp > 0) {
+                const L = getLevel();
+                stats.style.display = 'block';
+                stats.innerHTML = `
+                    <div class="home-level">
+                        <span class="home-level-icon">${L.icon}</span>
+                        <div class="home-level-info">
+                            <div class="home-level-name">Niveau ${L.lvl} · ${L.name}</div>
+                            <div class="home-level-xp">${xp} XP gagnés</div>
+                        </div>
+                    </div>
+                `;
             }
         }
 
         // ==========================================
         // NAVIGATION
         // ==========================================
-        function genererThemeMenu() {
+        function showScreen(screen) {
+            document.getElementById('home-screen').style.display = screen === 'home' ? 'flex' : 'none';
+            document.getElementById('game-screen').style.display = screen === 'game' ? 'flex' : 'none';
+        }
+
+        function goHome() {
+            if (rushTimer) clearInterval(rushTimer);
+            if (examTimer) clearInterval(examTimer);
+            examMode = false;
+            showScreen('home');
+            updateHomeStats();
+        }
+
+        function startApp() {
+            showScreen('game');
+            renderModeMenu();
+            updateProgress();
+            loadTheme(theme);
+        }
+
+        function renderModeMenu() {
+            const modes = [
+                ['flashcard', '📚 Cards'],
+                ['quiz', '❓ Quiz'],
+                ['listening', '👂 Audio'],
+                ['roleplay', '🎭 Service'],
+                ['world', '🌍 World'],
+                ['recipe', '📜 Recipes'],
+                ['rush', '⏱️ Rush']
+            ];
+            
+            document.getElementById('mode-menu').innerHTML = modes.map(m => 
+                `<button class="menu-btn ${mode === m[0] ? 'active' : ''}" data-mode="${m[0]}">${m[1]}</button>`
+            ).join('');
+        }
+
+        function renderThemeMenu() {
+            const show = mode === 'flashcard' || mode === 'quiz';
             const menu = document.getElementById('theme-menu');
-            menu.innerHTML = '';
-            let showThemeMenu = (currentMode === 'flashcard' || currentMode === 'quiz');
-            menu.style.display = showThemeMenu ? 'flex' : 'none';
+            
+            if (show) {
+                menu.style.display = 'flex';
+                menu.innerHTML = Object.keys(database).map(k => 
+                    `<button class="menu-btn ${theme === k ? 'active' : ''}" data-theme="${k}">${k}</button>`
+                ).join('');
+            } else {
+                menu.style.display = 'none';
+            }
+        }
 
-            if(showThemeMenu) {
-                for (let key in database) {
-                    let btn = document.createElement('button');
-                    btn.className = 'menu-btn' + (key === currentTheme ? ' active' : '');
-                    btn.innerText = key;
-                    btn.onclick = function() { 
-                        currentTheme = key; 
-                        genererThemeMenu(); 
-                        chargerTheme(key); 
-                    };
-                    menu.appendChild(btn);
+        function loadTheme(t) {
+            theme = t;
+            deck = database[t] ? shuffle([...database[t]]) : [];
+            idx = 0;
+            flipped = false;
+            quizNumber = 0;
+            totalQuizzes = deck.length;
+            renderThemeMenu();
+            renderQuestion();
+        }
+
+        function setMode(m) {
+            if (rushTimer) clearInterval(rushTimer);
+            mode = m;
+            idx = 0;
+            quizNumber = 0;
+            renderModeMenu();
+            renderThemeMenu();
+
+            switch(m) {
+                case 'listening': initListening(); break;
+                case 'roleplay': initRoleplay(); break;
+                case 'world': initWorld(); break;
+                case 'recipe': initRecipe(); break;
+                case 'rush': initRush(); break;
+                default:
+                    deck = database[theme] ? shuffle([...database[theme]]) : [];
+                    totalQuizzes = deck.length;
+                    renderQuestion();
+            }
+        }
+
+        // ==========================================
+        // FLASHCARD & QUIZ - Avec compteurs
+        // ==========================================
+        function renderQuestion() {
+            if (!deck.length) return;
+            const item = deck[idx];
+            const area = document.getElementById('game-area');
+            const controls = document.getElementById('controls-area');
+
+            if (mode === 'flashcard') {
+                const displayWord = flipped ? item.en : item.fr;
+                const displayEx = flipped ? item.exemple : "Tap to flip";
+
+                // NOUVEAU: Afficher le compteur de cartes
+                area.innerHTML = `
+                    <span class="card-counter">📚 Carte ${idx + 1}/${deck.length}</span>
+                    <div class="mode-label">Flashcard</div>
+                    <div class="card-word" id="flip-card">${displayWord}</div>
+                    <div class="card-example">${displayEx}</div>
+                `;
+
+                controls.innerHTML = `
+                    <button class="btn-nav" id="prev-btn" ${idx === 0 ? 'disabled' : ''}>◀ Prev</button>
+                    <button class="btn-sound" id="speak-btn">🔊</button>
+                    <button class="btn-nav" id="next-btn">Next ▶</button>
+                `;
+
+                document.getElementById('flip-card').addEventListener('click', () => { 
+                    flipped = !flipped; 
+                    renderQuestion(); 
+                    if (flipped) speak(item.en); 
+                });
+                document.getElementById('prev-btn').addEventListener('click', () => { if (idx > 0) { idx--; flipped = false; renderQuestion(); } });
+                document.getElementById('next-btn').addEventListener('click', () => { idx = (idx + 1) % deck.length; if (idx === 0) deck = shuffle(deck); flipped = false; renderQuestion(); });
+                document.getElementById('speak-btn').addEventListener('click', () => speak(item.en));
+
+            } else if (mode === 'quiz') {
+                let opts = [item.en];
+                const allWords = Object.values(database).flat().map(x => x.en);
+                while (opts.length < 4) {
+                    const r = allWords[Math.floor(Math.random() * allWords.length)];
+                    if (!opts.includes(r)) opts.push(r);
                 }
+                opts = shuffle(opts);
+
+                // NOUVEAU: Afficher le numéro du quiz
+                area.innerHTML = `
+                    <span class="card-counter">❓ Quiz ${idx + 1}/${deck.length}</span>
+                    <div class="quiz-number">Question ${idx + 1}</div>
+                    <div class="quiz-question">Translate:<br><b>${item.fr}</b></div>
+                    <div class="quiz-options">
+                        ${opts.map(o => `<button class="quiz-btn" data-opt="${o}">${o}</button>`).join('')}
+                    </div>
+                `;
+
+                controls.innerHTML = '<button class="btn-nav btn-action" id="skip-btn">Skip</button>';
+
+                document.querySelectorAll('.quiz-btn').forEach(btn => {
+                    btn.addEventListener('click', () => checkQuiz(btn.dataset.opt, item.en));
+                });
+                document.getElementById('skip-btn').addEventListener('click', () => { idx = (idx + 1) % deck.length; renderQuestion(); });
             }
         }
 
-        function chargerTheme(theme) {
-            deck = database[theme] ? database[theme].slice() : [];
-            melanger(deck);
-            index = 0;
-            isFlipped = false;
-            afficherElement();
-        }
+        function checkQuiz(selected, correct) {
+            const isCorrect = selected === correct;
+            if (isCorrect) addXP(10);
 
-        function changerMode(mode) {
-            if(rushTimer) clearInterval(rushTimer);
-            currentMode = mode;
-            
-            document.querySelectorAll('#mode-menu .menu-btn').forEach(function(btn) {
-                btn.classList.remove('active');
-            });
-            
-            const modeLabels = {
-                'flashcard': 'Cards',
-                'quiz': 'Quiz', 
-                'listening': 'Audio',
-                'roleplay': 'Sales',
-                'world': 'World',
-                'recipe': 'Recipes',
-                'rush': 'Rush'
-            };
-            
-            document.querySelectorAll('#mode-menu .menu-btn').forEach(function(btn) {
-                if(btn.innerText.includes(modeLabels[mode])) {
-                    btn.classList.add('active');
-                }
+            document.querySelectorAll('.quiz-btn').forEach(btn => {
+                btn.disabled = true;
+                if (btn.dataset.opt === correct) btn.classList.add('correct');
+                if (btn.dataset.opt === selected && !isCorrect) btn.classList.add('wrong');
             });
 
-            genererThemeMenu();
-            index = 0;
-
-            if(mode === 'recipe') initRecipeMode();
-            else if(mode === 'rush') initRushMode();
-            else if(mode === 'listening') initListeningMode();
-            else if(mode === 'roleplay') initRoleplayMode();
-            else if(mode === 'world') initWorldMode();
-            else {
-                deck = database[currentTheme] ? database[currentTheme].slice() : [];
-                melanger(deck);
-                afficherElement();
-            }
-        }
-
-        // Fisher-Yates Shuffle
-        function melanger(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                const temp = array[i];
-                array[i] = array[j];
-                array[j] = temp;
-            }
+            document.getElementById('controls-area').innerHTML = `
+                <button class="btn-nav btn-action ${isCorrect ? 'btn-success' : ''}" id="next-quiz">
+                    ${isCorrect ? '✓ Correct! +10 XP' : '✗ Answer: ' + correct}
+                </button>
+            `;
+            document.getElementById('next-quiz').addEventListener('click', () => { idx = (idx + 1) % deck.length; renderQuestion(); });
         }
 
         // ==========================================
-        // AUDIO FUNCTION
+        // LISTENING - Avec numéro
         // ==========================================
-        function parler(texte) {
-            window.speechSynthesis.cancel();
-            const utterance = new SpeechSynthesisUtterance(texte);
-            utterance.lang = 'en-GB';
-            utterance.rate = 0.9;
-            window.speechSynthesis.speak(utterance);
+        function initListening() {
+            currentListeningItemIndex = Math.floor(Math.random() * listeningData.length);
+            currentListeningItem = listeningData[currentListeningItemIndex];
+            currentListeningOptions = shuffle([...currentListeningItem.options]);
+            renderListening(null);
         }
 
-        // ==========================================
-        // FLASHCARD & QUIZ MODES
-        // ==========================================
-        function afficherElement() {
-            const container = document.getElementById('game-container');
+        function renderListening(answered) {
+            const item = currentListeningItem;
+            const opts = currentListeningOptions;
+            const area = document.getElementById('game-area');
             const controls = document.getElementById('controls-area');
             
-            if(!deck || deck.length === 0) {
-                container.innerHTML = '<p>No data available.</p>';
+            if (!item || !opts) {
+                initListening();
+                return;
+            }
+
+            // NOUVEAU: Afficher le numéro
+            area.innerHTML = `
+                <span class="card-counter">👂 Audio ${currentListeningItemIndex + 1}/${listeningData.length}</span>
+                <div class="mode-label">Listening</div>
+                <p style="color:var(--fg-secondary); margin: 10px 0;">Listen and choose the action.</p>
+                <button class="btn-sound" style="margin:0 auto 14px; width:80px; height:80px;" id="audio-btn">🔊</button>
+                <div class="quiz-options">
+                    ${opts.map(o => {
+                        let cls = 'quiz-btn';
+                        if (answered) {
+                            if (o === item.answer) cls += ' correct';
+                            else if (o === answered) cls += ' wrong';
+                        }
+                        return `<button class="${cls}" data-opt="${o}" ${answered ? 'disabled' : ''}>${o}</button>`;
+                    }).join('')}
+                </div>
+            `;
+
+            document.getElementById('audio-btn').addEventListener('click', () => speak(item.audio));
+
+            if (!answered) {
+                document.querySelectorAll('.quiz-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        if (btn.dataset.opt === item.answer) addXP(15);
+                        renderListening(btn.dataset.opt);
+                    });
+                });
+            }
+
+            controls.innerHTML = answered 
+                ? `<button class="btn-nav btn-action ${answered === item.answer ? 'btn-success' : ''}" id="next-listen">Next</button>`
+                : '';
+            if (answered) document.getElementById('next-listen').addEventListener('click', () => initListening());
+        }
+
+        // ==========================================
+        // ROLEPLAY - Avec numéro
+        // ==========================================
+        function initRoleplay() {
+            currentRoleplayIndex = Math.floor(Math.random() * roleplayData.length);
+            currentRoleplayItem = roleplayData[currentRoleplayIndex];
+            renderRoleplay(null);
+        }
+
+        function renderRoleplay(selected) {
+            const item = currentRoleplayItem;
+            const area = document.getElementById('game-area');
+            const controls = document.getElementById('controls-area');
+            
+            if (!item) {
+                initRoleplay();
                 return;
             }
             
-            const item = deck[index];
+            const finished = selected !== null;
 
-            if (currentMode === 'flashcard') {
-                let displayWord = isFlipped ? item.en : item.fr;
-                let displayEx = isFlipped ? item.exemple : "Tap to flip";
-                
-                showChef(true);
-                
-                container.innerHTML = 
-                    '<div class="mode-label">Flashcard</div>' +
-                    '<div class="card-word" onclick="toggleCarte()">' + displayWord + '</div>' +
-                    '<div class="card-example">' + displayEx + '</div>' +
-                    '<div class="card-hint">' + (index + 1) + ' / ' + deck.length + '</div>';
-                
-                controls.innerHTML = 
-                    '<button class="btn-nav" onclick="cartePrecedente()" ' + (index === 0 ? 'disabled' : '') + '>Previous</button>' +
-                    '<button class="btn-sound" onclick="parler(\'' + item.en.replace(/'/g, "\\'") + '\')" aria-label="Listen">' +
-                        '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>' +
-                    '</button>' +
-                    '<button class="btn-nav" onclick="carteSuivante()">Next</button>';
-            } 
-            else if (currentMode === 'quiz') {
-                showChef(true);
-                
-                let options = [item.en];
-                const allWords = [];
-                for(let cat in database) {
-                    database[cat].forEach(function(w) { allWords.push(w.en); });
-                }
-                
-                while (options.length < 4) {
-                    let random = allWords[Math.floor(Math.random() * allWords.length)];
-                    if (options.indexOf(random) === -1) options.push(random);
-                }
-                
-                melanger(options);
-                
-                container.innerHTML = 
-                    '<div class="mode-label">Quiz</div>' +
-                    '<div class="quiz-question">Translate:<b>' + item.fr + '</b></div>' +
-                    '<div class="quiz-options">' +
-                        options.map(function(opt) { 
-                            return '<button class="quiz-btn" onclick="verifierQuiz(\'' + opt.replace(/'/g, "\\'") + '\', \'' + item.en.replace(/'/g, "\\'") + '\')">' + opt + '</button>'; 
-                        }).join('') +
-                    '</div>';
-                    
-                controls.innerHTML = '<button class="btn-nav btn-action" onclick="quizSkip()">Skip</button>';
-            }
-        }
-
-        function toggleCarte() {
-            isFlipped = !isFlipped;
-            afficherElement();
-            if(isFlipped) parler(deck[index].en);
-        }
-        
-        function carteSuivante() { 
-            if (index >= deck.length - 1) { 
-                melanger(deck); 
-                index = 0; 
-            } else { 
-                index++; 
-            } 
-            isFlipped = false; 
-            afficherElement(); 
-        }
-        
-        function cartePrecedente() { 
-            if (index > 0) { 
-                index--; 
-                isFlipped = false; 
-                afficherElement(); 
-            } 
-        }
-        
-        function verifierQuiz(selection, reponse) {
-            const buttons = document.querySelectorAll('.quiz-btn');
-            let isCorrect = (selection === reponse);
-            
-            buttons.forEach(function(btn) {
-                btn.disabled = true;
-                if (btn.innerText === reponse) btn.classList.add('correct');
-                if (btn.innerText === selection && !isCorrect) btn.classList.add('wrong');
-            });
-            
-            if (isCorrect) addXP(10);
-            
-            const controls = document.getElementById('controls-area');
-            controls.innerHTML = '<button class="btn-nav btn-action" onclick="quizNext()" style="background:' + (isCorrect ? 'var(--success)' : 'var(--error)') + ';">' + (isCorrect ? 'Correct! +10 XP' : 'Answer: ' + reponse) + '</button>';
-        }
-        
-        function quizNext() {
-            if (index >= deck.length - 1) { melanger(deck); index = 0; } else { index++; }
-            afficherElement();
-        }
-        
-        function quizSkip() { 
-            if (index >= deck.length - 1) { melanger(deck); index = 0; } else { index++; } 
-            afficherElement(); 
-        }
-
-        // ==========================================
-        // LISTENING MODE
-        // ==========================================
-        function initListeningMode() {
-            listeningItem = listeningData[Math.floor(Math.random() * listeningData.length)];
-            renderListening(false);
-        }
-        
-        function renderListening(answered) {
-            showChef(false);
-            
-            let shuffledOptions = listeningItem.options.slice();
-            melanger(shuffledOptions);
-            
-            const container = document.getElementById('game-container');
-            container.innerHTML = 
-                '<div class="mode-label">Listening Comprehension</div>' +
-                '<p style="color:var(--fg-secondary); margin: 12px 0;">Listen and choose the correct action.</p>' +
-                '<button class="btn-sound" style="margin:0 auto 16px; width:80px; height:80px;" onclick="parler(\'' + listeningItem.audio + '\')" aria-label="Listen">' +
-                    '<svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>' +
-                '</button>' +
-                '<div class="quiz-options">' +
-                    shuffledOptions.map(function(opt) { 
-                        let classes = 'quiz-btn';
-                        if(answered) {
-                            if(opt === listeningItem.answer) classes += ' correct';
-                        }
-                        return '<button class="' + classes + '" onclick="checkListening(\'' + opt.replace(/'/g, "\\'") + '\')" ' + (answered ? 'disabled' : '') + '>' + opt + '</button>'; 
-                    }).join('') +
-                '</div>';
-                
-            document.getElementById('controls-area').innerHTML = answered ? '<button class="btn-nav btn-action" onclick="initListeningMode()">Next</button>' : '';
-        }
-        
-        function checkListening(choice) { 
-            if(choice === listeningItem.answer) addXP(15); 
-            renderListening(true); 
-        }
-
-        // ==========================================
-        // ROLEPLAY MODE
-        // ==========================================
-        function initRoleplayMode() {
-            roleplayItem = roleplayData[Math.floor(Math.random() * roleplayData.length)];
-            renderRoleplay(-1);
-        }
-        
-        function renderRoleplay(selectedIndex) {
-            showChef(true);
-            
-            const container = document.getElementById('game-container');
-            const isFinished = selectedIndex !== -1;
-            const correctIndex = roleplayItem.correct;
-            
-            container.innerHTML = 
-                '<div class="mode-label">Sales Situation</div>' +
-                '<div class="roleplay-context">' +
-                    '<div class="roleplay-scenario">' + roleplayItem.scenario + '</div>' +
-                    '<div class="roleplay-dialog">"' + roleplayItem.context + '"</div>' +
-                '</div>' +
-                '<p style="font-size:0.9em; color:var(--fg-muted); margin-bottom:12px;">Choose the best response:</p>' +
-                '<div style="display:flex; flex-direction:column; gap:8px;">' +
-                    roleplayItem.options.map(function(opt, i) { 
+            // NOUVEAU: Afficher le numéro du scénario
+            area.innerHTML = `
+                <span class="card-counter">🎭 Scénario ${currentRoleplayIndex + 1}/${roleplayData.length}</span>
+                <div class="mode-label">Service Scenario</div>
+                <div class="roleplay-context">
+                    <div class="roleplay-scenario">${item.scenario}</div>
+                    <div class="roleplay-dialog">"${item.context}"</div>
+                </div>
+                <p style="color:var(--fg-muted); font-size:0.85rem; margin-bottom:10px;">Choose the best response:</p>
+                <div style="display:flex; flex-direction:column; gap:8px;">
+                    ${item.options.map((o, i) => {
                         let style = '';
-                        if(isFinished && i === correctIndex) style = 'border-color:var(--success); background:rgba(107,155,107,0.2);';
-                        if(isFinished && i === selectedIndex && i !== correctIndex) style = 'border-color:var(--error); background:rgba(196,92,92,0.2);';
-                        return '<button class="quiz-btn" style="min-height:50px; width:100%; ' + style + '" onclick="checkRoleplay(' + i + ')" ' + (isFinished ? 'disabled' : '') + '>' + opt + '</button>'; 
-                    }).join('') +
-                '</div>' +
-                (isFinished ? '<p style="margin-top:16px; color:var(--fg-secondary); font-size:0.9rem; font-style:italic;">' + roleplayItem.feedback + '</p>' : '');
-                
-            document.getElementById('controls-area').innerHTML = isFinished ? '<button class="btn-nav btn-action" onclick="initRoleplayMode()">Next Scenario</button>' : '';
-        }
-        
-        function checkRoleplay(idx) { 
-            if(idx === roleplayItem.correct) addXP(20); 
-            renderRoleplay(idx); 
+                        if (finished && i === item.correct) style = 'border-color:var(--success); background:rgba(107,155,107,0.2);';
+                        if (finished && i === selected && i !== item.correct) style = 'border-color:var(--error); background:rgba(196,92,92,0.2);';
+                        return `<button class="quiz-btn" style="${style}" data-idx="${i}" ${finished ? 'disabled' : ''}>${o}</button>`;
+                    }).join('')}
+                </div>
+                ${finished ? `<p style="margin-top:14px; color:var(--fg-secondary); font-size:0.85rem; font-style:italic;">💡 ${item.feedback}</p>` : ''}
+            `;
+
+            if (!finished) {
+                document.querySelectorAll('.quiz-btn[data-idx]').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const idx = parseInt(btn.dataset.idx);
+                        if (idx === item.correct) addXP(20);
+                        renderRoleplay(idx);
+                    });
+                });
+            }
+
+            controls.innerHTML = finished 
+                ? '<button class="btn-nav btn-action" id="next-role">Next Scenario</button>'
+                : '';
+            if (finished) document.getElementById('next-role').addEventListener('click', () => initRoleplay());
         }
 
         // ==========================================
-        // WORLD MODE
+        // WORLD - Avec numéro
         // ==========================================
-        function initWorldMode() {
-            worldItem = worldPastriesData[Math.floor(Math.random() * worldPastriesData.length)];
-            renderWorld(-1);
+        function initWorld() {
+            currentWorldIndex = Math.floor(Math.random() * worldPastriesData.length);
+            currentWorldItem = worldPastriesData[currentWorldIndex];
+            currentWorldOptions = shuffle([...currentWorldItem.options]);
+            renderWorld(null);
         }
-        
+
         function renderWorld(selected) {
-            showChef(false);
+            const item = currentWorldItem;
+            const opts = currentWorldOptions;
+            const area = document.getElementById('game-area');
+            const controls = document.getElementById('controls-area');
             
-            const container = document.getElementById('game-container');
-            let shuffledOptions = worldItem.options.slice();
-            melanger(shuffledOptions);
-            const isFinished = selected !== -1;
+            if (!item || !opts) {
+                initWorld();
+                return;
+            }
             
-            container.innerHTML = 
-                '<div class="mode-label">World Pastry Tour</div>' +
-                '<p style="color:var(--fg-secondary); margin: 8px 0;">What is this pastry?</p>' +
-                '<div style="font-size:1.6rem; font-weight:700; color:var(--fg-primary); margin: 12px 0;">' + worldItem.question + '</div>' +
-                '<div class="quiz-options">' +
-                    shuffledOptions.map(function(opt) { 
-                        let classes = 'quiz-btn';
-                        if(isFinished) {
-                            if(opt === worldItem.answer) classes += ' correct';
-                            else if(opt === selected) classes += ' wrong';
+            const finished = selected !== null;
+
+            // NOUVEAU: Afficher le numéro
+            area.innerHTML = `
+                <span class="card-counter">🌍 Question ${currentWorldIndex + 1}/${worldPastriesData.length}</span>
+                <div class="mode-label">World Pastry</div>
+                <p style="color:var(--fg-secondary); margin: 8px 0;">What is this pastry?</p>
+                <div style="font-size:1.5rem; font-weight:700; margin: 10px 0;">${item.question}</div>
+                <div class="quiz-options">
+                    ${opts.map(o => {
+                        let cls = 'quiz-btn';
+                        if (finished) {
+                            if (o === item.answer) cls += ' correct';
+                            else if (o === selected) cls += ' wrong';
                         }
-                        return '<button class="' + classes + '" onclick="checkWorld(\'' + opt.replace(/'/g, "\\'") + '\')" ' + (isFinished ? 'disabled' : '') + '>' + opt + '</button>'; 
-                    }).join('') +
-                '</div>';
-                
-            document.getElementById('controls-area').innerHTML = isFinished ? '<button class="btn-nav btn-action" onclick="initWorldMode()">Next</button>' : '';
-        }
-        
-        function checkWorld(choice) { 
-            if(choice === worldItem.answer) addXP(15); 
-            renderWorld(choice); 
+                        return `<button class="${cls}" data-opt="${o}" ${finished ? 'disabled' : ''}>${o}</button>`;
+                    }).join('')}
+                </div>
+            `;
+
+            if (!finished) {
+                document.querySelectorAll('.quiz-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        if (btn.dataset.opt === item.answer) addXP(15);
+                        renderWorld(btn.dataset.opt);
+                    });
+                });
+            }
+
+            controls.innerHTML = finished 
+                ? '<button class="btn-nav btn-action" id="next-world">Next</button>'
+                : '';
+            if (finished) document.getElementById('next-world').addEventListener('click', () => initWorld());
         }
 
         // ==========================================
-        // RECIPE MODE
+        // RECIPE - Avec numéro
         // ==========================================
-        function initRecipeMode() {
-            currentRecipe = recipes[Math.floor(Math.random() * recipes.length)];
-            userSteps = currentRecipe.steps.slice().sort(function() { return Math.random() - 0.5; });
+        function initRecipe() {
+            currentRecipeIndex = Math.floor(Math.random() * recipes.length);
+            currentRecipe = recipes[currentRecipeIndex];
+            userSteps = shuffle([...currentRecipe.steps]);
             selectedStepIndex = null;
             renderRecipe();
         }
-        
+
         function renderRecipe() {
-            showChef(true);
+            if (!currentRecipe) return;
             
-            const container = document.getElementById('game-container');
-            container.style.justifyContent = "flex-start";
-            
-            container.innerHTML = 
-                '<div class="recipe-container">' +
-                    '<div class="recipe-info">' +
-                        '<div style="font-size:1.5rem; margin-bottom:8px;">Recipe</div>' +
-                        '<div style="font-weight:700; font-size:1.2rem; color:var(--accent);">' + currentRecipe.title + '</div>' +
-                        '<p style="font-size:0.75rem; color:var(--fg-muted); margin-top:12px;">Click two steps to swap them.</p>' +
-                    '</div>' +
-                    '<div class="recipe-steps">' +
-                        userSteps.map(function(step, i) { 
-                            return '<div class="quiz-btn recipe-step ' + (selectedStepIndex === i ? 'selected' : '') + '" onclick="selectStep(' + i + ')">' + step + '</div>'; 
-                        }).join('') +
-                    '</div>' +
-                '</div>';
-                
-            document.getElementById('controls-area').innerHTML = '<button class="btn-nav btn-action" onclick="initRecipeMode()">New Recipe</button>';
-        }
-        
-        function selectStep(idx) { 
-            if (selectedStepIndex === null) { 
-                selectedStepIndex = idx; 
-            } else { 
-                let temp = userSteps[selectedStepIndex]; 
-                userSteps[selectedStepIndex] = userSteps[idx]; 
-                userSteps[idx] = temp; 
-                selectedStepIndex = null; 
-            } 
-            renderRecipe(); 
-            checkRecipeWin(); 
-        }
-        
-        function checkRecipeWin() { 
-            const isCorrect = userSteps.every(function(step, i) { return step === currentRecipe.steps[i]; }); 
-            if (isCorrect) { 
-                addXP(30); 
-                setTimeout(function() { 
-                    alert("Recipe validated! +30 XP"); 
-                    initRecipeMode(); 
-                }, 300); 
-            } 
+            const done = userSteps.every((s, i) => s === currentRecipe.steps[i]);
+
+            // NOUVEAU: Afficher le numéro de recette
+            document.getElementById('game-area').innerHTML = `
+                <span class="card-counter">📜 Recette ${currentRecipeIndex + 1}/${recipes.length}</span>
+                <div class="recipe-container">
+                    <div class="recipe-info">
+                        <div style="font-size:1.2rem; margin-bottom:6px;">📜 Recipe</div>
+                        <div style="font-weight:700; color:var(--accent);">${currentRecipe.title}</div>
+                        <p style="font-size:0.7rem; color:var(--fg-muted); margin-top:8px;">Click 2 steps to swap.</p>
+                    </div>
+                    <div class="recipe-steps">
+                        ${userSteps.map((s, i) => `
+                            <div class="quiz-btn recipe-step ${selectedStepIndex === i ? 'selected' : ''} ${done ? 'correct' : ''}" data-step="${i}">
+                                ${done ? '✓' : (i+1)}. ${s}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            if (done) addXP(30);
+
+            document.querySelectorAll('.recipe-step').forEach(div => {
+                div.addEventListener('click', () => {
+                    if (done) return;
+                    const i = parseInt(div.dataset.step);
+                    if (selectedStepIndex === null) {
+                        selectedStepIndex = i;
+                    } else {
+                        [userSteps[selectedStepIndex], userSteps[i]] = [userSteps[i], userSteps[selectedStepIndex]];
+                        selectedStepIndex = null;
+                    }
+                    renderRecipe();
+                });
+            });
+
+            document.getElementById('controls-area').innerHTML = `
+                <button class="btn-nav btn-action ${done ? 'btn-success' : ''}" id="new-recipe">
+                    ${done ? '✓ Validated! +30 XP' : '🔄 New Recipe'}
+                </button>
+            `;
+            document.getElementById('new-recipe').addEventListener('click', () => initRecipe());
         }
 
         // ==========================================
-        // RUSH MODE
+        // RUSH
         // ==========================================
-        function normalizeAnswer(str) {
-            str = str.toLowerCase();
-            str = str.replace(/^(the|a|an|le|la|les|l')\s/, '');
-            if(str.indexOf('/') !== -1) { str = str.split('/')[0].trim(); }
-            return str.trim();
+        function normalize(s) {
+            return s.toLowerCase().replace(/^(the|a|an|le|la|les|l')\s/, '').split('/')[0].trim();
         }
 
-        function initRushMode() {
-            showChef(false);
-            
-            const container = document.getElementById('game-container');
-            container.style.justifyContent = "center";
-            container.innerHTML = 
-                '<div class="mode-label">Rush Challenge</div>' +
-                '<h3 style="color:var(--fg-primary); margin-bottom:8px;">Pastry Rush</h3>' +
-                '<p style="color:var(--fg-secondary); margin-bottom:20px;">Type the English word (article optional)</p>' +
-                '<div id="rush-prompt" class="card-word">?</div>' +
-                '<input type="text" id="rush-input" class="quiz-btn" style="background:var(--bg-secondary); border:2px solid var(--accent); color:var(--fg-primary); text-align:center; font-size:1.1rem;" placeholder="Type here..." autocomplete="off">' +
-                '<div class="timer" id="rush-timer">15.0</div>';
-                
-            document.getElementById('controls-area').innerHTML = '<button class="btn-nav btn-action" onclick="startRushRound()">Start</button>';
+        function initRush() {
+            document.getElementById('game-area').innerHTML = `
+                <div class="mode-label">Rush Challenge</div>
+                <h3 style="color:var(--fg-primary); margin-bottom:8px;">⏱️ Pastry Rush</h3>
+                <p style="color:var(--fg-secondary); margin-bottom:14px;">Type the English word quickly!</p>
+                <div class="card-word" id="rush-word">?</div>
+                <input type="text" class="quiz-btn" id="rush-input" style="background:var(--bg-secondary); border:2px solid var(--accent); text-align:center; margin-top:10px;" placeholder="Type here..." autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
+                <div class="timer" id="rush-timer">15.0</div>
+            `;
+            document.getElementById('controls-area').innerHTML = '<button class="btn-nav btn-action" id="start-rush">▶ Start</button>';
+            document.getElementById('start-rush').addEventListener('click', () => startRush());
         }
-        
-        function startRushRound() {
-            let allItems = [];
-            for(let cat in database) {
-                database[cat].forEach(function(item) { allItems.push(item); });
-            }
+
+        function startRush() {
+            const allItems = Object.values(database).flat();
             rushItem = allItems[Math.floor(Math.random() * allItems.length)];
-            document.getElementById('rush-prompt').innerText = rushItem.fr;
-            document.getElementById('rush-prompt').style.color = "var(--fg-primary)"; 
-            document.getElementById('rush-input').value = "";
+            rushTimeLeft = 15;
+
+            document.getElementById('rush-word').textContent = rushItem.fr;
+            document.getElementById('rush-word').style.color = 'var(--fg-primary)';
+            document.getElementById('rush-input').value = '';
             document.getElementById('rush-input').focus();
-            rushTimeLeft = 15.0;
-            document.getElementById('controls-area').innerHTML = "";
-            
-            if(rushTimer) clearInterval(rushTimer);
-            rushTimer = setInterval(function() { 
-                rushTimeLeft -= 0.1; 
-                if(rushTimeLeft < 0) rushTimeLeft = 0;
-                document.getElementById('rush-timer').innerText = rushTimeLeft.toFixed(1); 
-                if(rushTimeLeft <= 0) { 
-                    clearInterval(rushTimer); 
-                    rushLose(); 
-                } 
+            document.getElementById('controls-area').innerHTML = '';
+
+            rushTimer = setInterval(() => {
+                rushTimeLeft -= 0.1;
+                const timer = document.getElementById('rush-timer');
+                if (timer) {
+                    timer.textContent = rushTimeLeft.toFixed(1);
+                    timer.className = 'timer' + (rushTimeLeft < 5 ? ' warning' : '');
+                }
+                
+                if (rushTimeLeft <= 0) {
+                    clearInterval(rushTimer);
+                    const wordEl = document.getElementById('rush-word');
+                    if (wordEl) {
+                        wordEl.textContent = '✗ ' + rushItem.en;
+                        wordEl.style.color = 'var(--error)';
+                    }
+                    document.getElementById('controls-area').innerHTML = '<button class="btn-nav btn-action" id="retry-rush">Retry</button>';
+                    document.getElementById('retry-rush').addEventListener('click', () => startRush());
+                }
             }, 100);
         }
-        
-        document.addEventListener('input', function(e) {
-            if(e.target.id === 'rush-input' && rushItem) {
-                let userVal = normalizeAnswer(e.target.value);
-                let correctVal = normalizeAnswer(rushItem.en);
-                if(userVal === correctVal) { 
-                    clearInterval(rushTimer); 
-                    rushWin(); 
+
+        document.addEventListener('input', e => {
+            if (e.target.id === 'rush-input' && rushItem && rushTimer) {
+                if (normalize(e.target.value) === normalize(rushItem.en)) {
+                    clearInterval(rushTimer);
+                    addXP(20);
+                    const wordEl = document.getElementById('rush-word');
+                    if (wordEl) {
+                        wordEl.textContent = '✓ ' + rushItem.en;
+                        wordEl.style.color = 'var(--success)';
+                    }
+                    document.getElementById('controls-area').innerHTML = '<button class="btn-nav btn-action btn-success" id="next-rush">Next +20 XP</button>';
+                    document.getElementById('next-rush').addEventListener('click', () => startRush());
                 }
             }
         });
 
-        function rushWin() { 
-            addXP(20); 
-            document.getElementById('rush-prompt').innerText = "Correct! " + rushItem.en; 
-            document.getElementById('rush-prompt').style.color = "var(--success)"; 
-            document.getElementById('controls-area').innerHTML = '<button class="btn-nav btn-action" onclick="startRushRound()">Next (+20 XP)</button>'; 
-            rushItem = null; 
-        }
-        
-        function rushLose() { 
-            document.getElementById('rush-prompt').innerText = "Time's up! " + rushItem.en; 
-            document.getElementById('rush-prompt').style.color = "var(--error)"; 
-            document.getElementById('rush-input').value = rushItem.en; 
-            document.getElementById('controls-area').innerHTML = '<button class="btn-nav btn-action" onclick="startRushRound()">Try Again</button>'; 
-            rushItem = null; 
-        }
-    </script>
+        // ==========================================
+        // CORRECTION IA - NOUVEAU MODULE
+        // ==========================================
+        async function correctWithAI(userText, prompt, modelAnswer) {
+            if (!apiKey) {
+                alert('Veuillez d\'abord configurer votre clé API dans les paramètres.');
+                return null;
+            }
 
-    <!-- SERVICE WORKER REGISTRATION -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('Service Worker enregistré'))
-                    .catch(err => console.log('Erreur SW:', err));
+            try {
+                const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${apiKey}`
+                    },
+                    body: JSON.stringify({
+                        model: 'gpt-4o-mini',
+                        messages: [
+                            {
+                                role: 'system',
+                                content: `You are an expert English teacher specializing in pastry and culinary arts. Correct the student's writing and provide constructive feedback.
+
+Your response MUST be in this JSON format:
+{
+  "score": <number 0-100>,
+  "correctedText": "<corrected version>",
+  "errors": [
+    {"original": "<error>", "correction": "<fix>", "type": "grammar|vocabulary|spelling|style"}
+  ],
+  "feedback": "<encouraging feedback in French>",
+  "strengths": ["<what was done well>"],
+  "suggestions": ["<specific improvement suggestions>"]
+}
+
+Be encouraging but thorough. Focus on culinary/pastry vocabulary and professional English.`
+                            },
+                            {
+                                role: 'user',
+                                content: `Task: ${prompt}\n\nStudent's answer:\n${userText}\n\nModel answer for reference:\n${modelAnswer}`
+                            }
+                        ],
+                        temperature: 0.7,
+                        max_tokens: 1000
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API Error: ${response.status}`);
+                }
+
+                const data = await response.json();
+                const content = data.choices[0].message.content;
+                
+                // Parse JSON response
+                const jsonMatch = content.match(/\{[\s\S]*\}/);
+                if (jsonMatch) {
+                    return JSON.parse(jsonMatch[0]);
+                }
+                throw new Error('Invalid response format');
+            } catch (error) {
+                console.error('AI Correction Error:', error);
+                return {
+                    error: true,
+                    message: error.message || 'Erreur lors de la correction IA'
+                };
+            }
+        }
+
+        function renderAICorrection(correction, userText) {
+            if (correction.error) {
+                return `
+                    <div class="ai-correction-section" style="border-color: var(--error);">
+                        <div class="ai-correction-header">❌ Erreur</div>
+                        <p style="color: var(--fg-secondary);">${correction.message}</p>
+                        <p style="color: var(--fg-muted); font-size: 0.8rem; margin-top: 8px;">
+                            Vérifiez votre clé API et réessayez.
+                        </p>
+                    </div>
+                `;
+            }
+
+            let errorsHtml = '';
+            if (correction.errors && correction.errors.length > 0) {
+                errorsHtml = correction.errors.map(e => `
+                    <div style="margin: 6px 0; padding: 6px 10px; background: var(--bg-card); border-radius: 6px;">
+                        <span class="error-highlight">${e.original}</span>
+                        → <span class="correction-highlight">${e.correction}</span>
+                        <span style="font-size: 0.7rem; color: var(--fg-muted); margin-left: 6px;">(${e.type})</span>
+                    </div>
+                `).join('');
+            } else {
+                errorsHtml = '<p style="color: var(--success);">✓ Aucune erreur majeure détectée!</p>';
+            }
+
+            let strengthsHtml = '';
+            if (correction.strengths && correction.strengths.length > 0) {
+                strengthsHtml = correction.strengths.map(s => `<li>${s}</li>`).join('');
+            }
+
+            let suggestionsHtml = '';
+            if (correction.suggestions && correction.suggestions.length > 0) {
+                suggestionsHtml = correction.suggestions.map(s => `<li>${s}</li>`).join('');
+            }
+
+            return `
+                <div class="ai-correction-section">
+                    <div class="ai-correction-header">🤖 Correction IA</div>
+                    
+                    <div class="ai-score">
+                        Score: <span class="ai-score-score">${correction.score}/100</span>
+                    </div>
+                    
+                    <div style="margin-top: 12px;">
+                        <strong style="color: var(--fg-secondary);">Texte corrigé:</strong>
+                        <p style="margin-top: 6px; padding: 10px; background: var(--bg-card); border-radius: 8px; color: var(--fg-primary);">
+                            ${correction.correctedText}
+                        </p>
+                    </div>
+                    
+                    ${errorsHtml ? `
+                    <div style="margin-top: 12px;">
+                        <strong style="color: var(--fg-secondary);">Erreurs détectées:</strong>
+                        <div style="margin-top: 6px;">${errorsHtml}</div>
+                    </div>
+                    ` : ''}
+                    
+                    ${strengthsHtml ? `
+                    <div style="margin-top: 12px;">
+                        <strong style="color: var(--success);">✓ Points forts:</strong>
+                        <ul style="margin-top: 4px; margin-left: 16px; color: var(--fg-secondary);">${strengthsHtml}</ul>
+                    </div>
+                    ` : ''}
+                    
+                    ${suggestionsHtml ? `
+                    <div style="margin-top: 12px;">
+                        <strong style="color: var(--accent);">💡 Suggestions:</strong>
+                        <ul style="margin-top: 4px; margin-left: 16px; color: var(--fg-secondary);">${suggestionsHtml}</ul>
+                    </div>
+                    ` : ''}
+                    
+                    <div style="margin-top: 12px; padding: 10px; background: var(--bg-card); border-radius: 8px; border-left: 3px solid var(--gold);">
+                        <strong style="color: var(--gold);">Feedback:</strong>
+                        <p style="margin-top: 4px; color: var(--fg-primary);">${correction.feedback}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showAPIKeyDialog() {
+            const currentKey = apiKey ? '••••••••' + apiKey.slice(-4) : 'Non configurée';
+            return `
+                <div class="api-key-section">
+                    <p style="font-size: 0.85rem; color: var(--fg-secondary);">
+                        <strong>🔑 Clé API OpenAI</strong>
+                        <br><span style="font-size: 0.75rem; color: var(--fg-muted);">Actuelle: ${currentKey}</span>
+                    </p>
+                    <input type="password" class="api-key-input" id="api-key-input" 
+                           placeholder="Entrez votre clé API (sk-...)" 
+                           value="${apiKey}">
+                    <button class="btn-nav btn-action" style="margin-top: 8px; font-size: 0.8rem;" id="save-api-key">
+                        💾 Sauvegarder
+                    </button>
+                </div>
+            `;
+        }
+
+        // ==========================================
+        // EXAM MODE - Avec correction IA
+        // ==========================================
+        function startExam(subject) {
+            currentExamSubject = subject;
+            examQuestions = shuffle([...examSubjects[subject].questions]);
+            examIndex = 0;
+            examAnswers = [];
+            examTimeLeft = 20 * 60;
+            examMode = true;
+
+            showScreen('game');
+            renderModeMenu();
+            updateProgress();
+            document.getElementById('theme-menu').style.display = 'none';
+
+            startExamTimer();
+            renderExamQuestion();
+        }
+
+        function startExamTimer() {
+            examTimer = setInterval(() => {
+                examTimeLeft--;
+                const mins = Math.floor(examTimeLeft / 60);
+                const secs = examTimeLeft % 60;
+                const titleEl = document.getElementById('lvl-title');
+                if (titleEl) {
+                    titleEl.textContent = `Temps: ${mins}:${secs.toString().padStart(2, '0')}`;
+                }
+                if (examTimeLeft <= 0) {
+                    clearInterval(examTimer);
+                    finishExam();
+                }
+            }, 1000);
+        }
+
+        function renderExamQuestion() {
+            const q = examQuestions[examIndex];
+            const area = document.getElementById('game-area');
+            const controls = document.getElementById('controls-area');
+
+            const mins = Math.floor(examTimeLeft / 60);
+            const secs = examTimeLeft % 60;
+
+            document.getElementById('lvl-name').textContent = `EXAMEN - ${currentExamSubject}`;
+            document.getElementById('lvl-title').textContent = `Temps: ${mins}:${secs.toString().padStart(2, '0')}`;
+
+            if (q.type === 'mcq') {
+                const opts = shuffle([...q.options]);
+
+                // NOUVEAU: Afficher le numéro de question
+                area.innerHTML = `
+                    <span class="card-counter">📝 Question ${examIndex + 1}/${examQuestions.length}</span>
+                    <div class="quiz-number">Question ${examIndex + 1}/${examQuestions.length}</div>
+                    <div class="quiz-question" style="margin-top:10px;">${q.question}</div>
+                    <div class="quiz-options">
+                        ${opts.map(o => `<button class="quiz-btn" data-opt="${o}">${o}</button>`).join('')}
+                    </div>
+                `;
+
+                controls.innerHTML = '';
+
+                document.querySelectorAll('.quiz-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        examAnswers[examIndex] = btn.dataset.opt;
+                        const isCorrect = btn.dataset.opt === q.correct;
+                        if (isCorrect) addXP(10);
+                        
+                        document.querySelectorAll('.quiz-btn').forEach(b => {
+                            b.disabled = true;
+                            if (b.dataset.opt === q.correct) b.classList.add('correct');
+                            if (b.dataset.opt === btn.dataset.opt && !isCorrect) b.classList.add('wrong');
+                        });
+
+                        controls.innerHTML = `
+                            <button class="btn-nav btn-action ${isCorrect ? 'btn-success' : ''}" id="exam-next">
+                                ${isCorrect ? '✓ Correct!' : '✗ Next'}
+                            </button>
+                        `;
+                        document.getElementById('exam-next').addEventListener('click', () => nextExamQuestion());
+                    });
+                });
+
+            } else if (q.type === 'writing') {
+                const saved = examAnswers[examIndex] || '';
+                const wc = saved ? countWords(saved) : 0;
+
+                // NOUVEAU: Afficher le numéro et inclure la correction IA
+                area.innerHTML = `
+                    <span class="card-counter">✍️ Rédaction ${examIndex + 1}/${examQuestions.length}</span>
+                    <div class="quiz-number">Writing Task ${examIndex + 1}</div>
+                    <div class="exam-intro">
+                        <p>${q.prompt.replace(/\n/g, '<br>')}</p>
+                        <p style="font-size:0.8rem; color:var(--fg-muted); margin-top:8px;">Min: ${q.wordMin} words | Max: ${q.wordMax} words</p>
+                    </div>
+                    ${showAPIKeyDialog()}
+                    <div class="writing-area">
+                        <textarea class="writing-textarea" id="exam-writing" placeholder="Write your answer here...">${saved}</textarea>
+                        <div class="word-count ${wc >= q.wordMin ? 'ok' : ''}">${wc} words</div>
+                    </div>
+                    <div id="ai-correction-container"></div>
+                `;
+
+                controls.innerHTML = `
+                    <button class="btn-ai-correct" id="ai-correct-btn" ${wc < q.wordMin ? 'disabled' : ''}>
+                        🤖 Corriger avec IA
+                    </button>
+                    <button class="btn-nav btn-action btn-gold" id="submit-writing" style="margin-top: 10px;" ${wc < q.wordMin ? 'disabled' : ''}>
+                        Submit Answer
+                    </button>
+                `;
+
+                const textarea = document.getElementById('exam-writing');
+                const wcDisplay = area.querySelector('.word-count');
+                const submitBtn = document.getElementById('submit-writing');
+                const aiCorrectBtn = document.getElementById('ai-correct-btn');
+                const saveApiKeyBtn = document.getElementById('save-api-key');
+                const apiKeyInput = document.getElementById('api-key-input');
+
+                // Sauvegarder la clé API
+                if (saveApiKeyBtn) {
+                    saveApiKeyBtn.addEventListener('click', () => {
+                        const newKey = apiKeyInput.value.trim();
+                        if (newKey) {
+                            apiKey = newKey;
+                            try { localStorage.setItem('pastryApiKey', apiKey); } catch(e) {}
+                            alert('✓ Clé API sauvegardée!');
+                        }
+                    });
+                }
+
+                textarea.addEventListener('input', () => {
+                    const count = countWords(textarea.value);
+                    wcDisplay.textContent = count + ' words';
+                    wcDisplay.className = 'word-count ' + (count >= q.wordMin ? 'ok' : '');
+                    submitBtn.disabled = count < q.wordMin;
+                    aiCorrectBtn.disabled = count < q.wordMin;
+                });
+
+                // NOUVEAU: Correction IA
+                aiCorrectBtn.addEventListener('click', async () => {
+                    const userText = textarea.value.trim();
+                    if (userText.length < q.wordMin) return;
+                    
+                    aiCorrectBtn.disabled = true;
+                    aiCorrectBtn.innerHTML = '<span class="loading-spinner"></span> Correction en cours...';
+                    
+                    const correction = await correctWithAI(userText, q.prompt, q.modelAnswer);
+                    
+                    const container = document.getElementById('ai-correction-container');
+                    if (correction) {
+                        container.innerHTML = renderAICorrection(correction, userText);
+                        
+                        // Ajouter XP basé sur le score
+                        if (!correction.error && correction.score) {
+                            const xpEarned = Math.round(correction.score / 10);
+                            addXP(xpEarned);
+                        }
+                    }
+                    
+                    aiCorrectBtn.disabled = false;
+                    aiCorrectBtn.innerHTML = '🤖 Corriger à nouveau';
+                });
+
+                submitBtn.addEventListener('click', () => {
+                    examAnswers[examIndex] = textarea.value;
+                    addXP(15);
+                    
+                    area.innerHTML += `
+                        <div class="correction-box">
+                            <div class="score-display">
+                                <div class="score-big">+15 XP</div>
+                                <div class="score-label">Writing submitted</div>
+                            </div>
+                            <p style="font-size:0.85rem; color:var(--fg-secondary); margin-top:10px;">
+                                <strong>Model answer:</strong><br>
+                                <em style="color:var(--fg-muted);">${q.modelAnswer}</em>
+                            </p>
+                        </div>
+                    `;
+
+                    controls.innerHTML = '<button class="btn-nav btn-action btn-gold" id="next-writing">Next Question</button>';
+                    document.getElementById('next-writing').addEventListener('click', () => nextExamQuestion());
+                });
+            }
+        }
+
+        function nextExamQuestion() {
+            examIndex++;
+            if (examIndex >= examQuestions.length) {
+                finishExam();
+            } else {
+                renderExamQuestion();
+            }
+        }
+
+        function finishExam() {
+            clearInterval(examTimer);
+            examMode = false;
+
+            let correct = 0;
+            examQuestions.forEach((q, i) => {
+                if (q.type === 'mcq' && examAnswers[i] === q.correct) correct++;
+                if (q.type === 'writing' && examAnswers[i]) correct += 0.8;
             });
+            const score = Math.round((correct / examQuestions.length) * 100);
+
+            document.getElementById('game-area').innerHTML = `
+                <div style="text-align:center;">
+                    <div style="font-size:3rem; margin-bottom:10px;">${score >= 70 ? '🏆' : score >= 50 ? '👍' : '📚'}</div>
+                    <h2 style="color:var(--fg-primary); margin-bottom:16px;">Exam Complete!</h2>
+                    <div class="score-display" style="margin:16px 0;">
+                        <div class="score-big">${score}%</div>
+                        <div class="score-label">${score >= 70 ? 'Excellent!' : score >= 50 ? 'Good work!' : 'Keep practicing!'}</div>
+                    </div>
+                    <p style="color:var(--fg-secondary);">Subject: ${currentExamSubject}</p>
+                    <p style="color:var(--fg-muted); font-size:0.85rem; margin-top:6px;">Correct answers: ${Math.round(correct)}/${examQuestions.length}</p>
+                </div>
+            `;
+
+            document.getElementById('controls-area').innerHTML = `
+                <button class="btn-nav btn-action btn-gold" id="exam-home">Return Home</button>
+            `;
+            document.getElementById('exam-home').addEventListener('click', () => goHome());
+        }
+
+        // ==========================================
+        // EVENT LISTENERS
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', () => {
+            updateHomeStats();
+
+            document.getElementById('start-btn').addEventListener('click', () => startApp());
+            document.getElementById('back-btn').addEventListener('click', () => goHome());
+
+            document.getElementById('mode-menu').addEventListener('click', e => {
+                if (e.target.dataset.mode) setMode(e.target.dataset.mode);
+            });
+
+            document.getElementById('theme-menu').addEventListener('click', e => {
+                if (e.target.dataset.theme) loadTheme(e.target.dataset.theme);
+            });
+
+            document.getElementById('exam-btn').addEventListener('click', () => {
+                const area = document.getElementById('home-stats');
+                area.style.display = 'block';
+                area.innerHTML = `
+                    <p style="color:var(--fg-primary); font-weight:bold; margin-bottom:10px;">Select Exam Subject:</p>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                        ${Object.entries(examSubjects).map(([k, v]) => `
+                            <button class="quiz-btn" style="min-height:54px;" data-exam="${k}">
+                                <span style="font-size:1.3rem;">${v.icon}</span><br>
+                                <span style="font-size:0.8rem;">${k}</span>
+                            </button>
+                        `).join('')}
+                    </div>
+                `;
+                
+                document.querySelectorAll('[data-exam]').forEach(btn => {
+                    btn.addEventListener('click', () => startExam(btn.dataset.exam));
+                });
+            });
+        });
+        
+        // iOS standalone mode fix
+        if (window.navigator.standalone) {
+            document.body.classList.add('standalone');
         }
     </script>
-
 </body>
 </html>
