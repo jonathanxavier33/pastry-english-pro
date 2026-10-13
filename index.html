@@ -470,3 +470,374 @@
         .spinner { display: inline-block; width: 18px; height: 18px; border: 2px solid var(--fg-muted); border-radius: 50%; border-top-color: var(--accent); animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
     </style>
+</head>
+<body>
+
+    <div id="home-screen">
+        <div class="home-logo">🧁</div>
+        <h1>Pastry English Pro</h1>
+        <p class="subtitle">L'anglais appliqué aux métiers de la Pâtisserie (CAP, MC, BP)</p>
+        
+        <div class="image-grid">
+            <img src="https://images.unsplash.com/photo-1519915028121-7d3463d20b13?auto=format&fit=crop&w=400&q=80" alt="Pâtisserie">
+            <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=400&q=80" alt="Macarons">
+        </div>
+
+        <div class="home-actions">
+            <button class="btn-main" onclick="startApp('train')">🚀 Lancer l'entraînement</button>
+            <button class="btn-secondary" onclick="startApp('exam')">📝 Mode Examen & IA</button>
+        </div>
+    </div>
+
+    <div id="game-screen">
+        <header>
+            <div class="header-top">
+                <button class="btn-icon" onclick="backToHome()">←</button>
+                <div class="header-title" id="header-title">Pastry English Pro</div>
+                <button class="btn-icon" onclick="resetKey()" title="Changer clé API">⚙️</button>
+            </div>
+
+            <div class="progress-panel">
+                <div class="progress-header">
+                    <div class="level-info">
+                        <span class="level-badge" id="lvl-badge">Niveau 1</span>
+                        <span class="level-name" id="lvl-name">Apprentice</span>
+                    </div>
+                    <div class="xp-count" id="xp-counter">0 XP</div>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" id="progress-bar"></div>
+                </div>
+            </div>
+        </header>
+
+        <nav class="menu-container" id="category-menu"></nav>
+        <nav class="menu-container" id="mode-menu"></nav>
+
+        <main>
+            <div class="card-stage" id="card-stage"></div>
+            <div class="controls-stage" id="controls-stage"></div>
+        </main>
+    </div>
+
+    <script>
+        const database = {
+            "Classic Pastries": [
+                { fr: "L'éclair au chocolat", en: "Chocolate éclair", exemple: "Fill choux pastry with chocolate pastry cream.", hint: "Choux pastry filled with cream and glazed." },
+                { fr: "Le macaron", en: "Macaron", exemple: "Pair macaron shells with ganache filling.", hint: "Delicate meringue-based almond cookies." },
+                { fr: "La tarte au citron meringuée", en: "Lemon meringue pie", exemple: "Torch the Italian meringue until golden.", hint: "Shortcrust pastry, lemon curd, and fluffy meringue." },
+                { fr: "Le mille-feuille", en: "Mille-feuille (Napoleon)", exemple: "Roll out puff pastry into thin layers.", hint: "Layers of puff pastry and diplomat cream." },
+                { fr: "Le Paris-Brest", en: "Paris-Brest", exemple: "Pipe choux rings and top with sliced almonds.", hint: "Ring-shaped choux pastry filled with praline mousseline." },
+                { fr: "L'opéra", en: "Opera cake", exemple: "Soak almond sponge with coffee syrup.", hint: "Layers of Joconde sponge, coffee buttercream, and ganache." },
+                { fr: "La tarte Tatin", en: "Tarte Tatin", exemple: "Caramelize apples in butter and sugar.", hint: "Upside-down caramelized apple tart." },
+                { fr: "Le Saint-Honoré", en: "Saint-Honoré", exemple: "Dip choux puffs in hot caramel.", hint: "Puff pastry base, choux puffs, and chiboust cream." },
+                { fr: "Le flan pâtissier", en: "Custard tart (Flan)", exemple: "Bake until the custard is slightly spotted.", hint: "Thick vanilla custard baked in a pastry crust." },
+                { fr: "Le baba au rhum", en: "Rum baba", exemple: "Soak the baked yeast cake in rum syrup.", hint: "Yeast sponge soaked in hard liquor syrup." },
+                { fr: "La religieuse", en: "Religious nun pastry (Religieuse)", exemple: "Use two choux puffs stacked together.", hint: "Two stacked choux pastry cases filled with cream." },
+                { fr: "Le kouign-amann", en: "Kouign-amann", exemple: "Laminate dough with plenty of butter and sugar.", hint: "Brittany cake with layers of butter and sugar." },
+                { fr: "La brioche", en: "Brioche", exemple: "Knead butter into the enriched yeast dough.", hint: "Enriched French bread with high egg and butter content." },
+                { fr: "Le croissant", en: "Croissant", exemple: "Roll and shape triangular laminated dough.", hint: "Buttery, flaky, crescent-shaped viennoiserie." },
+                { fr: "Le pain au chocolat", en: "Chocolate bread (Pain au chocolat)", exemple: "Enclose two chocolate batons in the dough.", hint: "Flaky pastry wrapped around dark chocolate." },
+                { fr: "Le chausson aux pommes", en: "Apple turnover", exemple: "Seal apple compote inside puff pastry.", hint: "Puff pastry turnover filled with apple compote." },
+                { fr: "Le financier", en: "Financier", exemple: "Bake brown butter batter in small molds.", hint: "Small French almond cake made with browned butter." },
+                { fr: "La madeleine", en: "Madeleine", exemple: "Chill the batter to get the iconic hump.", hint: "Small shell-shaped sponge cake." },
+                { fr: "Le canelé", en: "Caneled pastry (Canelé)", exemple: "Coat copper molds with beeswax and butter.", hint: "Bordeaux pastry with a caramelized crust and soft center." },
+                { fr: "La galette des rois", en: "King cake", exemple: "Hide a porcelain charm inside the puff pastry.", hint: "Puff pastry cake filled with frangipane for Epiphany." }
+            ],
+            "Basic Ingredients": [
+                { fr: "La farine de blé", en: "Wheat flour", exemple: "Sieve the flour to avoid lumps.", hint: "Primary milling product used for doughs." },
+                { fr: "Le sucre semoule", en: "Caster sugar", exemple: "Weigh out the caster sugar precisely.", hint: "Fine white granulated sugar." },
+                { fr: "Le beurre extra-fin", en: "Unsalted butter", exemple: "Ensure butter is at room temperature.", hint: "High-fat dairy essential for lamination." },
+                { fr: "La crème liquide entière", en: "Heavy cream", exemple: "Whip cold heavy cream to stiff peaks.", hint: "Liquid dairy with over 30% fat content." },
+                { fr: "L'oeuf entier", en: "Whole egg", exemple: "Add eggs one by one into the mixture.", hint: "Standard liquid binding agent." }
+            ],
+            "Professional Tools": [
+                { fr: "Le fouet en inox", en: "Wire whisk", exemple: "Use a wire whisk to aerate eggs.", hint: "Utensil with looped wires for beating." },
+                { fr: "La maryse (spatule)", en: "Rubber spatula", exemple: "Scrape down the bowl with a rubber spatula.", hint: "Flexible silicone scraper for batter." },
+                { fr: "Le rouleau à pâtisserie", en: "Rolling pin", exemple: "Roll out the dough evenly.", hint: "Cylindrical tool used to flatten dough." },
+                { fr: "La poche à douille", en: "Pastry bag", exemple: "Fill the pastry bag with choux cream.", hint: "Cone-shaped bag used for piping." },
+                { fr: "Le tapis silpat", en: "Silicone baking mat", exemple: "Place choux buns on a silicone mat.", hint: "Non-stick reusable baking liner." }
+            ]
+        };
+
+        let currentXP = 0;
+        let currentCategory = "Classic Pastries";
+        let currentMode = "flashcard";
+        let currentItemIndex = 0;
+        let currentQuizData = null;
+
+        function startApp(mode) {
+            document.getElementById('home-screen').style.display = 'none';
+            document.getElementById('game-screen').style.display = 'flex';
+            if (mode === 'train') {
+                initMenus();
+                loadActivity();
+            } else {
+                loadExamMode();
+            }
+        }
+
+        function backToHome() {
+            document.getElementById('game-screen').style.display = 'none';
+            document.getElementById('home-screen').style.display = 'flex';
+        }
+
+        function initMenus() {
+            const catMenu = document.getElementById('category-menu');
+            catMenu.innerHTML = Object.keys(database).map(cat => 
+                `<div class="chip ${cat === currentCategory ? 'active' : ''}" onclick="changeCategory('${cat}')">${cat}</div>`
+            ).join('');
+
+            const modeMenu = document.getElementById('mode-menu');
+            modeMenu.innerHTML = `
+                <div class="chip ${currentMode === 'flashcard' ? 'active' : ''}" onclick="changeMode('flashcard')">🃏 Flashcards</div>
+                <div class="chip ${currentMode === 'quiz' ? 'active' : ''}" onclick="changeMode('quiz')">🎯 Quiz & Remédiation</div>
+            `;
+        }
+
+        function changeCategory(cat) {
+            currentCategory = cat;
+            currentItemIndex = 0;
+            initMenus();
+            loadActivity();
+        }
+
+        function changeMode(mode) {
+            currentMode = mode;
+            currentItemIndex = 0;
+            initMenus();
+            loadActivity();
+        }
+
+        // --- SYNTHÈSE VOCALE (TEXT-TO-SPEECH) ---
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel(); // Arrête la lecture en cours
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-GB'; // Accent britannique (ou 'en-US')
+                utterance.rate = 0.9; // Légèrement ralenti pour les élèves
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert("La synthèse vocale n'est pas supportée par votre navigateur.");
+            }
+        }
+
+        function loadActivity() {
+            document.getElementById('header-title').textContent = "Pastry English Pro";
+            const items = database[currentCategory];
+            const item = items[currentItemIndex % items.length];
+            const stage = document.getElementById('card-stage');
+            const controls = document.getElementById('controls-stage');
+
+            if (currentMode === 'flashcard') {
+                stage.innerHTML = `
+                    <div class="card-category-tag">${currentCategory}</div>
+                    <button class="audio-btn" onclick="speakText('${item.en.replace(/'/g, "\\'")}')" title="Écouter la prononciation">🔊</button>
+                    <div class="card-main-word" id="flash-word">${item.fr}</div>
+                    <div class="card-sub-info" id="flash-sub">"${item.exemple}"</div>
+                    <div class="tap-hint">👆 Touche la carte pour voir la traduction en anglais</div>
+                `;
+                controls.innerHTML = `
+                    <button class="btn-action" onclick="nextCard()">Mot suivant ➔</button>
+                `;
+
+                let flipped = false;
+                stage.onclick = (e) => {
+                    // Empêche le clic sur le bouton audio de retourner la carte
+                    if (e.target.closest('.audio-btn')) return;
+
+                    const wordEl = document.getElementById('flash-word');
+                    const subEl = document.getElementById('flash-sub');
+                    if (!flipped) {
+                        wordEl.textContent = item.en;
+                        subEl.innerHTML = `💡 <strong>Indice :</strong> ${item.hint}`;
+                        flipped = true;
+                        addXP(5);
+                    } else {
+                        wordEl.textContent = item.fr;
+                        subEl.textContent = `"${item.exemple}"`;
+                        flipped = false;
+                    }
+                };
+            } else {
+                stage.onclick = null;
+                if (!currentQuizData || currentQuizData.correctItem.en !== item.en) {
+                    const pool = items.filter(i => i.en !== item.en);
+                    const wrong1 = pool[Math.floor(Math.random() * pool.length)] || { en: "Baking tray", fr: "Plaque" };
+                    const wrong2 = pool[Math.floor(Math.random() * pool.length)] || { en: "Whisk", fr: "Fouet" };
+                    const options = [item.en, wrong1.en, wrong2.en].sort(() => Math.random() - 0.5);
+                    currentQuizData = { correctItem: item, options: options };
+                }
+
+                stage.innerHTML = `
+                    <div class="card-category-tag">${currentCategory}</div>
+                    <button class="audio-btn" onclick="speakText('${currentQuizData.correctItem.en.replace(/'/g, "\\'")}')" title="Écouter l'indice audio">🔊</button>
+                    <div class="quiz-prompt">Traduisez en anglais :</div>
+                    <div class="card-main-word">${currentQuizData.correctItem.fr}</div>
+                    <div class="quiz-container">
+                        <div class="quiz-options-grid" id="quiz-grid">
+                            ${currentQuizData.options.map(opt => `
+                                <button class="quiz-option-btn" onclick="handleQuizAnswer(this, '${opt.replace(/'/g, "\\'")}', '${currentQuizData.correctItem.en.replace(/'/g, "\\'")}')">${opt}</button>
+                            `).join('')}
+                        </div>
+                        <div id="remediation-container"></div>
+                    </div>
+                `;
+                controls.innerHTML = `
+                    <button class="btn-action" onclick="nextCard()">Question suivante ➔</button>
+                `;
+            }
+        }
+
+        function nextCard() {
+            currentItemIndex++;
+            currentQuizData = null;
+            loadActivity();
+        }
+
+        function handleQuizAnswer(btn, selected, correct) {
+            const grid = document.getElementById('quiz-grid');
+            const buttons = grid.querySelectorAll('.quiz-option-btn');
+            buttons.forEach(b => b.disabled = true);
+
+            if (selected === correct) {
+                btn.classList.add('correct');
+                addXP(10);
+                setTimeout(() => { nextCard(); }, 1200);
+            } else {
+                btn.classList.add('wrong');
+                buttons.forEach(b => {
+                    if (b.textContent.trim() === correct.trim()) {
+                        b.classList.add('correct');
+                    }
+                });
+
+                const remediationDiv = document.getElementById('remediation-container');
+                remediationDiv.innerHTML = `
+                    <div class="remediation-box">
+                        <div class="remediation-title">🧠 Point Pédagogique & Remédiation</div>
+                        <div>La bonne traduction pour <strong>"${currentQuizData.correctItem.fr}"</strong> est <strong>"${correct}"</strong>.<br><em>Exemple pro :</em> ${currentQuizData.correctItem.exemple}</div>
+                    </div>
+                `;
+            }
+        }
+
+        function addXP(amount) {
+            currentXP += amount;
+            document.getElementById('xp-counter').textContent = `${currentXP} XP`;
+            const progress = Math.min((currentXP % 100), 100);
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+            
+            if (currentXP >= 100) {
+                document.getElementById('lvl-badge').textContent = "Niveau 2";
+                document.getElementById('lvl-name').textContent = "Commis Pâtissier";
+            }
+        }
+
+        function loadExamMode() {
+            document.getElementById('header-title').textContent = "Mode Examen & Correction IA";
+            document.getElementById('category-menu').innerHTML = '';
+            document.getElementById('mode-menu').innerHTML = '';
+
+            const stage = document.getElementById('card-stage');
+            const controls = document.getElementById('controls-stage');
+
+            stage.style.justifyContent = "flex-start";
+            stage.style.textAlign = "left";
+            stage.innerHTML = `
+                <div style="font-weight: 700; color: var(--gold); margin-bottom: 8px;">📝 Évaluation Écrite CAP Pâtisserie</div>
+                <div class="exam-instructions">
+                    Rédigez en anglais (50 mots minimum) la description de votre gâteau préféré parmi les classiques et détaillez brièvement sa fabrication.
+                </div>
+                <div class="writing-container">
+                    <textarea class="writing-textarea" placeholder="Write your description here in English... (Ex: My favorite pastry is the chocolate éclair because...)"></textarea>
+                </div>
+                <div id="ai-result-area"></div>
+            `;
+
+            controls.innerHTML = `
+                <button class="btn-action" onclick="submitToAI()">✨ Demander l'évaluation du Chef IA</button>
+            `;
+        }
+
+        function getApiKey() {
+            let key = localStorage.getItem('gemini_api_key');
+            if (!key) {
+                key = prompt("Entrez votre clé API Gemini (stockée localement sur votre appareil) :");
+                if (key) localStorage.setItem('gemini_api_key', key.trim());
+            }
+            return key;
+        }
+
+        function resetKey() {
+            localStorage.removeItem('gemini_api_key');
+            alert("Clé API réinitialisée.");
+        }
+
+        async function submitToAI() {
+            const textarea = document.querySelector('.writing-textarea');
+            if (!textarea || !textarea.value.trim()) {
+                alert("Veuillez rédiger un texte avant de demander la correction !");
+                return;
+            }
+
+            const apiKey = getApiKey();
+            if (!apiKey) return;
+
+            const studentText = textarea.value;
+            const resultArea = document.getElementById('ai-result-area');
+            resultArea.innerHTML = `
+                <div class="ai-card" style="text-align: center; padding: 20px;">
+                    <div class="spinner"></div><span style="margin-left: 10px; font-size: 0.9rem;">Le Chef IA analyse votre copie...</span>
+                </div>
+            `;
+
+            const systemPrompt = `Tu es un professeur d'anglais bienveillant en CFA pour des apprentis en pâtisserie (niveau CAP/BP). Analyse la production écrite de l'élève.
+            Renvois STRICTEMENT un objet JSON valide (sans markdown autour) avec cette structure :
+            {
+              "score": "note sur 20 (ex: 14/20)",
+              "feedback": "Un commentaire constructif en français.",
+              "corrected_html": "Le texte corrigé avec des balises <span class=\\\"error-highlight\\\">mot_fautif</span> <span class=\\\"correction-highlight\\\">mot_correct</span>."
+            }`;
+
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [
+                                { text: systemPrompt },
+                                { text: `Texte élève : \n"""\n${studentText}\n"""` }
+                            ]
+                        }],
+                        generationConfig: { temperature: 0.2, responseMimeType: "application/json" }
+                    })
+                });
+
+                if (!response.ok) throw new Error("Erreur de communication avec l'API");
+
+                const data = await response.json();
+                const resObj = JSON.parse(data.candidates[0].content.parts[0].text);
+
+                resultArea.innerHTML = `
+                    <div class="ai-card">
+                        <div class="ai-header">
+                            <span>👨‍🍳 Évaluation du Chef</span>
+                            <span style="color: var(--gold); font-size: 1.1rem; font-weight: 800;">${resObj.score}</span>
+                        </div>
+                        <p style="font-size: 0.85rem; margin-bottom: 8px;"><strong>Feedback :</strong> ${resObj.feedback}</p>
+                        <p style="font-size: 0.85rem; margin-bottom: 4px;"><strong>Correction :</strong></p>
+                        <div style="background: var(--bg-primary); padding: 10px; border-radius: 8px; font-size: 0.9rem; line-height: 1.5;">
+                            ${resObj.corrected_html}
+                        </div>
+                    </div>
+                `;
+            } catch (err) {
+                console.error(err);
+                resultArea.innerHTML = `<div class="ai-card" style="color: var(--error);">Une erreur est survenue lors de l'appel à l'IA. Vérifiez votre clé.</div>`;
+            }
+        }
+    </script>
+</body>
+</html>
