@@ -6,29 +6,31 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Pastry English">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#1a1612">
-    <meta name="format-detection" content="telephone=no">
+    <meta name="theme-color" content="#120f0d">
     <title>Pastry English Pro</title>
     
     <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧁</text></svg>">
     
     <style>
         :root {
-            --bg-primary: #1a1612;
-            --bg-secondary: #2d2520;
-            --bg-card: #3a322b;
-            --fg-primary: #f5f0eb;
-            --fg-secondary: #b8a99a;
-            --fg-muted: #8a7d72;
+            --bg-primary: #120f0d;
+            --bg-secondary: #1e1916;
+            --bg-card: #28211c;
+            --bg-card-hover: #332a24;
+            --fg-primary: #fbf9f7;
+            --fg-secondary: #bbaea4;
+            --fg-muted: #82756b;
             --accent: #e07a5f;
-            --accent-light: #f2a98b;
-            --success: #6b9b6b;
-            --error: #c45c5c;
-            --border: #4a423a;
-            --shadow: rgba(0,0,0,0.4);
-            --gold: #D4AF37;
-            --gold-light: #F4E4BA;
+            --accent-glow: rgba(224,122,95,0.25);
+            --success: #52796f;
+            --success-glow: rgba(82,121,111,0.3);
+            --error: #b75d5d;
+            --error-glow: rgba(183,93,93,0.3);
+            --border: #3d332c;
+            --gold: #e9c46a;
+            --radius-sm: 12px;
+            --radius-md: 18px;
+            --radius-lg: 24px;
         }
 
         * { 
@@ -46,7 +48,7 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, SF Pro Display, Arial, sans-serif;
             background: var(--bg-primary);
             color: var(--fg-primary);
             display: flex;
@@ -56,115 +58,125 @@
             overflow-x: hidden;
         }
 
-        /* ACCUEIL */
+        /* ACCUEIL MODERNISÉ */
         #home-screen {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            min-height: -webkit-fill-available;
-            padding: 20px;
-            padding-top: env(safe-area-inset-top, 20px);
-            padding-bottom: env(safe-area-inset-bottom, 20px);
+            padding: 24px;
             text-align: center;
             background: 
-                radial-gradient(ellipse at 20% 0%, rgba(224,122,95,0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 100%, rgba(224,122,95,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 10% 10%, rgba(224,122,95,0.12) 0%, transparent 45%),
+                radial-gradient(circle at 90% 90%, rgba(233,196,106,0.08) 0%, transparent 45%),
                 var(--bg-primary);
         }
 
+        .home-logo {
+            font-size: 4rem;
+            margin-bottom: 12px;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
         #home-screen h1 {
-            font-size: clamp(1.6rem, 5vw, 2.2rem);
-            font-weight: 900;
-            color: var(--fg-primary);
+            font-size: clamp(1.8rem, 6vw, 2.4rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
             margin-bottom: 6px;
+            background: linear-gradient(135deg, #fbf9f7, #bbaea4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .subtitle { 
             color: var(--fg-secondary); 
             font-size: 0.95rem; 
-            margin-bottom: 20px; 
+            margin-bottom: 28px; 
+            font-weight: 400;
         }
 
         .image-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 12px;
             width: 100%;
             max-width: 340px;
-            margin-bottom: 20px;
+            margin-bottom: 28px;
         }
 
         .image-grid img {
             width: 100%;
-            height: 120px;
+            height: 110px;
             object-fit: cover;
-            border-radius: 12px;
+            border-radius: var(--radius-sm);
             border: 1px solid var(--border);
+            filter: brightness(0.9);
+            transition: transform 0.3s ease;
         }
 
-        .home-stats {
-            background: var(--bg-card);
-            border-radius: 14px;
-            padding: 14px;
-            margin-bottom: 16px;
-            width: 100%;
-            max-width: 320px;
-            border: 1px solid var(--border);
+        .image-grid img:hover {
+            transform: scale(1.02);
         }
 
-        .home-level {
+        .home-actions {
             display: flex;
-            align-items: center;
+            flex-direction: column;
             gap: 12px;
+            width: 100%;
+            max-width: 300px;
         }
 
-        .home-level-icon { font-size: 1.8rem; }
-        .home-level-info { text-align: left; }
-        .home-level-name { font-weight: bold; color: var(--accent); font-size: 0.9rem; }
-        .home-level-xp { font-size: 0.8rem; color: var(--fg-secondary); }
-
-        .btn-start {
-            background: linear-gradient(135deg, var(--accent), var(--accent-light));
-            color: var(--bg-primary);
+        .btn-main {
+            background: linear-gradient(135deg, var(--accent), #d06548);
+            color: white;
             border: none;
-            padding: 16px 36px;
+            padding: 16px 24px;
             font-size: 1rem;
             font-weight: 700;
-            border-radius: 50px;
+            border-radius: var(--radius-md);
             cursor: pointer;
-            -webkit-appearance: none;
-            appearance: none;
-            min-height: 50px;
-            box-shadow: 0 4px 16px rgba(224,122,95,0.3);
+            box-shadow: 0 8px 24px var(--accent-glow);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
-        .btn-start:active { transform: scale(0.96); }
+        .btn-main:active { transform: scale(0.97); }
 
-        .btn-exam {
-            background: linear-gradient(135deg, var(--gold), var(--gold-light));
-            color: var(--bg-primary);
-            border: none;
-            padding: 12px 28px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            border-radius: 50px;
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--gold);
+            border: 1px solid var(--border);
+            padding: 14px 24px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: var(--radius-md);
             cursor: pointer;
-            -webkit-appearance: none;
-            appearance: none;
-            min-height: 44px;
-            margin-top: 10px;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
-        #game-screen { display: none; flex-direction: column; min-height: 100vh; min-height: -webkit-fill-available; }
+        .btn-secondary:hover { background: var(--bg-card-hover); }
 
-        /* HEADER */
+        /* ÉCRAN JEU / EXAMEN */
+        #game-screen { display: none; flex-direction: column; min-height: 100vh; }
+
         header {
             background: var(--bg-secondary);
             border-bottom: 1px solid var(--border);
-            padding: 12px 16px;
-            padding-top: max(12px, env(safe-area-inset-top));
+            padding: 16px;
+            padding-top: max(16px, env(safe-area-inset-top));
             flex-shrink: 0;
         }
 
@@ -172,32 +184,40 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 14px;
         }
 
         .header-title {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 700;
-            color: var(--fg-primary);
+            letter-spacing: -0.01em;
         }
 
-        .btn-home {
+        .btn-icon {
             background: var(--bg-card);
             border: 1px solid var(--border);
             color: var(--fg-secondary);
-            width: 44px;
-            height: 44px;
-            border-radius: 10px;
-            font-size: 1.3rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.1rem;
             cursor: pointer;
-            -webkit-appearance: none;
-            appearance: none;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: background 0.2s;
         }
 
-        /* BARRE DE PROGRESSION */
+        .btn-icon:hover { background: var(--bg-card-hover); color: var(--fg-primary); }
+
+        /* PROGRESSION */
+        .progress-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 12px 14px;
+        }
+
         .progress-header {
             display: flex;
             justify-content: space-between;
@@ -205,1857 +225,683 @@
             margin-bottom: 8px;
         }
 
-        .level-info { display: flex; align-items: center; gap: 8px; }
-        .level-icon { font-size: 1.3rem; }
-        .level-text { text-align: left; }
-        .level-name { font-weight: bold; font-size: 0.85rem; color: var(--accent); }
-        .level-title { font-size: 0.7rem; color: var(--fg-muted); }
-
-        .xp-info { text-align: right; }
-        .xp-count { font-weight: bold; color: var(--gold); font-size: 0.85rem; }
-        .xp-next { font-size: 0.65rem; color: var(--fg-muted); }
-
-        .progress-container {
-            width: 100%;
-            background: var(--bg-card);
-            border-radius: 12px;
-            height: 26px;
-            overflow: hidden;
-            position: relative;
-            border: 2px solid var(--border);
+        .level-info { display: flex; align-items: center; gap: 10px; }
+        .level-badge {
+            background: rgba(224,122,95,0.15);
+            color: var(--accent);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
         }
 
-        .progress-bar {
+        .level-name { font-weight: 700; font-size: 0.85rem; }
+        .xp-count { font-weight: 700; color: var(--gold); font-size: 0.85rem; }
+
+        .progress-track {
+            width: 100%;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            height: 8px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--accent), var(--accent-light));
-            position: relative;
-            transition: width 0.5s ease;
+            background: linear-gradient(90deg, var(--accent), var(--gold));
+            border-radius: 10px;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             width: 0%;
         }
 
-        .progress-pastry {
-            position: absolute;
-            top: -2px;
-            right: -16px;
-            transform: translateX(-100%);
-            transition: left 0.5s ease;
-            font-size: 1.2rem;
-            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.4));
-            z-index: 10;
-        }
-
-        /* NOUVEAU: Labels des niveaux sur la barre de progression */
-        .level-labels {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 6px;
-            padding: 0 2px;
-        }
-
-        .level-label {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 3px;
-            position: relative;
-        }
-
-        .level-label-dot {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.65rem;
-            background: var(--bg-card);
-            border: 2px solid var(--border);
-            transition: all 0.3s ease;
-        }
-
-        .level-label-name {
-            font-size: 0.55rem;
-            color: var(--fg-muted);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.02em;
-            white-space: nowrap;
-        }
-
-        .level-label.passed .level-label-dot {
-            background: linear-gradient(135deg, var(--accent), var(--accent-light));
-            border-color: var(--accent);
-            box-shadow: 0 0 8px rgba(224,122,95,0.5);
-        }
-
-        .level-label.passed .level-label-name {
-            color: var(--accent);
-        }
-
-        .level-label.current .level-label-dot {
-            border-color: var(--gold);
-            box-shadow: 0 0 10px rgba(212,175,55,0.6);
-            animation: pulse 2s infinite;
-        }
-
-        .level-label.current .level-label-name {
-            color: var(--gold);
-            font-weight: 700;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        /* Ancien style pour compatibilité */
-        .level-dots { display: flex; justify-content: space-between; margin-top: 6px; padding: 0 2px; }
-        
-        .level-dot {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 3px;
-        }
-
-        .level-dot-circle {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
-            background: var(--bg-card);
-            border: 2px solid var(--border);
-        }
-
-        .level-dot.passed .level-dot-circle {
-            background: linear-gradient(135deg, var(--accent), var(--accent-light));
-            border-color: var(--accent);
-        }
-
-        .level-dot.current .level-dot-circle {
-            border-color: var(--gold);
-        }
-
-        .level-dot-name { font-size: 0.5rem; color: var(--fg-muted); font-weight: 600; }
-        .level-dot.passed .level-dot-name, .level-dot.current .level-dot-name { color: var(--accent); }
-
-        /* MENUS */
-        .menu-scroll {
+        /* MENUS HORIZONTAUX */
+        .menu-container {
             display: flex;
             overflow-x: auto;
-            padding: 8px 12px;
-            gap: 6px;
+            padding: 10px 16px;
+            gap: 8px;
             background: var(--bg-secondary);
-            white-space: nowrap;
-            scrollbar-width: none;
             border-bottom: 1px solid var(--border);
+            scrollbar-width: none;
             flex-shrink: 0;
-            -webkit-overflow-scrolling: touch;
         }
 
-        .menu-scroll::-webkit-scrollbar { display: none; }
+        .menu-container::-webkit-scrollbar { display: none; }
 
-        .menu-btn {
+        .chip {
             background: var(--bg-card);
             border: 1px solid var(--border);
             color: var(--fg-secondary);
-            padding: 10px 14px;
+            padding: 8px 14px;
             border-radius: 20px;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             font-weight: 600;
             cursor: pointer;
-            -webkit-appearance: none;
-            appearance: none;
-            flex-shrink: 0;
-            min-height: 40px;
+            white-space: nowrap;
+            transition: all 0.2s;
         }
 
-        .menu-btn.active {
+        .chip.active {
             background: var(--accent);
-            color: var(--bg-primary);
+            color: white;
             border-color: var(--accent);
+            box-shadow: 0 4px 12px var(--accent-glow);
         }
 
-        /* MAIN */
+        /* ZONE CENTRALE DE JEU */
         main {
             flex: 1;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            padding: 12px;
-            padding-bottom: max(12px, env(safe-area-inset-bottom));
-            overflow-y: auto;
-            background: 
-                radial-gradient(ellipse at 50% 0%, rgba(224,122,95,0.08) 0%, transparent 60%),
-                var(--bg-primary);
+            padding: 16px;
+            max-width: 600px;
+            width: 100%;
+            margin: 0 auto;
+            justify-content: space-between;
         }
 
-        .game-area {
+        .card-stage {
             background: var(--bg-card);
-            width: 100%;
-            max-width: 100%;
-            padding: 18px;
-            border-radius: 16px;
             border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 24px 20px;
             text-align: center;
-            min-height: 280px;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+            position: relative;
+            flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            box-shadow: 0 4px 20px var(--shadow);
-        }
-
-        /* NOUVEAU: Compteur de cartes/questions */
-        .card-counter {
-            position: absolute;
-            top: 8px;
-            right: 12px;
-            background: var(--bg-secondary);
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--fg-secondary);
-            border: 1px solid var(--border);
-        }
-
-        .game-area {
-            position: relative;
-        }
-
-        /* NOUVEAU: Numéro de quiz */
-        .quiz-number {
-            background: linear-gradient(135deg, var(--accent), var(--accent-light));
-            color: var(--bg-primary);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            display: inline-block;
-            margin-bottom: 8px;
-        }
-
-        /* BOUTONS QUIZ */
-        .quiz-options { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 8px; 
-            margin-top: 14px; 
-        }
-
-        .quiz-btn {
-            background: var(--bg-secondary);
-            border: 2px solid var(--border);
-            color: var(--fg-primary);
-            padding: 14px 10px;
-            font-size: 1rem;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 600;
-            min-height: 54px;
-            display: flex;
             align-items: center;
-            justify-content: center;
-            -webkit-appearance: none;
-            appearance: none;
-            text-align: center;
-            line-height: 1.3;
+            margin-bottom: 16px;
+            min-height: 280px;
         }
 
-        .quiz-btn:active { transform: scale(0.98); }
-        .quiz-btn.correct { background: var(--success); border-color: var(--success); color: white; }
-        .quiz-btn.wrong { background: var(--error); border-color: var(--error); color: white; }
-        .quiz-btn:disabled { opacity: 0.7; cursor: default; }
+        .card-category-tag {
+            position: absolute;
+            top: 16px;
+            left: 20px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
 
-        .card-word {
-            font-size: clamp(1.6rem, 5vw, 2rem);
+        .card-main-word {
+            font-size: clamp(1.8rem, 6vw, 2.4rem);
             font-weight: 800;
             color: var(--fg-primary);
-            margin: 10px 0;
-            min-height: 50px;
-            cursor: pointer;
+            margin: 12px 0;
             line-height: 1.2;
         }
 
-        .card-example {
-            font-style: italic;
-            color: var(--fg-secondary);
+        .card-sub-info {
             font-size: 0.95rem;
-            margin-top: 10px;
-            min-height: 32px;
-            line-height: 1.4;
+            color: var(--fg-secondary);
+            font-style: italic;
+            margin-top: 8px;
+            min-height: 28px;
         }
 
-        .card-hint { color: var(--fg-muted); font-size: 0.8rem; margin-top: 6px; }
-
-        .controls-area {
-            width: 100%;
-            margin-top: 14px;
-        }
-
-        .nav-buttons { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            gap: 8px; 
-        }
-
-        .btn-nav {
+        .tap-hint {
+            margin-top: 16px;
+            font-size: 0.75rem;
+            color: var(--fg-muted);
             background: var(--bg-secondary);
-            color: var(--fg-primary);
+            padding: 6px 12px;
+            border-radius: 12px;
             border: 1px solid var(--border);
-            padding: 12px 16px;
-            border-radius: 25px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            flex: 1;
-            cursor: pointer;
-            -webkit-appearance: none;
-            appearance: none;
-            min-height: 48px;
         }
 
-        .btn-sound {
-            background: var(--accent);
-            color: var(--bg-primary);
-            flex: 0;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            font-size: 1.3rem;
-            padding: 0;
+        /* QUIZ GRID FIXÉE (SÉCURISÉE CONTRE LE DÉCALAGE DES BOUTONS) */
+        .quiz-container {
+            width: 100%;
+            margin-top: 16px;
+        }
+
+        .quiz-prompt {
+            font-size: 0.9rem;
+            color: var(--fg-secondary);
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .quiz-options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .quiz-option-btn {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            color: var(--fg-primary);
+            padding: 16px 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: transform 0.1s, background 0.2s, border-color 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: none;
-            cursor: pointer;
-            -webkit-appearance: none;
-            appearance: none;
+            text-align: center;
+            min-height: 60px;
         }
 
-        .btn-nav:disabled { opacity: 0.5; cursor: default; }
-        .btn-action { 
-            width: 100%; 
-            background: linear-gradient(135deg, var(--accent), var(--accent-light)); 
-            color: var(--bg-primary); 
-            border: none; 
+        .quiz-option-btn:active:not(:disabled) { transform: scale(0.97); }
+        .quiz-option-btn.correct {
+            background: var(--success);
+            border-color: var(--success);
+            color: white;
+            box-shadow: 0 4px 12px var(--success-glow);
         }
-        .btn-success { background: linear-gradient(135deg, var(--success), #8bc38b) !important; }
-        .btn-gold { background: linear-gradient(135deg, var(--gold), var(--gold-light)) !important; }
-
-        .quiz-question { font-size: 1rem; color: var(--fg-secondary); margin-bottom: 6px; }
-        .quiz-question b { display: block; font-size: 1.3rem; color: var(--fg-primary); margin-top: 6px; }
-
-        .timer { font-size: 1.8rem; font-weight: 800; color: var(--accent); margin-top: 10px; font-variant-numeric: tabular-nums; }
-        .timer.warning { color: var(--error); }
-
-        .mode-label {
-            font-size: 0.7rem;
-            color: var(--gold);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            font-weight: 700;
-            margin-bottom: 4px;
+        .quiz-option-btn.wrong {
+            background: var(--error);
+            border-color: var(--error);
+            color: white;
+            box-shadow: 0 4px 12px var(--error-glow);
         }
+        .quiz-option-btn:disabled { cursor: default; }
 
-        .roleplay-context {
+        /* REMÉDIATION / EXPLICATION PÉDAGOGIQUE */
+        .remediation-box {
             background: var(--bg-secondary);
-            padding: 12px;
-            border-radius: 10px;
-            margin-bottom: 12px;
-            text-align: left;
-            border-left: 3px solid var(--accent);
-        }
-
-        .roleplay-scenario { font-weight: 700; color: var(--accent); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 4px; }
-        .roleplay-dialog { background: var(--bg-card); padding: 8px; border-radius: 6px; font-style: italic; color: var(--fg-secondary); font-size: 0.9rem; }
-
-        .recipe-container { display: flex; width: 100%; gap: 12px; align-items: stretch; }
-        .recipe-info { flex: 1; display: flex; flex-direction: column; justify-content: center; border-right: 1px solid var(--border); padding-right: 12px; text-align: right; }
-        .recipe-steps { flex: 1.5; display: flex; flex-direction: column; gap: 5px; }
-        .recipe-step { font-size: 0.85rem; min-height: 42px; }
-        .recipe-step.selected { background: var(--accent) !important; color: var(--bg-primary) !important; border-color: var(--accent) !important; }
-
-        /* EXAM STYLES */
-        .exam-intro {
-            text-align: left;
+            border-left: 4px solid var(--gold);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
             padding: 14px;
-            background: var(--bg-secondary);
-            border-radius: 10px;
-            margin-bottom: 12px;
+            margin-top: 14px;
+            text-align: left;
+            font-size: 0.85rem;
+            animation: fadeIn 0.3s ease;
         }
 
-        .exam-intro h3 { color: var(--gold); margin-bottom: 6px; font-size: 1rem; }
-        .exam-intro p { color: var(--fg-secondary); font-size: 0.85rem; line-height: 1.4; }
+        .remediation-title {
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
 
-        .writing-area {
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* CONTRÔLES BAS DE PAGE */
+        .controls-stage {
+            width: 100%;
+        }
+
+        .btn-action {
+            width: 100%;
+            background: linear-gradient(135deg, var(--accent), #d06548);
+            color: white;
+            border: none;
+            padding: 16px;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            box-shadow: 0 6px 20px var(--accent-glow);
+            transition: transform 0.2s;
+        }
+
+        .btn-action:active { transform: scale(0.98); }
+
+        /* MODE EXAMEN & CORRECTION IA */
+        .exam-instructions {
             background: var(--bg-secondary);
-            border: 2px solid var(--border);
-            border-radius: 10px;
-            padding: 10px;
-            margin-top: 10px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 14px;
+            margin-bottom: 12px;
+            text-align: left;
+            font-size: 0.85rem;
+            color: var(--fg-secondary);
+            line-height: 1.4;
+        }
+
+        .writing-container {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 12px;
+            text-align: left;
+            margin-bottom: 12px;
         }
 
         .writing-textarea {
             width: 100%;
-            min-height: 100px;
+            min-height: 120px;
             background: transparent;
             border: none;
             color: var(--fg-primary);
             font-family: inherit;
             font-size: 0.95rem;
-            resize: vertical;
+            resize: none;
             outline: none;
-            -webkit-appearance: none;
+            line-height: 1.5;
         }
 
-        .word-count { font-size: 0.75rem; color: var(--fg-muted); text-align: right; margin-top: 6px; }
-        .word-count.ok { color: var(--success); font-weight: bold; }
-
-        .correction-box {
-            background: var(--bg-secondary);
-            border-radius: 10px;
-            padding: 14px;
-            margin-top: 10px;
-            text-align: left;
-        }
-
-        .score-display { text-align: center; padding: 14px; background: var(--bg-card); border-radius: 10px; margin: 10px 0; }
-        .score-big { font-size: 2.2rem; font-weight: bold; color: var(--gold); }
-        .score-label { font-size: 0.85rem; color: var(--fg-secondary); }
-
-        .feedback-section { margin-top: 10px; padding: 10px; border-radius: 8px; }
-        .feedback-correct { background: rgba(107,155,107,0.2); border-left: 3px solid var(--success); }
-        .feedback-wrong { background: rgba(196,92,92,0.2); border-left: 3px solid var(--error); }
-
-        /* NOUVEAU: Styles pour la correction IA */
-        .ai-correction-section {
-            background: linear-gradient(135deg, rgba(224,122,95,0.1), rgba(242,169,139,0.1));
-            border: 2px solid var(--accent);
-            border-radius: 12px;
+        .ai-card {
+            background: linear-gradient(135deg, rgba(224,122,95,0.08), rgba(233,196,106,0.05));
+            border: 1px solid var(--accent);
+            border-radius: var(--radius-sm);
             padding: 16px;
-            margin-top: 12px;
+            margin-top: 14px;
             text-align: left;
+            animation: fadeIn 0.4s ease;
         }
 
-        .ai-correction-header {
+        .ai-header {
             display: flex;
             align-items: center;
-            gap: 8px;
-            margin-bottom: 12px;
-            color: var(--accent);
+            justify-content: space-between;
+            margin-bottom: 10px;
             font-weight: 700;
+            color: var(--accent);
         }
 
-        .ai-correction-content {
-            color: var(--fg-primary);
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-
-        .ai-correction-content .error-highlight {
-            background: rgba(196,92,92,0.3);
-            padding: 2px 4px;
+        .error-highlight {
+            background: rgba(183,93,93,0.3);
+            color: #ff9999;
+            padding: 1px 4px;
             border-radius: 4px;
             text-decoration: line-through;
         }
 
-        .ai-correction-content .correction-highlight {
-            background: rgba(107,155,107,0.3);
-            padding: 2px 4px;
+        .correction-highlight {
+            background: rgba(82,121,111,0.4);
+            color: #85e3b0;
+            padding: 1px 4px;
             border-radius: 4px;
             font-weight: 600;
         }
 
-        .ai-score {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: var(--bg-card);
-            padding: 6px 12px;
-            border-radius: 20px;
-            margin-top: 10px;
-            font-size: 0.85rem;
-        }
-
-        .ai-score-score {
-            font-weight: 700;
-            color: var(--gold);
-        }
-
-        .btn-ai-correct {
-            background: linear-gradient(135deg, #8B5CF6, #A78BFA);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-weight: 600;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            margin-top: 10px;
-            font-size: 0.85rem;
-        }
-
-        .btn-ai-correct:hover {
-            transform: scale(1.02);
-        }
-
-        .btn-ai-correct:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        .api-key-section {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 12px;
-            margin-top: 10px;
-        }
-
-        .api-key-input {
-            width: 100%;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 10px;
-            color: var(--fg-primary);
-            font-size: 0.85rem;
-            margin-top: 6px;
-        }
-
-        .api-key-input::placeholder {
-            color: var(--fg-muted);
-        }
-
-        .loading-spinner {
+        .spinner {
             display: inline-block;
-            width: 16px;
-            height: 16px;
+            width: 18px;
+            height: 18px;
             border: 2px solid var(--fg-muted);
             border-radius: 50%;
             border-top-color: var(--accent);
-            animation: spin 1s linear infinite;
+            animation: spin 0.8s linear infinite;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 360px) {
-            .quiz-btn { font-size: 0.9rem; padding: 12px 8px; }
-            .card-word { font-size: 1.5rem; }
-            .menu-btn { padding: 8px 12px; font-size: 0.8rem; }
-            .level-label-name { font-size: 0.45rem; }
-        }
-
-        /* iOS specific fixes */
-        @supports (-webkit-touch-callout: none) {
-            .btn-start, .btn-action, .quiz-btn, .menu-btn, .btn-nav, .btn-sound {
-                min-height: 44px;
-            }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-    <!-- ACCUEIL -->
+    <!-- ÉCRAN D'ACCUEIL -->
     <div id="home-screen">
-        <div style="font-size: 3rem; margin-bottom: 6px;">🧁</div>
+        <div class="home-logo">🧁</div>
         <h1>Pastry English Pro</h1>
-        <p class="subtitle">Formation anglais pâtisserie - CAP / MC / BP</p>
+        <p class="subtitle">L'anglais appliqué aux métiers de la Pâtisserie (CAP, MC, BP)</p>
         
         <div class="image-grid">
-            <img src="https://images.unsplash.com/photo-1519915028121-7d3463d20b13?auto=format&fit=crop&w=400&q=80" alt="Patisserie">
+            <img src="https://images.unsplash.com/photo-1519915028121-7d3463d20b13?auto=format&fit=crop&w=400&q=80" alt="Pâtisserie">
             <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=400&q=80" alt="Macarons">
         </div>
 
-        <div class="home-stats" id="home-stats" style="display: none;"></div>
-
-        <button class="btn-start" id="start-btn">Commencer la formation</button>
-        <button class="btn-exam" id="exam-btn">📝 Mode Examen CAP</button>
-
-        <p style="font-size: 0.7rem; color: var(--fg-muted); margin-top: 16px;">
-            📱 Ajoutez à votre écran d'accueil
-        </p>
+        <div class="home-actions">
+            <button class="btn-main" onclick="startApp('train')">🚀 Lancer l'entraînement</button>
+            <button class="btn-secondary" onclick="startApp('exam')">📝 Mode Examen & IA</button>
+        </div>
     </div>
 
-    <!-- JEU -->
+    <!-- ÉCRAN DE JEU & EXAMEN -->
     <div id="game-screen">
         <header>
             <div class="header-top">
-                <button class="btn-home" id="back-btn">←</button>
-                <span class="header-title">Pastry English Pro</span>
-                <div style="width:44px;"></div>
+                <button class="btn-icon" onclick="backToHome()">←</button>
+                <div class="header-title" id="header-title">Pastry English Pro</div>
+                <button class="btn-icon" onclick="resetKey()" title="Changer clé API">⚙️</button>
             </div>
 
-            <div class="progress-header">
-                <div class="level-info">
-                    <span class="level-icon" id="lvl-icon">👨‍🍳</span>
-                    <div class="level-text">
-                        <div class="level-name" id="lvl-name">Niveau 1 · Apprentice</div>
-                        <div class="level-title" id="lvl-title">Débutant en pâtisserie</div>
+            <div class="progress-panel">
+                <div class="progress-header">
+                    <div class="level-info">
+                        <span class="level-badge" id="lvl-badge">Niveau 1</span>
+                        <span class="level-name" id="lvl-name">Apprentice</span>
                     </div>
+                    <div class="xp-count" id="xp-counter">0 XP</div>
                 </div>
-                <div class="xp-info">
-                    <div class="xp-count" id="xp-count">0 XP</div>
-                    <div class="xp-next" id="xp-next">100 XP niveau suivant</div>
-                </div>
-            </div>
-
-            <div class="progress-container">
-                <div class="progress-bar" id="progress-bar">
-                    <div class="progress-pastry" id="progress-pastry">🧁</div>
+                <div class="progress-track">
+                    <div class="progress-fill" id="progress-bar"></div>
                 </div>
             </div>
-
-            <div class="level-labels" id="level-labels"></div>
         </header>
 
-        <nav class="menu-scroll" id="mode-menu"></nav>
-        <nav class="menu-scroll" id="theme-menu"></nav>
+        <nav class="menu-container" id="category-menu"></nav>
+        <nav class="menu-container" id="mode-menu"></nav>
 
         <main>
-            <div class="game-area" id="game-area"></div>
-            <div class="controls-area" id="controls-area"></div>
+            <div class="card-stage" id="card-stage"></div>
+            <div class="controls-stage" id="controls-stage"></div>
         </main>
     </div>
 
     <script>
         // ==========================================
-        // DATABASE - 5 CATEGORIES
+        // BASE DE DONNÉES ENRICHIE (20 GÂTEAUX + INGRÉDIENTS + OUTILS)
         // ==========================================
         const database = {
+            "Classic Pastries": [
+                { fr: "L'éclair au chocolat", en: "Chocolate éclair", exemple: "Fill choux pastry with chocolate pastry cream.", hint: "Choux pastry filled with cream and glazed." },
+                { fr: "Le macaron", en: "Macaron", exemple: "Pair macaron shells with ganache filling.", hint: "Delicate meringue-based almond cookies." },
+                { fr: "La tarte au citron meringuée", en: "Lemon meringue pie", exemple: "Torch the Italian meringue until golden.", hint: "Shortcrust pastry, lemon curd, and fluffy meringue." },
+                { fr: "Le mille-feuille", en: "Mille-feuille (Napoleon)", exemple: "Roll out puff pastry into thin layers.", hint: "Layers of puff pastry and diplomat cream." },
+                { fr: "Le Paris-Brest", en: "Paris-Brest", exemple: "Pipe choux rings and top with sliced almonds.", hint: "Ring-shaped choux pastry filled with praline mousseline." },
+                { fr: "L'opéra", en: "Opera cake", exemple: "Soak almond sponge with coffee syrup.", hint: "Layers of Joconde sponge, coffee buttercream, and ganache." },
+                { fr: "La tarte Tatin", en: "Tarte Tatin", exemple: "Caramelize apples in butter and sugar.", hint: "Upside-down caramelized apple tart." },
+                { fr: "Le Saint-Honoré", en: "Saint-Honoré", exemple: "Dip choux puffs in hot caramel.", hint: "Puff pastry base, choux puffs, and chiboust cream." },
+                { fr: "Le flan pâtissier", en: "Custard tart (Flan)", exemple: "Bake until the custard is slightly spotted.", hint: "Thick vanilla custard baked in a pastry crust." },
+                { fr: "Le baba au rhum", en: "Rum baba", exemple: "Soak the baked yeast cake in rum syrup.", hint: "Yeast sponge soaked in hard liquor syrup." },
+                { fr: "Le religeuse", en: "Religious nun pastry (Religieuse)", exemple: "Use two choux puffs stacked together.", hint: "Two stacked choux pastry cases filled with cream." },
+                { fr: "Le kouign-amann", en: "Kouign-amann", exemple: "Laminate dough with plenty of butter and sugar.", hint: "Brittany cake with layers of butter and sugar." },
+                { fr: "La brioche", en: "Brioche", exemple: "Knead butter into the enriched yeast dough.", hint: "Enriched French bread with high egg and butter content." },
+                { fr: "Le croissant", en: "Croissant", exemple: "Roll and shape triangular laminated dough.", hint: "Buttery, flaky, crescent-shaped viennoiserie." },
+                { fr: "Le pain au chocolat", en: "Chocolate bread (Pain au chocolat)", exemple: "Enclose two chocolate batons in the dough.", hint: "Flaky pastry wrapped around dark chocolate." },
+                { fr: "Le chausson aux pommes", en: "Apple turnover", exemple: "Seal apple compote inside puff pastry.", hint: "Puff pastry turnover filled with apple compote." },
+                { fr: "Le financier", en: "Financier", exemple: "Bake brown butter batter in small molds.", hint: "Small French almond cake made with browned butter." },
+                { fr: "La madeleine", en: "Madeleine", exemple: "Chill the batter to get the iconic hump.", hint: "Small shell-shaped sponge cake." },
+                { fr: "Le canelé", en: "Caneled pastry (Canelé)", exemple: "Coat copper molds with beeswax and butter.", hint: "Bordeaux pastry with a caramelized crust and soft center." },
+                { fr: "La galette des rois", en: "King cake", exemple: "Hide a porcelain charm inside the puff pastry.", hint: "Puff pastry cake filled with frangipane for Epiphany." }
+            ],
             "Basic Ingredients": [
-                { fr: "La farine", en: "Flour", exemple: "Sieve the flour into a bowl." },
-                { fr: "Le sucre semoule", en: "Caster sugar", exemple: "Cream butter with caster sugar." },
-                { fr: "Le sucre glace", en: "Icing sugar", exemple: "Dust with icing sugar." },
-                { fr: "Le sucre inverti", en: "Invert sugar", exemple: "Invert sugar keeps pastries moist." },
-                { fr: "Le glucose", en: "Glucose syrup", exemple: "Add glucose to prevent crystallization." },
-                { fr: "Le miel", en: "Honey", exemple: "Warm the honey first." },
-                { fr: "La cassonade", en: "Brown sugar", exemple: "Brown sugar adds caramel notes." },
-                { fr: "Le beurre", en: "Butter", exemple: "Use softened butter." },
-                { fr: "Le beurre noisette", en: "Hazelnut butter", exemple: "Cook butter until nutty brown." },
-                { fr: "La crème liquide", en: "Liquid cream", exemple: "Whip cold liquid cream." },
-                { fr: "La crème épaisse", en: "Thick cream", exemple: "Add thick cream for richness." },
-                { fr: "Le lait entier", en: "Whole milk", exemple: "Bring whole milk to a boil." },
-                { fr: "L'oeuf entier", en: "Whole egg", exemple: "Beat whole eggs until fluffy." },
-                { fr: "Le jaune d'oeuf", en: "Egg yolk", exemple: "Use yolks for custards." },
-                { fr: "Le blanc d'oeuf", en: "Egg white", exemple: "Whisk whites to stiff peaks." },
-                { fr: "L'eau", en: "Water", exemple: "Add ice-cold water." },
-                { fr: "Le sel", en: "Salt", exemple: "A pinch of salt enhances flavors." }
-            ],
-            "Chocolate & Fillings": [
-                { fr: "Le chocolat noir", en: "Dark chocolate", exemple: "Temper dark chocolate at 31°C." },
-                { fr: "Le chocolat au lait", en: "Milk chocolate", exemple: "Milk chocolate is sweeter." },
-                { fr: "Le chocolat blanc", en: "White chocolate", exemple: "White chocolate burns easily." },
-                { fr: "Le cacao en poudre", en: "Cocoa powder", exemple: "Use Dutch-processed cocoa." },
-                { fr: "Les pistoles", en: "Chocolate pistoles", exemple: "Melt pistoles over bain-marie." },
-                { fr: "La poudre d'amandes", en: "Almond flour", exemple: "Use fine almond flour for macarons." },
-                { fr: "La poudre de noisettes", en: "Hazelnut flour", exemple: "Toast hazelnut flour first." },
-                { fr: "La pâte de pistache", en: "Pistachio paste", exemple: "Add pistachio paste for flavor." },
-                { fr: "Le praliné", en: "Praline paste", exemple: "Fold praline into mousse." },
-                { fr: "La noix de coco râpée", en: "Shredded coconut", exemple: "Toast coconut until golden." },
-                { fr: "Les amandes effilées", en: "Sliced almonds", exemple: "Decorate with sliced almonds." },
-                { fr: "Les noisettes concassées", en: "Crushed hazelnuts", exemple: "Sprinkle crushed hazelnuts." },
-                { fr: "Les raisins secs", en: "Raisins", exemple: "Soak raisins in rum." },
-                { fr: "Les fruits confits", en: "Candied fruits", exemple: "Dice candied fruits evenly." }
-            ],
-            "Fruits & Flavors": [
-                { fr: "La gousse de vanille", en: "Vanilla bean", exemple: "Split and scrape the bean." },
-                { fr: "L'extrait de vanille", en: "Vanilla extract", exemple: "Add vanilla extract at the end." },
-                { fr: "La cannelle", en: "Cinnamon", exemple: "Cinnamon adds warmth." },
-                { fr: "La cardamome", en: "Cardamom", exemple: "Crush cardamom pods." },
-                { fr: "Le gingembre", en: "Ginger", exemple: "Use fresh grated ginger." },
-                { fr: "La muscade", en: "Nutmeg", exemple: "Grate fresh nutmeg." },
-                { fr: "Le zeste de citron", en: "Lemon zest", exemple: "Zest organic lemons only." },
-                { fr: "Le zeste d'orange", en: "Orange zest", exemple: "Blanch orange zest." },
-                { fr: "La fleur d'oranger", en: "Orange blossom water", exemple: "Flavors madeleines." },
-                { fr: "L'eau de rose", en: "Rose water", exemple: "Add a few drops." },
-                { fr: "La framboise", en: "Raspberry", exemple: "Fresh raspberries for decoration." },
-                { fr: "La fraise", en: "Strawberry", exemple: "Hull strawberries first." },
-                { fr: "La mangue", en: "Mango", exemple: "Use ripe mango puree." },
-                { fr: "Le fruit de la passion", en: "Passion fruit", exemple: "Passion fruit curd is delicious." },
-                { fr: "L'abricot", en: "Apricot", exemple: "Apricot glaze adds shine." }
+                { fr: "La farine de blé", en: "Wheat flour", exemple: "Sieve the flour to avoid lumps.", hint: "Primary milling product used for doughs." },
+                { fr: "Le sucre semoule", en: "Caster sugar", exemple: "Weigh out the caster sugar precisely.", hint: "Fine white granulated sugar." },
+                { fr: "Le beurre extra-fin", en: "Unsalted butter", exemple: "Ensure butter is at room temperature.", hint: "High-fat dairy essential for lamination." },
+                { fr: "La crème liquide entière", en: "Heavy cream", exemple: "Whip cold heavy cream to stiff peaks.", hint: "Liquid dairy with over 30% fat content." },
+                { fr: "L'oeuf entier", en: "Whole egg", exemple: "Add eggs one by one into the mixture.", hint: "Standard liquid binding agent." }
             ],
             "Professional Tools": [
-                { fr: "Le fouet", en: "Whisk", exemple: "Use a balloon whisk." },
-                { fr: "La maryse", en: "Spatula", exemple: "Scrape the bowl with spatula." },
-                { fr: "La corne", en: "Bench scraper", exemple: "Divide dough with bench scraper." },
-                { fr: "Le batteur", en: "Stand mixer", exemple: "Attach the paddle." },
-                { fr: "Le fouet à main", en: "Hand mixer", exemple: "Portable for small batches." },
-                { fr: "Le moule à tarte", en: "Tart pan", exemple: "Use a fluted tart pan." },
-                { fr: "Le cercle à entremets", en: "Cake ring", exemple: "Set the ring on a tray." },
-                { fr: "La poche à douille", en: "Piping bag", exemple: "Fill the bag halfway." },
-                { fr: "La douille unie", en: "Round tip", exemple: "Small round tip for details." },
-                { fr: "La douille étoile", en: "Star tip", exemple: "Star tip creates rosettes." },
-                { fr: "Le rouleau à pâtisserie", en: "Rolling pin", exemple: "Use a French rolling pin." },
-                { fr: "La balance électronique", en: "Digital scale", exemple: "Tare before weighing." },
-                { fr: "Le thermomètre sonde", en: "Probe thermometer", exemple: "Check core temperature." },
-                { fr: "Le chinois", en: "Fine sieve", exemple: "Pass through a fine sieve." },
-                { fr: "La guitare", en: "Guitar cutter", exemple: "Cut even pieces." },
-                { fr: "La cellule", en: "Blast freezer", exemple: "Rapid freeze." }
-            ],
-            "Basic Techniques": [
-                { fr: "Macaroner", en: "Macaronage", exemple: "Fold until macaronage." },
-                { fr: "Monter les blancs", en: "Whip egg whites", exemple: "Whip to stiff peaks." },
-                { fr: "Incorporer", en: "Fold in", exemple: "Fold in the flour gently." },
-                { fr: "Tempérer", en: "Temper", exemple: "Temper chocolate for shine." },
-                { fr: "Mijoter", en: "Simmer", exemple: "Simmer the compote slowly." },
-                { fr: "Réduire", en: "Reduce", exemple: "Reduce the syrup by half." },
-                { fr: "Chemiser", en: "Line", exemple: "Line the mold with parchment." },
-                { fr: "Masquer", en: "Crumb coat", exemple: "Apply thin crumb coat first." },
-                { fr: "Chablonner", en: "Coat bottom", exemple: "Coat biscuit with chocolate." },
-                { fr: "Laminer", en: "Laminate", exemple: "Laminate puff pastry." },
-                { fr: "Donner un tour", en: "Give a fold", exemple: "Give a single fold." },
-                { fr: "Abaisser", en: "Roll out", exemple: "Roll out to 3mm thick." },
-                { fr: "Dorer", en: "Egg wash", exemple: "Egg wash before baking." },
-                { fr: "Pincer", en: "Crimp", exemple: "Crimp the tart edges." },
-                { fr: "Cuire à blanc", en: "Blind bake", exemple: "Blind bake with weights." },
-                { fr: "Glacer", en: "Glaze", exemple: "Glaze with apricot jam." },
-                { fr: "Pocher", en: "Pipe", exemple: "Pipe onto baking sheet." }
+                { fr: "Le fouet en inox", en: "Wire whisk", exemple: "Use a wire whisk to aerate eggs.", hint: "Utensil with looped wires for beating." },
+                { fr: "La maryse (spatule)", en: "Rubber spatula", exemple: "Scrape down the bowl with a rubber spatula.", hint: "Flexible silicone scraper for batter." },
+                { fr: "Le rouleau à pâtisserie", en: "Rolling pin", exemple: "Roll out the dough evenly.", hint: "Cylindrical tool used to flatten dough." },
+                { fr: "La poche à douille", en: "Pastry bag", exemple: "Fill the pastry bag with choux cream.", hint: "Cone-shaped bag used for piping." },
+                { fr: "Le tapis silpat", en: "Silicone baking mat", exemple: "Place choux buns on a silicone mat.", hint: "Non-stick reusable baking liner." }
             ]
         };
 
-        // ==========================================
-        // DONNÉES COMPLÉMENTAIRES
-        // ==========================================
-        const worldPastriesData = [
-            { question: "Mochi (Japan)", options: ["Rice cake", "Bread roll", "Cookie", "Cream puff"], answer: "Rice cake" },
-            { question: "Baklava (Turkey)", options: ["Nut pastry", "Fruit tart", "Layer cake", "Ice cream"], answer: "Nut pastry" },
-            { question: "Pavlova (Australia)", options: ["Meringue cake", "Pudding", "Fruit pie", "Brownie"], answer: "Meringue cake" },
-            { question: "Pastel de Nata (Portugal)", options: ["Custard tart", "Meat pie", "Doughnut", "Bread"], answer: "Custard tart" },
-            { question: "Knafeh (Middle East)", options: ["Cheese pastry", "Nut cake", "Fruit jelly", "Rice pudding"], answer: "Cheese pastry" },
-            { question: "Churros (Spain)", options: ["Fried dough", "Baked bread", "Steamed bun", "Cake"], answer: "Fried dough" },
-            { question: "Cronut (USA)", options: ["Croissant-donut", "Muffin hybrid", "Bagel cross", "Waffle cone"], answer: "Croissant-donut" },
-            { question: "Panettone (Italy)", options: ["Christmas bread", "Cheese cake", "Pasta dish", "Fruit pie"], answer: "Christmas bread" },
-            { question: "Tiramisu (Italy)", options: ["Coffee dessert", "Cheese pie", "Fruit jelly", "Pudding cup"], answer: "Coffee dessert" },
-            { question: "Cannoli (Italy)", options: ["Fried tube", "Bread stick", "Cookie bar", "Cake roll"], answer: "Fried tube" },
-            { question: "Mille-feuille (France)", options: ["Thousand layers", "Meringue base", "Cream pie", "Fruit tart"], answer: "Thousand layers" },
-            { question: "Kouign-Amann (France)", options: ["Butter cake", "Bread loaf", "Cookie", "Souffle"], answer: "Butter cake" }
-        ];
+        let currentXP = 0;
+        let currentCategory = "Classic Pastries";
+        let currentMode = "flashcard";
+        let currentItemIndex = 0;
+        let currentQuizData = null;
 
-        const listeningData = [
-            { audio: "Whisk the egg whites until stiff peaks form.", options: ["Whisk whites", "Fold flour", "Melt butter", "Boil milk"], answer: "Whisk whites" },
-            { audio: "Sift the flour and cocoa powder together.", options: ["Sieve flour", "Mix eggs", "Whip cream", "Chop chocolate"], answer: "Sieve flour" },
-            { audio: "Fold the meringue into the almond mixture.", options: ["Fold meringue", "Whisk yolks", "Knead dough", "Roll pastry"], answer: "Fold meringue" },
-            { audio: "Pipe the choux pastry onto a baking tray.", options: ["Pipe choux", "Spread cream", "Cut fruit", "Grate zest"], answer: "Pipe choux" },
-            { audio: "Temper the dark chocolate to 31 degrees.", options: ["Temper chocolate", "Melt butter", "Boil sugar", "Whip cream"], answer: "Temper chocolate" },
-            { audio: "Line the tart pan with parchment paper.", options: ["Line pan", "Grease mold", "Flour surface", "Preheat oven"], answer: "Line pan" },
-            { audio: "Blind bake the tart shell for 15 minutes.", options: ["Blind bake", "Glaze top", "Fill shell", "Cool down"], answer: "Blind bake" },
-            { audio: "Caramelize the sugar until golden brown.", options: ["Caramelize sugar", "Whip cream", "Fold flour", "Chill bowl"], answer: "Caramelize sugar" },
-            { audio: "Soak the gelatin sheets in cold water.", options: ["Soak gelatin", "Melt chocolate", "Boil cream", "Whisk eggs"], answer: "Soak gelatin" },
-            { audio: "Bring the heavy cream to a gentle boil.", options: ["Boil cream", "Melt butter", "Whip whites", "Fold nuts"], answer: "Boil cream" }
-        ];
-
-        const roleplayData = [
-            { scenario: "Counter Sales", context: "Customer: 'Is this tart very sweet?'", options: ["Yes, extremely sweet.", "It has balanced, subtle flavors.", "I don't know."], correct: 1, feedback: "Describe flavors accurately and professionally." },
-            { scenario: "Allergen Inquiry", context: "Customer: 'Does this contain any nuts?'", options: ["Maybe, I'm not sure.", "Let me check the recipe for you.", "No nuts at all."], correct: 1, feedback: "Never guess with allergens. Always verify." },
-            { scenario: "Custom Order", context: "Customer: 'Can I order a birthday cake for 20 people?'", options: ["We're too busy.", "Certainly! Ready for tomorrow.", "We don't do custom orders."], correct: 1, feedback: "Accept orders with clear timing." },
-            { scenario: "Complaint", context: "Customer: 'This croissant isn't fresh.'", options: ["That's how they are.", "I apologize. Let me replace it.", "You should eat it sooner."], correct: 1, feedback: "Offer solutions when customers are unsatisfied." },
-            { scenario: "Recommendation", context: "Customer: 'What pairs well with cappuccino?'", options: ["Everything is good.", "Our chocolate eclair pairs beautifully.", "I don't drink coffee."], correct: 1, feedback: "Make specific, enthusiastic suggestions." },
-            { scenario: "Storage", context: "Customer: 'How should I store macarons?'", options: ["Leave on counter.", "Refrigerate in airtight container.", "Freeze immediately."], correct: 1, feedback: "Provide accurate storage instructions." },
-            { scenario: "Dietary", context: "Customer: 'Do you have gluten-free options?'", options: ["No, everything has gluten.", "We have flourless chocolate cake.", "Gluten-free isn't real."], correct: 1, feedback: "Know your dietary options." },
-            { scenario: "Price", context: "Customer: 'Why is this cake so expensive?'", options: ["It's not expensive.", "We use premium ingredients like Valrhona.", "Everything costs more now."], correct: 1, feedback: "Explain value through quality ingredients." }
-        ];
-
-        const recipes = [
-            { title: "Pastry Cream", steps: ["Boil the milk", "Whisk yolks and sugar", "Add cornstarch", "Pour hot milk", "Cook until thick", "Cool with film"] },
-            { title: "Macaron Shells", steps: ["Sift almond flour", "Make French meringue", "Fold dry ingredients", "Macaronage batter", "Pipe onto trays", "Rest 20 minutes", "Bake 12 minutes"] },
-            { title: "Chocolate Ganache", steps: ["Chop the chocolate", "Boil heavy cream", "Pour over chocolate", "Stir from center", "Emulsify well", "Cool before using"] },
-            { title: "Choux Pastry", steps: ["Boil water and butter", "Add flour at once", "Dry on medium heat", "Cool slightly", "Add eggs gradually", "Pipe shapes", "Bake until golden"] }
-        ];
-
-        // EXAM DATA
-        const examSubjects = {
-            "Hygiène": {
-                icon: "🧼",
-                questions: [
-                    { type: "mcq", question: "What does HACCP stand for?", options: ["Hazard Analysis Critical Control Points", "Health And Cooking Control", "Hygiene And Cleanliness Program", "Healthy Food Certification"], correct: 0 },
-                    { type: "mcq", question: "After handling raw eggs, what should you do?", options: ["Wipe hands on apron", "Continue working", "Wash hands thoroughly", "Use sanitizer only"], correct: 2 },
-                    { type: "mcq", question: "What is the ideal temperature for a pastry kitchen?", options: ["15-17°C", "18-20°C", "21-23°C", "24-26°C"], correct: 1 },
-                    { type: "mcq", question: "Which PPE is required in pastry kitchen?", options: ["Safety helmet", "Hair net and apron", "Goggles only", "Earplugs"], correct: 1 },
-                    { type: "writing", prompt: "Write an email (50-70 words) to your team about food safety. Include: washing hands, cleaning surfaces, proper storage.", wordMin: 50, wordMax: 70, modelAnswer: "Dear Team, I would like to remind everyone about food safety. Please wash your hands regularly, especially after handling raw ingredients. Clean and sanitize all work surfaces throughout the day. Ensure proper food storage by keeping raw and cooked products separate. Thank you for your cooperation. Best regards, The Pastry Chef" }
-                ]
-            },
-            "Ingrédients": {
-                icon: "🥚",
-                questions: [
-                    { type: "mcq", question: "What percentage of fat does butter contain?", options: ["70%", "80%", "90%", "60%"], correct: 1 },
-                    { type: "mcq", question: "What is the main function of eggs in sponge cake?", options: ["Add color", "Provide structure and aeration", "Make it sweeter", "Reduce cooking time"], correct: 1 },
-                    { type: "mcq", question: "Which sugar is best for meringues?", options: ["Brown sugar", "Icing sugar", "Caster sugar", "Raw sugar"], correct: 2 },
-                    { type: "mcq", question: "What type of flour is used for puff pastry?", options: ["Cake flour", "Bread flour", "All-purpose flour", "Self-rising flour"], correct: 2 },
-                    { type: "writing", prompt: "A customer asks about ingredients in your chocolate cake. Write a response (50-70 words) explaining: main ingredients, allergens, what makes your recipe special.", wordMin: 50, wordMax: 70, modelAnswer: "Our chocolate cake is made with dark chocolate, butter, eggs, flour, and sugar. Please note it contains allergens: eggs, gluten (wheat), and milk. What makes it special is our use of 70% Belgian chocolate, giving a rich and intense flavor." }
-                ]
-            },
-            "Service": {
-                icon: "🤝",
-                questions: [
-                    { type: "mcq", question: "How should you greet customers?", options: ["Wait for them to speak", "Continue working", "Greet with a smile", "Ask what they want"], correct: 2 },
-                    { type: "mcq", question: "A customer has a complaint. What should you do?", options: ["Ignore them", "Apologize and offer solution", "Say it's not your fault", "Ask them to leave"], correct: 1 },
-                    { type: "mcq", question: "Customer asks for gluten-free option. What to say?", options: ["We don't have any", "Let me show you our selection", "Not popular", "Try another shop"], correct: 1 },
-                    { type: "mcq", question: "How to describe a new pastry to customer?", options: ["Just point to it", "Describe flavors and textures", "Tell them to try it", "Read the label"], correct: 1 },
-                    { type: "writing", prompt: "Customer wants to order a custom birthday cake. Write a conversation (60-80 words) about: occasion, size/flavor, decoration, pickup date.", wordMin: 60, wordMax: 80, modelAnswer: "Pastry Chef: Good morning! How can I help you?\nCustomer: I'd like to order a birthday cake.\nChef: Wonderful! How many people?\nCustomer: About 15.\nChef: What flavor? We have chocolate, vanilla, strawberry.\nCustomer: Chocolate please. Can you add pink flowers?\nChef: Of course! When do you need it?\nCustomer: Saturday afternoon.\nChef: Perfect! Ready Saturday at 2 PM." }
-                ]
-            }
-        };
-
-        // ==========================================
-        // CONFIGURATION DES NIVEAUX
-        // ==========================================
-        const LEVELS = {
-            1: { name: "Apprentice", title: "Débutant en pâtisserie", icon: "👨‍🍳", shortName: "APP", xp: 0 },
-            2: { name: "Commis", title: "Assistant pâtissier", icon: "🥐", shortName: "COM", xp: 100 },
-            3: { name: "Pastry Chef", title: "Pâtissier confirmé", icon: "🎂", shortName: "CHEF", xp: 300 },
-            4: { name: "Head Chef", title: "Chef pâtissier", icon: "🏆", shortName: "HEAD", xp: 600 },
-            5: { name: "MOF", title: "Meilleur Ouvrier de France", icon: "👑", shortName: "MOF", xp: 1200 }
-        };
-
-        // ==========================================
-        // ÉTAT - Variables persistantes pour éviter les bugs
-        // ==========================================
-        let xp = 0;
-        let mode = "flashcard";
-        let theme = "Basic Ingredients";
-        let deck = [];
-        let idx = 0;
-        let flipped = false;
-
-        // Compteurs pour les quiz
-        let quizNumber = 0;
-        let totalQuizzes = 0;
-
-        let rushTimer = null;
-        let rushTimeLeft = 0;
-        let rushItem = null;
-
-        // Variables pour garder les items sélectionnés
-        let currentListeningItem = null;
-        let currentListeningItemIndex = 0;
-        let currentListeningOptions = null;
-        let currentRoleplayItem = null;
-        let currentRoleplayIndex = 0;
-        let currentWorldItem = null;
-        let currentWorldIndex = 0;
-        let currentWorldOptions = null;
-        let currentRecipe = null;
-        let currentRecipeIndex = 0;
-        let userSteps = [];
-        let selectedStepIndex = null;
-
-        // Exam state
-        let examMode = false;
-        let currentExamSubject = null;
-        let examQuestions = [];
-        let examIndex = 0;
-        let examAnswers = [];
-        let examTimeLeft = 0;
-        let examTimer = null;
-
-        // API Key pour la correction IA
-        let apiKey = '';
-        try { apiKey = localStorage.getItem('pastryApiKey') || ''; } catch(e) { apiKey = ''; }
-
-        // Charger XP
-        try { xp = parseInt(localStorage.getItem('pastryXP')) || 0; } catch(e) { xp = 0; }
-
-        // ==========================================
-        // UTILITAIRES
-        // ==========================================
-        function shuffle(arr) {
-            const a = [...arr];
-            for (let i = a.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [a[i], a[j]] = [a[j], a[i]];
-            }
-            return a;
-        }
-
-        function speak(text) {
-            try {
-                window.speechSynthesis.cancel();
-                const u = new SpeechSynthesisUtterance(text);
-                u.lang = 'en-GB';
-                u.rate = 0.9;
-                window.speechSynthesis.speak(u);
-            } catch(e) { console.log('Speech not available'); }
-        }
-
-        function addXP(n) {
-            xp += n;
-            try { localStorage.setItem('pastryXP', xp); } catch(e) {}
-            updateProgress();
-        }
-
-        function getLevel() {
-            for (let i = 5; i >= 1; i--) {
-                if (xp >= LEVELS[i].xp) {
-                    return { lvl: i, ...LEVELS[i], next: LEVELS[i+1] };
-                }
-            }
-            return { lvl: 1, ...LEVELS[1], next: LEVELS[2] };
-        }
-
-        function countWords(text) {
-            return text.trim().split(/\s+/).filter(w => w.length > 0).length;
-        }
-
-        // ==========================================
-        // PROGRESSION - Avec noms des niveaux
-        // ==========================================
-        function updateProgress() {
-            const L = getLevel();
-            
-            document.getElementById('lvl-icon').textContent = L.icon;
-            document.getElementById('lvl-name').textContent = `Niveau ${L.lvl} · ${L.name}`;
-            document.getElementById('lvl-title').textContent = L.title;
-            document.getElementById('xp-count').textContent = `${xp} XP`;
-            
-            if (L.next) {
-                document.getElementById('xp-next').textContent = `${L.next.xp - xp} XP niveau suivant`;
+        function startApp(mode) {
+            document.getElementById('home-screen').style.display = 'none';
+            document.getElementById('game-screen').style.display = 'flex';
+            if (mode === 'train') {
+                initMenus();
+                loadActivity();
             } else {
-                document.getElementById('xp-next').textContent = "Niveau maximum !";
-            }
-
-            const prevXp = LEVELS[L.lvl].xp;
-            const nextXp = L.next ? L.next.xp : L.xp;
-            const pct = L.next ? Math.min(100, ((xp - prevXp) / (nextXp - prevXp)) * 100) : 100;
-            
-            document.getElementById('progress-bar').style.width = pct + '%';
-
-            // NOUVEAU: Afficher les noms des niveaux sur la barre de progression
-            let labels = '';
-            for (let i = 1; i <= 5; i++) {
-                const passed = xp >= LEVELS[i].xp;
-                const current = i === L.lvl;
-                labels += `<div class="level-label ${passed ? 'passed' : ''} ${current ? 'current' : ''}">
-                    <div class="level-label-dot">${LEVELS[i].icon}</div>
-                    <span class="level-label-name">${LEVELS[i].shortName}</span>
-                </div>`;
-            }
-            document.getElementById('level-labels').innerHTML = labels;
-        }
-
-        function updateHomeStats() {
-            const stats = document.getElementById('home-stats');
-            if (xp > 0) {
-                const L = getLevel();
-                stats.style.display = 'block';
-                stats.innerHTML = `
-                    <div class="home-level">
-                        <span class="home-level-icon">${L.icon}</span>
-                        <div class="home-level-info">
-                            <div class="home-level-name">Niveau ${L.lvl} · ${L.name}</div>
-                            <div class="home-level-xp">${xp} XP gagnés</div>
-                        </div>
-                    </div>
-                `;
+                loadExamMode();
             }
         }
 
-        // ==========================================
-        // NAVIGATION
-        // ==========================================
-        function showScreen(screen) {
-            document.getElementById('home-screen').style.display = screen === 'home' ? 'flex' : 'none';
-            document.getElementById('game-screen').style.display = screen === 'game' ? 'flex' : 'none';
+        function backToHome() {
+            document.getElementById('game-screen').style.display = 'none';
+            document.getElementById('home-screen').style.display = 'flex';
         }
 
-        function goHome() {
-            if (rushTimer) clearInterval(rushTimer);
-            if (examTimer) clearInterval(examTimer);
-            examMode = false;
-            showScreen('home');
-            updateHomeStats();
-        }
-
-        function startApp() {
-            showScreen('game');
-            renderModeMenu();
-            updateProgress();
-            loadTheme(theme);
-        }
-
-        function renderModeMenu() {
-            const modes = [
-                ['flashcard', '📚 Cards'],
-                ['quiz', '❓ Quiz'],
-                ['listening', '👂 Audio'],
-                ['roleplay', '🎭 Service'],
-                ['world', '🌍 World'],
-                ['recipe', '📜 Recipes'],
-                ['rush', '⏱️ Rush']
-            ];
-            
-            document.getElementById('mode-menu').innerHTML = modes.map(m => 
-                `<button class="menu-btn ${mode === m[0] ? 'active' : ''}" data-mode="${m[0]}">${m[1]}</button>`
+        function initMenus() {
+            const catMenu = document.getElementById('category-menu');
+            catMenu.innerHTML = Object.keys(database).map(cat => 
+                `<div class="chip ${cat === currentCategory ? 'active' : ''}" onclick="changeCategory('${cat}')">${cat}</div>`
             ).join('');
+
+            const modeMenu = document.getElementById('mode-menu');
+            modeMenu.innerHTML = `
+                <div class="chip ${currentMode === 'flashcard' ? 'active' : ''}" onclick="changeMode('flashcard')">🃏 Flashcards</div>
+                <div class="chip ${currentMode === 'quiz' ? 'active' : ''}" onclick="changeMode('quiz')">🎯 Quiz & Remédiation</div>
+            `;
         }
 
-        function renderThemeMenu() {
-            const show = mode === 'flashcard' || mode === 'quiz';
-            const menu = document.getElementById('theme-menu');
-            
-            if (show) {
-                menu.style.display = 'flex';
-                menu.innerHTML = Object.keys(database).map(k => 
-                    `<button class="menu-btn ${theme === k ? 'active' : ''}" data-theme="${k}">${k}</button>`
-                ).join('');
-            } else {
-                menu.style.display = 'none';
-            }
+        function changeCategory(cat) {
+            currentCategory = cat;
+            currentItemIndex = 0;
+            initMenus();
+            loadActivity();
         }
 
-        function loadTheme(t) {
-            theme = t;
-            deck = database[t] ? shuffle([...database[t]]) : [];
-            idx = 0;
-            flipped = false;
-            quizNumber = 0;
-            totalQuizzes = deck.length;
-            renderThemeMenu();
-            renderQuestion();
+        function changeMode(mode) {
+            currentMode = mode;
+            currentItemIndex = 0;
+            initMenus();
+            loadActivity();
         }
 
-        function setMode(m) {
-            if (rushTimer) clearInterval(rushTimer);
-            mode = m;
-            idx = 0;
-            quizNumber = 0;
-            renderModeMenu();
-            renderThemeMenu();
+        function loadActivity() {
+            document.getElementById('header-title').textContent = "Pastry English Pro";
+            const items = database[currentCategory];
+            const item = items[currentItemIndex % items.length];
+            const stage = document.getElementById('card-stage');
+            const controls = document.getElementById('controls-stage');
 
-            switch(m) {
-                case 'listening': initListening(); break;
-                case 'roleplay': initRoleplay(); break;
-                case 'world': initWorld(); break;
-                case 'recipe': initRecipe(); break;
-                case 'rush': initRush(); break;
-                default:
-                    deck = database[theme] ? shuffle([...database[theme]]) : [];
-                    totalQuizzes = deck.length;
-                    renderQuestion();
-            }
-        }
-
-        // ==========================================
-        // FLASHCARD & QUIZ - Avec compteurs
-        // ==========================================
-        function renderQuestion() {
-            if (!deck.length) return;
-            const item = deck[idx];
-            const area = document.getElementById('game-area');
-            const controls = document.getElementById('controls-area');
-
-            if (mode === 'flashcard') {
-                const displayWord = flipped ? item.en : item.fr;
-                const displayEx = flipped ? item.exemple : "Tap to flip";
-
-                // NOUVEAU: Afficher le compteur de cartes
-                area.innerHTML = `
-                    <span class="card-counter">📚 Carte ${idx + 1}/${deck.length}</span>
-                    <div class="mode-label">Flashcard</div>
-                    <div class="card-word" id="flip-card">${displayWord}</div>
-                    <div class="card-example">${displayEx}</div>
+            if (currentMode === 'flashcard') {
+                stage.innerHTML = `
+                    <div class="card-category-tag">${currentCategory}</div>
+                    <div class="card-main-word" id="flash-word">${item.fr}</div>
+                    <div class="card-sub-info" id="flash-sub">"${item.exemple}"</div>
+                    <div class="tap-hint">👆 Touche la carte pour voir la traduction en anglais</div>
                 `;
-
                 controls.innerHTML = `
-                    <button class="btn-nav" id="prev-btn" ${idx === 0 ? 'disabled' : ''}>◀ Prev</button>
-                    <button class="btn-sound" id="speak-btn">🔊</button>
-                    <button class="btn-nav" id="next-btn">Next ▶</button>
+                    <button class="btn-action" onclick="nextCard()">Mot suivant ➔</button>
                 `;
 
-                document.getElementById('flip-card').addEventListener('click', () => { 
-                    flipped = !flipped; 
-                    renderQuestion(); 
-                    if (flipped) speak(item.en); 
-                });
-                document.getElementById('prev-btn').addEventListener('click', () => { if (idx > 0) { idx--; flipped = false; renderQuestion(); } });
-                document.getElementById('next-btn').addEventListener('click', () => { idx = (idx + 1) % deck.length; if (idx === 0) deck = shuffle(deck); flipped = false; renderQuestion(); });
-                document.getElementById('speak-btn').addEventListener('click', () => speak(item.en));
-
-            } else if (mode === 'quiz') {
-                let opts = [item.en];
-                const allWords = Object.values(database).flat().map(x => x.en);
-                while (opts.length < 4) {
-                    const r = allWords[Math.floor(Math.random() * allWords.length)];
-                    if (!opts.includes(r)) opts.push(r);
-                }
-                opts = shuffle(opts);
-
-                // NOUVEAU: Afficher le numéro du quiz
-                area.innerHTML = `
-                    <span class="card-counter">❓ Quiz ${idx + 1}/${deck.length}</span>
-                    <div class="quiz-number">Question ${idx + 1}</div>
-                    <div class="quiz-question">Translate:<br><b>${item.fr}</b></div>
-                    <div class="quiz-options">
-                        ${opts.map(o => `<button class="quiz-btn" data-opt="${o}">${o}</button>`).join('')}
-                    </div>
-                `;
-
-                controls.innerHTML = '<button class="btn-nav btn-action" id="skip-btn">Skip</button>';
-
-                document.querySelectorAll('.quiz-btn').forEach(btn => {
-                    btn.addEventListener('click', () => checkQuiz(btn.dataset.opt, item.en));
-                });
-                document.getElementById('skip-btn').addEventListener('click', () => { idx = (idx + 1) % deck.length; renderQuestion(); });
-            }
-        }
-
-        function checkQuiz(selected, correct) {
-            const isCorrect = selected === correct;
-            if (isCorrect) addXP(10);
-
-            document.querySelectorAll('.quiz-btn').forEach(btn => {
-                btn.disabled = true;
-                if (btn.dataset.opt === correct) btn.classList.add('correct');
-                if (btn.dataset.opt === selected && !isCorrect) btn.classList.add('wrong');
-            });
-
-            document.getElementById('controls-area').innerHTML = `
-                <button class="btn-nav btn-action ${isCorrect ? 'btn-success' : ''}" id="next-quiz">
-                    ${isCorrect ? '✓ Correct! +10 XP' : '✗ Answer: ' + correct}
-                </button>
-            `;
-            document.getElementById('next-quiz').addEventListener('click', () => { idx = (idx + 1) % deck.length; renderQuestion(); });
-        }
-
-        // ==========================================
-        // LISTENING - Avec numéro
-        // ==========================================
-        function initListening() {
-            currentListeningItemIndex = Math.floor(Math.random() * listeningData.length);
-            currentListeningItem = listeningData[currentListeningItemIndex];
-            currentListeningOptions = shuffle([...currentListeningItem.options]);
-            renderListening(null);
-        }
-
-        function renderListening(answered) {
-            const item = currentListeningItem;
-            const opts = currentListeningOptions;
-            const area = document.getElementById('game-area');
-            const controls = document.getElementById('controls-area');
-            
-            if (!item || !opts) {
-                initListening();
-                return;
-            }
-
-            // NOUVEAU: Afficher le numéro
-            area.innerHTML = `
-                <span class="card-counter">👂 Audio ${currentListeningItemIndex + 1}/${listeningData.length}</span>
-                <div class="mode-label">Listening</div>
-                <p style="color:var(--fg-secondary); margin: 10px 0;">Listen and choose the action.</p>
-                <button class="btn-sound" style="margin:0 auto 14px; width:80px; height:80px;" id="audio-btn">🔊</button>
-                <div class="quiz-options">
-                    ${opts.map(o => {
-                        let cls = 'quiz-btn';
-                        if (answered) {
-                            if (o === item.answer) cls += ' correct';
-                            else if (o === answered) cls += ' wrong';
-                        }
-                        return `<button class="${cls}" data-opt="${o}" ${answered ? 'disabled' : ''}>${o}</button>`;
-                    }).join('')}
-                </div>
-            `;
-
-            document.getElementById('audio-btn').addEventListener('click', () => speak(item.audio));
-
-            if (!answered) {
-                document.querySelectorAll('.quiz-btn').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        if (btn.dataset.opt === item.answer) addXP(15);
-                        renderListening(btn.dataset.opt);
-                    });
-                });
-            }
-
-            controls.innerHTML = answered 
-                ? `<button class="btn-nav btn-action ${answered === item.answer ? 'btn-success' : ''}" id="next-listen">Next</button>`
-                : '';
-            if (answered) document.getElementById('next-listen').addEventListener('click', () => initListening());
-        }
-
-        // ==========================================
-        // ROLEPLAY - Avec numéro
-        // ==========================================
-        function initRoleplay() {
-            currentRoleplayIndex = Math.floor(Math.random() * roleplayData.length);
-            currentRoleplayItem = roleplayData[currentRoleplayIndex];
-            renderRoleplay(null);
-        }
-
-        function renderRoleplay(selected) {
-            const item = currentRoleplayItem;
-            const area = document.getElementById('game-area');
-            const controls = document.getElementById('controls-area');
-            
-            if (!item) {
-                initRoleplay();
-                return;
-            }
-            
-            const finished = selected !== null;
-
-            // NOUVEAU: Afficher le numéro du scénario
-            area.innerHTML = `
-                <span class="card-counter">🎭 Scénario ${currentRoleplayIndex + 1}/${roleplayData.length}</span>
-                <div class="mode-label">Service Scenario</div>
-                <div class="roleplay-context">
-                    <div class="roleplay-scenario">${item.scenario}</div>
-                    <div class="roleplay-dialog">"${item.context}"</div>
-                </div>
-                <p style="color:var(--fg-muted); font-size:0.85rem; margin-bottom:10px;">Choose the best response:</p>
-                <div style="display:flex; flex-direction:column; gap:8px;">
-                    ${item.options.map((o, i) => {
-                        let style = '';
-                        if (finished && i === item.correct) style = 'border-color:var(--success); background:rgba(107,155,107,0.2);';
-                        if (finished && i === selected && i !== item.correct) style = 'border-color:var(--error); background:rgba(196,92,92,0.2);';
-                        return `<button class="quiz-btn" style="${style}" data-idx="${i}" ${finished ? 'disabled' : ''}>${o}</button>`;
-                    }).join('')}
-                </div>
-                ${finished ? `<p style="margin-top:14px; color:var(--fg-secondary); font-size:0.85rem; font-style:italic;">💡 ${item.feedback}</p>` : ''}
-            `;
-
-            if (!finished) {
-                document.querySelectorAll('.quiz-btn[data-idx]').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        const idx = parseInt(btn.dataset.idx);
-                        if (idx === item.correct) addXP(20);
-                        renderRoleplay(idx);
-                    });
-                });
-            }
-
-            controls.innerHTML = finished 
-                ? '<button class="btn-nav btn-action" id="next-role">Next Scenario</button>'
-                : '';
-            if (finished) document.getElementById('next-role').addEventListener('click', () => initRoleplay());
-        }
-
-        // ==========================================
-        // WORLD - Avec numéro
-        // ==========================================
-        function initWorld() {
-            currentWorldIndex = Math.floor(Math.random() * worldPastriesData.length);
-            currentWorldItem = worldPastriesData[currentWorldIndex];
-            currentWorldOptions = shuffle([...currentWorldItem.options]);
-            renderWorld(null);
-        }
-
-        function renderWorld(selected) {
-            const item = currentWorldItem;
-            const opts = currentWorldOptions;
-            const area = document.getElementById('game-area');
-            const controls = document.getElementById('controls-area');
-            
-            if (!item || !opts) {
-                initWorld();
-                return;
-            }
-            
-            const finished = selected !== null;
-
-            // NOUVEAU: Afficher le numéro
-            area.innerHTML = `
-                <span class="card-counter">🌍 Question ${currentWorldIndex + 1}/${worldPastriesData.length}</span>
-                <div class="mode-label">World Pastry</div>
-                <p style="color:var(--fg-secondary); margin: 8px 0;">What is this pastry?</p>
-                <div style="font-size:1.5rem; font-weight:700; margin: 10px 0;">${item.question}</div>
-                <div class="quiz-options">
-                    ${opts.map(o => {
-                        let cls = 'quiz-btn';
-                        if (finished) {
-                            if (o === item.answer) cls += ' correct';
-                            else if (o === selected) cls += ' wrong';
-                        }
-                        return `<button class="${cls}" data-opt="${o}" ${finished ? 'disabled' : ''}>${o}</button>`;
-                    }).join('')}
-                </div>
-            `;
-
-            if (!finished) {
-                document.querySelectorAll('.quiz-btn').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        if (btn.dataset.opt === item.answer) addXP(15);
-                        renderWorld(btn.dataset.opt);
-                    });
-                });
-            }
-
-            controls.innerHTML = finished 
-                ? '<button class="btn-nav btn-action" id="next-world">Next</button>'
-                : '';
-            if (finished) document.getElementById('next-world').addEventListener('click', () => initWorld());
-        }
-
-        // ==========================================
-        // RECIPE - Avec numéro
-        // ==========================================
-        function initRecipe() {
-            currentRecipeIndex = Math.floor(Math.random() * recipes.length);
-            currentRecipe = recipes[currentRecipeIndex];
-            userSteps = shuffle([...currentRecipe.steps]);
-            selectedStepIndex = null;
-            renderRecipe();
-        }
-
-        function renderRecipe() {
-            if (!currentRecipe) return;
-            
-            const done = userSteps.every((s, i) => s === currentRecipe.steps[i]);
-
-            // NOUVEAU: Afficher le numéro de recette
-            document.getElementById('game-area').innerHTML = `
-                <span class="card-counter">📜 Recette ${currentRecipeIndex + 1}/${recipes.length}</span>
-                <div class="recipe-container">
-                    <div class="recipe-info">
-                        <div style="font-size:1.2rem; margin-bottom:6px;">📜 Recipe</div>
-                        <div style="font-weight:700; color:var(--accent);">${currentRecipe.title}</div>
-                        <p style="font-size:0.7rem; color:var(--fg-muted); margin-top:8px;">Click 2 steps to swap.</p>
-                    </div>
-                    <div class="recipe-steps">
-                        ${userSteps.map((s, i) => `
-                            <div class="quiz-btn recipe-step ${selectedStepIndex === i ? 'selected' : ''} ${done ? 'correct' : ''}" data-step="${i}">
-                                ${done ? '✓' : (i+1)}. ${s}
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `;
-
-            if (done) addXP(30);
-
-            document.querySelectorAll('.recipe-step').forEach(div => {
-                div.addEventListener('click', () => {
-                    if (done) return;
-                    const i = parseInt(div.dataset.step);
-                    if (selectedStepIndex === null) {
-                        selectedStepIndex = i;
+                let flipped = false;
+                stage.onclick = () => {
+                    const wordEl = document.getElementById('flash-word');
+                    const subEl = document.getElementById('flash-sub');
+                    if (!flipped) {
+                        wordEl.textContent = item.en;
+                        subEl.innerHTML = `💡 <strong>Indice :</strong> ${item.hint}`;
+                        flipped = true;
+                        addXP(5);
                     } else {
-                        [userSteps[selectedStepIndex], userSteps[i]] = [userSteps[i], userSteps[selectedStepIndex]];
-                        selectedStepIndex = null;
+                        wordEl.textContent = item.fr;
+                        subEl.textContent = `"${item.exemple}"`;
+                        flipped = false;
                     }
-                    renderRecipe();
+                };
+            } else {
+                stage.onclick = null;
+                // Génération des choix du quiz de manière stable (Fix du bug des boutons qui bougent)
+                if (!currentQuizData || currentQuizData.correctItem.en !== item.en) {
+                    const pool = items.filter(i => i.en !== item.en);
+                    const wrong1 = pool[Math.floor(Math.random() * pool.length)] || { en: "Baking tray", fr: "Plaque" };
+                    const wrong2 = pool[Math.floor(Math.random() * pool.length)] || { en: "Whisk", fr: "Fouet" };
+                    const options = [item.en, wrong1.en, wrong2.en].sort(() => Math.random() - 0.5);
+                    currentQuizData = { correctItem: item, options: options };
+                }
+
+                stage.innerHTML = `
+                    <div class="card-category-tag">${currentCategory}</div>
+                    <div class="quiz-prompt">Traduisez en anglais :</div>
+                    <div class="card-main-word">${currentQuizData.correctItem.fr}</div>
+                    <div class="quiz-container">
+                        <div class="quiz-options-grid" id="quiz-grid">
+                            ${currentQuizData.options.map(opt => `
+                                <button class="quiz-option-btn" onclick="handleQuizAnswer(this, '${opt.replace(/'/g, "\\'")}', '${currentQuizData.correctItem.en.replace(/'/g, "\\'")}')">${opt}</button>
+                            `).join('')}
+                        </div>
+                        <div id="remediation-container"></div>
+                    </div>
+                `;
+                controls.innerHTML = `
+                    <button class="btn-action" onclick="nextCard()">Question suivante ➔</button>
+                `;
+            }
+        }
+
+        function nextCard() {
+            currentItemIndex++;
+            currentQuizData = null;
+            loadActivity();
+        }
+
+        // ==========================================
+        // CORRECTION DU BUG DES BOUTONS QUI BOUGENT & REMÉDIATION
+        // ==========================================
+        function handleQuizAnswer(btn, selected, correct) {
+            const grid = document.getElementById('quiz-grid');
+            const buttons = grid.querySelectorAll('.quiz-option-btn');
+            
+            // Désactive tous les boutons immédiatement pour bloquer les clics multiples
+            buttons.forEach(b => b.disabled = true);
+
+            if (selected === correct) {
+                btn.classList.add('correct');
+                addXP(10);
+                setTimeout(() => {
+                    nextCard();
+                }, 1200);
+            } else {
+                btn.classList.add('wrong');
+                // Trouve et met en valeur la bonne réponse sans déplacer les boutons
+                buttons.forEach(b => {
+                    if (b.textContent.trim() === correct.trim()) {
+                        b.classList.add('correct');
+                    }
                 });
-            });
 
-            document.getElementById('controls-area').innerHTML = `
-                <button class="btn-nav btn-action ${done ? 'btn-success' : ''}" id="new-recipe">
-                    ${done ? '✓ Validated! +30 XP' : '🔄 New Recipe'}
-                </button>
-            `;
-            document.getElementById('new-recipe').addEventListener('click', () => initRecipe());
-        }
-
-        // ==========================================
-        // RUSH
-        // ==========================================
-        function normalize(s) {
-            return s.toLowerCase().replace(/^(the|a|an|le|la|les|l')\s/, '').split('/')[0].trim();
-        }
-
-        function initRush() {
-            document.getElementById('game-area').innerHTML = `
-                <div class="mode-label">Rush Challenge</div>
-                <h3 style="color:var(--fg-primary); margin-bottom:8px;">⏱️ Pastry Rush</h3>
-                <p style="color:var(--fg-secondary); margin-bottom:14px;">Type the English word quickly!</p>
-                <div class="card-word" id="rush-word">?</div>
-                <input type="text" class="quiz-btn" id="rush-input" style="background:var(--bg-secondary); border:2px solid var(--accent); text-align:center; margin-top:10px;" placeholder="Type here..." autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
-                <div class="timer" id="rush-timer">15.0</div>
-            `;
-            document.getElementById('controls-area').innerHTML = '<button class="btn-nav btn-action" id="start-rush">▶ Start</button>';
-            document.getElementById('start-rush').addEventListener('click', () => startRush());
-        }
-
-        function startRush() {
-            const allItems = Object.values(database).flat();
-            rushItem = allItems[Math.floor(Math.random() * allItems.length)];
-            rushTimeLeft = 15;
-
-            document.getElementById('rush-word').textContent = rushItem.fr;
-            document.getElementById('rush-word').style.color = 'var(--fg-primary)';
-            document.getElementById('rush-input').value = '';
-            document.getElementById('rush-input').focus();
-            document.getElementById('controls-area').innerHTML = '';
-
-            rushTimer = setInterval(() => {
-                rushTimeLeft -= 0.1;
-                const timer = document.getElementById('rush-timer');
-                if (timer) {
-                    timer.textContent = rushTimeLeft.toFixed(1);
-                    timer.className = 'timer' + (rushTimeLeft < 5 ? ' warning' : '');
-                }
-                
-                if (rushTimeLeft <= 0) {
-                    clearInterval(rushTimer);
-                    const wordEl = document.getElementById('rush-word');
-                    if (wordEl) {
-                        wordEl.textContent = '✗ ' + rushItem.en;
-                        wordEl.style.color = 'var(--error)';
-                    }
-                    document.getElementById('controls-area').innerHTML = '<button class="btn-nav btn-action" id="retry-rush">Retry</button>';
-                    document.getElementById('retry-rush').addEventListener('click', () => startRush());
-                }
-            }, 100);
-        }
-
-        document.addEventListener('input', e => {
-            if (e.target.id === 'rush-input' && rushItem && rushTimer) {
-                if (normalize(e.target.value) === normalize(rushItem.en)) {
-                    clearInterval(rushTimer);
-                    addXP(20);
-                    const wordEl = document.getElementById('rush-word');
-                    if (wordEl) {
-                        wordEl.textContent = '✓ ' + rushItem.en;
-                        wordEl.style.color = 'var(--success)';
-                    }
-                    document.getElementById('controls-area').innerHTML = '<button class="btn-nav btn-action btn-success" id="next-rush">Next +20 XP</button>';
-                    document.getElementById('next-rush').addEventListener('click', () => startRush());
-                }
+                // Affichage de la boîte de remédiation pédagogique
+                const remediationDiv = document.getElementById('remediation-container');
+                remediationDiv.innerHTML = `
+                    <div class="remediation-box">
+                        <div class="remediation-title">🧠 Point Pédagogique & Remédiation</div>
+                        <div>La bonne traduction pour <strong>"${currentQuizData.correctItem.fr}"</strong> est <strong>"${correct}"</strong>.<br><em>Exemple pro :</em> ${currentQuizData.correctItem.exemple}</div>
+                    </div>
+                `;
             }
-        });
+        }
+
+        function addXP(amount) {
+            currentXP += amount;
+            document.getElementById('xp-counter').textContent = `${currentXP} XP`;
+            const progress = Math.min((currentXP % 100), 100);
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+            
+            if (currentXP >= 100) {
+                document.getElementById('lvl-badge').textContent = "Niveau 2";
+                document.getElementById('lvl-name').textContent = "Commis Pâtissier";
+            }
+        }
 
         // ==========================================
-        // CORRECTION IA - NOUVEAU MODULE
+        // MODE EXAMEN & INTÉGRATION API GEMINI
         // ==========================================
-        async function correctWithAI(userText, prompt, modelAnswer) {
-            if (!apiKey) {
-                alert('Veuillez d\'abord configurer votre clé API dans les paramètres.');
-                return null;
+        function loadExamMode() {
+            document.getElementById('header-title').textContent = "Mode Examen & Correction IA";
+            document.getElementById('category-menu').innerHTML = '';
+            document.getElementById('mode-menu').innerHTML = '';
+
+            const stage = document.getElementById('card-stage');
+            const controls = document.getElementById('controls-stage');
+
+            stage.style.justifyContent = "flex-start";
+            stage.style.textAlign = "left";
+            stage.innerHTML = `
+                <div style="font-weight: 700; color: var(--gold); margin-bottom: 8px;">📝 Évaluation Écrite CAP Pâtisserie</div>
+                <div class="exam-instructions">
+                    Rédigez en anglais (50 mots minimum) la description de votre gâteau préféré parmi les classiques et détaillez brièvement sa fabrication (ingrédients, techniques).
+                </div>
+                <div class="writing-container">
+                    <textarea class="writing-textarea" placeholder="Write your description here in English... (Ex: My favorite pastry is the chocolate éclair because...)"></textarea>
+                </div>
+                <div id="ai-result-area"></div>
+            `;
+
+            controls.innerHTML = `
+                <button class="btn-action" onclick="submitToAI()">✨ Demander l'évaluation du Chef IA</button>
+            `;
+        }
+
+        function getApiKey() {
+            let key = localStorage.getItem('gemini_api_key');
+            if (!key) {
+                key = prompt("Entrez votre clé API Gemini (stockée localement sur votre appareil) :");
+                if (key) localStorage.setItem('gemini_api_key', key.trim());
             }
+            return key;
+        }
+
+        function resetKey() {
+            localStorage.removeItem('gemini_api_key');
+            alert("Clé API réinitialisée.");
+        }
+
+        async function submitToAI() {
+            const textarea = document.querySelector('.writing-textarea');
+            if (!textarea || !textarea.value.trim()) {
+                alert("Veuillez rédiger un texte avant de demander la correction !");
+                return;
+            }
+
+            const apiKey = getApiKey();
+            if (!apiKey) return;
+
+            const studentText = textarea.value;
+            const resultArea = document.getElementById('ai-result-area');
+            resultArea.innerHTML = `
+                <div class="ai-card" style="text-align: center; padding: 20px;">
+                    <div class="spinner"></div><span style="margin-left: 10px; font-size: 0.9rem;">Le Chef IA analyse votre copie...</span>
+                </div>
+            `;
+
+            const systemPrompt = `Tu es un professeur d'anglais bienveillant en CFA pour des apprentis en pâtisserie (niveau CAP/BP). Analyse la production écrite de l'élève.
+            Renvois STRICTEMENT un objet JSON valide (sans markdown autour) avec cette structure :
+            {
+              "score": "note sur 20 (ex: 14/20)",
+              "feedback": "Un commentaire constructif en français.",
+              "corrected_html": "Le texte corrigé avec des balises <span class=\\\"error-highlight\\\">mot_fautif</span> <span class=\\\"correction-highlight\\\">mot_correct</span>."
+            }`;
 
             try {
-                const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${apiKey}`
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        model: 'gpt-4o-mini',
-                        messages: [
-                            {
-                                role: 'system',
-                                content: `You are an expert English teacher specializing in pastry and culinary arts. Correct the student's writing and provide constructive feedback.
-
-Your response MUST be in this JSON format:
-{
-  "score": <number 0-100>,
-  "correctedText": "<corrected version>",
-  "errors": [
-    {"original": "<error>", "correction": "<fix>", "type": "grammar|vocabulary|spelling|style"}
-  ],
-  "feedback": "<encouraging feedback in French>",
-  "strengths": ["<what was done well>"],
-  "suggestions": ["<specific improvement suggestions>"]
-}
-
-Be encouraging but thorough. Focus on culinary/pastry vocabulary and professional English.`
-                            },
-                            {
-                                role: 'user',
-                                content: `Task: ${prompt}\n\nStudent's answer:\n${userText}\n\nModel answer for reference:\n${modelAnswer}`
-                            }
-                        ],
-                        temperature: 0.7,
-                        max_tokens: 1000
+                        contents: [{
+                            parts: [
+                                { text: systemPrompt },
+                                { text: `Texte élève : \n"""\n${studentText}\n"""` }
+                            ]
+                        }],
+                        generationConfig: { temperature: 0.2, responseMimeType: "application/json" }
                     })
                 });
 
-                if (!response.ok) {
-                    throw new Error(`API Error: ${response.status}`);
-                }
+                if (!response.ok) throw new Error("Erreur de communication avec l'API");
 
                 const data = await response.json();
-                const content = data.choices[0].message.content;
-                
-                // Parse JSON response
-                const jsonMatch = content.match(/\{[\s\S]*\}/);
-                if (jsonMatch) {
-                    return JSON.parse(jsonMatch[0]);
-                }
-                throw new Error('Invalid response format');
-            } catch (error) {
-                console.error('AI Correction Error:', error);
-                return {
-                    error: true,
-                    message: error.message || 'Erreur lors de la correction IA'
-                };
-            }
-        }
+                const resObj = JSON.parse(data.candidates[0].content.parts[0].text);
 
-        function renderAICorrection(correction, userText) {
-            if (correction.error) {
-                return `
-                    <div class="ai-correction-section" style="border-color: var(--error);">
-                        <div class="ai-correction-header">❌ Erreur</div>
-                        <p style="color: var(--fg-secondary);">${correction.message}</p>
-                        <p style="color: var(--fg-muted); font-size: 0.8rem; margin-top: 8px;">
-                            Vérifiez votre clé API et réessayez.
-                        </p>
-                    </div>
-                `;
-            }
-
-            let errorsHtml = '';
-            if (correction.errors && correction.errors.length > 0) {
-                errorsHtml = correction.errors.map(e => `
-                    <div style="margin: 6px 0; padding: 6px 10px; background: var(--bg-card); border-radius: 6px;">
-                        <span class="error-highlight">${e.original}</span>
-                        → <span class="correction-highlight">${e.correction}</span>
-                        <span style="font-size: 0.7rem; color: var(--fg-muted); margin-left: 6px;">(${e.type})</span>
-                    </div>
-                `).join('');
-            } else {
-                errorsHtml = '<p style="color: var(--success);">✓ Aucune erreur majeure détectée!</p>';
-            }
-
-            let strengthsHtml = '';
-            if (correction.strengths && correction.strengths.length > 0) {
-                strengthsHtml = correction.strengths.map(s => `<li>${s}</li>`).join('');
-            }
-
-            let suggestionsHtml = '';
-            if (correction.suggestions && correction.suggestions.length > 0) {
-                suggestionsHtml = correction.suggestions.map(s => `<li>${s}</li>`).join('');
-            }
-
-            return `
-                <div class="ai-correction-section">
-                    <div class="ai-correction-header">🤖 Correction IA</div>
-                    
-                    <div class="ai-score">
-                        Score: <span class="ai-score-score">${correction.score}/100</span>
-                    </div>
-                    
-                    <div style="margin-top: 12px;">
-                        <strong style="color: var(--fg-secondary);">Texte corrigé:</strong>
-                        <p style="margin-top: 6px; padding: 10px; background: var(--bg-card); border-radius: 8px; color: var(--fg-primary);">
-                            ${correction.correctedText}
-                        </p>
-                    </div>
-                    
-                    ${errorsHtml ? `
-                    <div style="margin-top: 12px;">
-                        <strong style="color: var(--fg-secondary);">Erreurs détectées:</strong>
-                        <div style="margin-top: 6px;">${errorsHtml}</div>
-                    </div>
-                    ` : ''}
-                    
-                    ${strengthsHtml ? `
-                    <div style="margin-top: 12px;">
-                        <strong style="color: var(--success);">✓ Points forts:</strong>
-                        <ul style="margin-top: 4px; margin-left: 16px; color: var(--fg-secondary);">${strengthsHtml}</ul>
-                    </div>
-                    ` : ''}
-                    
-                    ${suggestionsHtml ? `
-                    <div style="margin-top: 12px;">
-                        <strong style="color: var(--accent);">💡 Suggestions:</strong>
-                        <ul style="margin-top: 4px; margin-left: 16px; color: var(--fg-secondary);">${suggestionsHtml}</ul>
-                    </div>
-                    ` : ''}
-                    
-                    <div style="margin-top: 12px; padding: 10px; background: var(--bg-card); border-radius: 8px; border-left: 3px solid var(--gold);">
-                        <strong style="color: var(--gold);">Feedback:</strong>
-                        <p style="margin-top: 4px; color: var(--fg-primary);">${correction.feedback}</p>
-                    </div>
-                </div>
-            `;
-        }
-
-        function showAPIKeyDialog() {
-            const currentKey = apiKey ? '••••••••' + apiKey.slice(-4) : 'Non configurée';
-            return `
-                <div class="api-key-section">
-                    <p style="font-size: 0.85rem; color: var(--fg-secondary);">
-                        <strong>🔑 Clé API OpenAI</strong>
-                        <br><span style="font-size: 0.75rem; color: var(--fg-muted);">Actuelle: ${currentKey}</span>
-                    </p>
-                    <input type="password" class="api-key-input" id="api-key-input" 
-                           placeholder="Entrez votre clé API (sk-...)" 
-                           value="${apiKey}">
-                    <button class="btn-nav btn-action" style="margin-top: 8px; font-size: 0.8rem;" id="save-api-key">
-                        💾 Sauvegarder
-                    </button>
-                </div>
-            `;
-        }
-
-        // ==========================================
-        // EXAM MODE - Avec correction IA
-        // ==========================================
-        function startExam(subject) {
-            currentExamSubject = subject;
-            examQuestions = shuffle([...examSubjects[subject].questions]);
-            examIndex = 0;
-            examAnswers = [];
-            examTimeLeft = 20 * 60;
-            examMode = true;
-
-            showScreen('game');
-            renderModeMenu();
-            updateProgress();
-            document.getElementById('theme-menu').style.display = 'none';
-
-            startExamTimer();
-            renderExamQuestion();
-        }
-
-        function startExamTimer() {
-            examTimer = setInterval(() => {
-                examTimeLeft--;
-                const mins = Math.floor(examTimeLeft / 60);
-                const secs = examTimeLeft % 60;
-                const titleEl = document.getElementById('lvl-title');
-                if (titleEl) {
-                    titleEl.textContent = `Temps: ${mins}:${secs.toString().padStart(2, '0')}`;
-                }
-                if (examTimeLeft <= 0) {
-                    clearInterval(examTimer);
-                    finishExam();
-                }
-            }, 1000);
-        }
-
-        function renderExamQuestion() {
-            const q = examQuestions[examIndex];
-            const area = document.getElementById('game-area');
-            const controls = document.getElementById('controls-area');
-
-            const mins = Math.floor(examTimeLeft / 60);
-            const secs = examTimeLeft % 60;
-
-            document.getElementById('lvl-name').textContent = `EXAMEN - ${currentExamSubject}`;
-            document.getElementById('lvl-title').textContent = `Temps: ${mins}:${secs.toString().padStart(2, '0')}`;
-
-            if (q.type === 'mcq') {
-                const opts = shuffle([...q.options]);
-
-                // NOUVEAU: Afficher le numéro de question
-                area.innerHTML = `
-                    <span class="card-counter">📝 Question ${examIndex + 1}/${examQuestions.length}</span>
-                    <div class="quiz-number">Question ${examIndex + 1}/${examQuestions.length}</div>
-                    <div class="quiz-question" style="margin-top:10px;">${q.question}</div>
-                    <div class="quiz-options">
-                        ${opts.map(o => `<button class="quiz-btn" data-opt="${o}">${o}</button>`).join('')}
-                    </div>
-                `;
-
-                controls.innerHTML = '';
-
-                document.querySelectorAll('.quiz-btn').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        examAnswers[examIndex] = btn.dataset.opt;
-                        const isCorrect = btn.dataset.opt === q.correct;
-                        if (isCorrect) addXP(10);
-                        
-                        document.querySelectorAll('.quiz-btn').forEach(b => {
-                            b.disabled = true;
-                            if (b.dataset.opt === q.correct) b.classList.add('correct');
-                            if (b.dataset.opt === btn.dataset.opt && !isCorrect) b.classList.add('wrong');
-                        });
-
-                        controls.innerHTML = `
-                            <button class="btn-nav btn-action ${isCorrect ? 'btn-success' : ''}" id="exam-next">
-                                ${isCorrect ? '✓ Correct!' : '✗ Next'}
-                            </button>
-                        `;
-                        document.getElementById('exam-next').addEventListener('click', () => nextExamQuestion());
-                    });
-                });
-
-            } else if (q.type === 'writing') {
-                const saved = examAnswers[examIndex] || '';
-                const wc = saved ? countWords(saved) : 0;
-
-                // NOUVEAU: Afficher le numéro et inclure la correction IA
-                area.innerHTML = `
-                    <span class="card-counter">✍️ Rédaction ${examIndex + 1}/${examQuestions.length}</span>
-                    <div class="quiz-number">Writing Task ${examIndex + 1}</div>
-                    <div class="exam-intro">
-                        <p>${q.prompt.replace(/\n/g, '<br>')}</p>
-                        <p style="font-size:0.8rem; color:var(--fg-muted); margin-top:8px;">Min: ${q.wordMin} words | Max: ${q.wordMax} words</p>
-                    </div>
-                    ${showAPIKeyDialog()}
-                    <div class="writing-area">
-                        <textarea class="writing-textarea" id="exam-writing" placeholder="Write your answer here...">${saved}</textarea>
-                        <div class="word-count ${wc >= q.wordMin ? 'ok' : ''}">${wc} words</div>
-                    </div>
-                    <div id="ai-correction-container"></div>
-                `;
-
-                controls.innerHTML = `
-                    <button class="btn-ai-correct" id="ai-correct-btn" ${wc < q.wordMin ? 'disabled' : ''}>
-                        🤖 Corriger avec IA
-                    </button>
-                    <button class="btn-nav btn-action btn-gold" id="submit-writing" style="margin-top: 10px;" ${wc < q.wordMin ? 'disabled' : ''}>
-                        Submit Answer
-                    </button>
-                `;
-
-                const textarea = document.getElementById('exam-writing');
-                const wcDisplay = area.querySelector('.word-count');
-                const submitBtn = document.getElementById('submit-writing');
-                const aiCorrectBtn = document.getElementById('ai-correct-btn');
-                const saveApiKeyBtn = document.getElementById('save-api-key');
-                const apiKeyInput = document.getElementById('api-key-input');
-
-                // Sauvegarder la clé API
-                if (saveApiKeyBtn) {
-                    saveApiKeyBtn.addEventListener('click', () => {
-                        const newKey = apiKeyInput.value.trim();
-                        if (newKey) {
-                            apiKey = newKey;
-                            try { localStorage.setItem('pastryApiKey', apiKey); } catch(e) {}
-                            alert('✓ Clé API sauvegardée!');
-                        }
-                    });
-                }
-
-                textarea.addEventListener('input', () => {
-                    const count = countWords(textarea.value);
-                    wcDisplay.textContent = count + ' words';
-                    wcDisplay.className = 'word-count ' + (count >= q.wordMin ? 'ok' : '');
-                    submitBtn.disabled = count < q.wordMin;
-                    aiCorrectBtn.disabled = count < q.wordMin;
-                });
-
-                // NOUVEAU: Correction IA
-                aiCorrectBtn.addEventListener('click', async () => {
-                    const userText = textarea.value.trim();
-                    if (userText.length < q.wordMin) return;
-                    
-                    aiCorrectBtn.disabled = true;
-                    aiCorrectBtn.innerHTML = '<span class="loading-spinner"></span> Correction en cours...';
-                    
-                    const correction = await correctWithAI(userText, q.prompt, q.modelAnswer);
-                    
-                    const container = document.getElementById('ai-correction-container');
-                    if (correction) {
-                        container.innerHTML = renderAICorrection(correction, userText);
-                        
-                        // Ajouter XP basé sur le score
-                        if (!correction.error && correction.score) {
-                            const xpEarned = Math.round(correction.score / 10);
-                            addXP(xpEarned);
-                        }
-                    }
-                    
-                    aiCorrectBtn.disabled = false;
-                    aiCorrectBtn.innerHTML = '🤖 Corriger à nouveau';
-                });
-
-                submitBtn.addEventListener('click', () => {
-                    examAnswers[examIndex] = textarea.value;
-                    addXP(15);
-                    
-                    area.innerHTML += `
-                        <div class="correction-box">
-                            <div class="score-display">
-                                <div class="score-big">+15 XP</div>
-                                <div class="score-label">Writing submitted</div>
-                            </div>
-                            <p style="font-size:0.85rem; color:var(--fg-secondary); margin-top:10px;">
-                                <strong>Model answer:</strong><br>
-                                <em style="color:var(--fg-muted);">${q.modelAnswer}</em>
-                            </p>
+                resultArea.innerHTML = `
+                    <div class="ai-card">
+                        <div class="ai-header">
+                            <span>👨‍🍳 Évaluation du Chef</span>
+                            <span style="color: var(--gold); font-size: 1.1rem; font-weight: 800;">${resObj.score}</span>
                         </div>
-                    `;
-
-                    controls.innerHTML = '<button class="btn-nav btn-action btn-gold" id="next-writing">Next Question</button>';
-                    document.getElementById('next-writing').addEventListener('click', () => nextExamQuestion());
-                });
-            }
-        }
-
-        function nextExamQuestion() {
-            examIndex++;
-            if (examIndex >= examQuestions.length) {
-                finishExam();
-            } else {
-                renderExamQuestion();
-            }
-        }
-
-        function finishExam() {
-            clearInterval(examTimer);
-            examMode = false;
-
-            let correct = 0;
-            examQuestions.forEach((q, i) => {
-                if (q.type === 'mcq' && examAnswers[i] === q.correct) correct++;
-                if (q.type === 'writing' && examAnswers[i]) correct += 0.8;
-            });
-            const score = Math.round((correct / examQuestions.length) * 100);
-
-            document.getElementById('game-area').innerHTML = `
-                <div style="text-align:center;">
-                    <div style="font-size:3rem; margin-bottom:10px;">${score >= 70 ? '🏆' : score >= 50 ? '👍' : '📚'}</div>
-                    <h2 style="color:var(--fg-primary); margin-bottom:16px;">Exam Complete!</h2>
-                    <div class="score-display" style="margin:16px 0;">
-                        <div class="score-big">${score}%</div>
-                        <div class="score-label">${score >= 70 ? 'Excellent!' : score >= 50 ? 'Good work!' : 'Keep practicing!'}</div>
-                    </div>
-                    <p style="color:var(--fg-secondary);">Subject: ${currentExamSubject}</p>
-                    <p style="color:var(--fg-muted); font-size:0.85rem; margin-top:6px;">Correct answers: ${Math.round(correct)}/${examQuestions.length}</p>
-                </div>
-            `;
-
-            document.getElementById('controls-area').innerHTML = `
-                <button class="btn-nav btn-action btn-gold" id="exam-home">Return Home</button>
-            `;
-            document.getElementById('exam-home').addEventListener('click', () => goHome());
-        }
-
-        // ==========================================
-        // EVENT LISTENERS
-        // ==========================================
-        document.addEventListener('DOMContentLoaded', () => {
-            updateHomeStats();
-
-            document.getElementById('start-btn').addEventListener('click', () => startApp());
-            document.getElementById('back-btn').addEventListener('click', () => goHome());
-
-            document.getElementById('mode-menu').addEventListener('click', e => {
-                if (e.target.dataset.mode) setMode(e.target.dataset.mode);
-            });
-
-            document.getElementById('theme-menu').addEventListener('click', e => {
-                if (e.target.dataset.theme) loadTheme(e.target.dataset.theme);
-            });
-
-            document.getElementById('exam-btn').addEventListener('click', () => {
-                const area = document.getElementById('home-stats');
-                area.style.display = 'block';
-                area.innerHTML = `
-                    <p style="color:var(--fg-primary); font-weight:bold; margin-bottom:10px;">Select Exam Subject:</p>
-                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
-                        ${Object.entries(examSubjects).map(([k, v]) => `
-                            <button class="quiz-btn" style="min-height:54px;" data-exam="${k}">
-                                <span style="font-size:1.3rem;">${v.icon}</span><br>
-                                <span style="font-size:0.8rem;">${k}</span>
-                            </button>
-                        `).join('')}
+                        <p style="font-size: 0.85rem; margin-bottom: 8px;"><strong>Feedback :</strong> ${resObj.feedback}</p>
+                        <p style="font-size: 0.85rem; margin-bottom: 4px;"><strong>Correction :</strong></p>
+                        <div style="background: var(--bg-primary); padding: 10px; border-radius: 8px; font-size: 0.9rem; line-height: 1.5;">
+                            ${resObj.corrected_html}
+                        </div>
                     </div>
                 `;
-                
-                document.querySelectorAll('[data-exam]').forEach(btn => {
-                    btn.addEventListener('click', () => startExam(btn.dataset.exam));
-                });
-            });
-        });
-        
-        // iOS standalone mode fix
-        if (window.navigator.standalone) {
-            document.body.classList.add('standalone');
+            } catch (err) {
+                console.error(err);
+                resultArea.innerHTML = `<div class="ai-card" style="color: var(--error);">Une erreur est survenue lors de l'appel à l'IA. Vérifiez votre clé.</div>`;
+            }
         }
     </script>
 </body>
