@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pastry English Pro 2.0 - CFA CMA INSAV</title>
+    <title>Pastry English Pro 2.0 XXL - CFA CMA INSAV</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -30,7 +30,7 @@
                     <i class="fa-solid fa-cake-candles text-2xl text-amber-200"></i>
                 </div>
                 <div>
-                    <h1 class="text-xl font-bold tracking-wide">Pastry English Pro <span class="text-xs bg-amber-600 text-amber-100 px-2 py-0.5 rounded-full uppercase">v2.0 XXL</span></h1>
+                    <h1 class="text-xl font-bold tracking-wide">Pastry English Pro <span class="text-xs bg-amber-600 text-amber-100 px-2 py-0.5 rounded-full uppercase">v2.0 XXL+</span></h1>
                     <p class="text-xs text-amber-200">CMA Formation INSAV — CFA Métiers de Bouche</p>
                 </div>
             </div>
@@ -51,16 +51,16 @@
         <!-- Tab Navigation -->
         <nav class="bg-amber-900/80 px-4 flex space-x-2 overflow-x-auto border-t border-amber-700">
             <button onclick="switchTab('flashcards')" id="tab-flashcards" class="tab-btn px-4 py-2.5 text-sm font-medium text-amber-200 border-b-2 border-amber-400 hover:text-white transition whitespace-nowrap flex items-center space-x-2">
-                <i class="fa-solid fa-layer-group"></i> <span>Vocabulaire (Flashcards)</span>
+                <i class="fa-solid fa-layer-group"></i> <span>Vocabulaire XXL (160+ Mots)</span>
             </button>
             <button onclick="switchTab('quiz')" id="tab-quiz" class="tab-btn px-4 py-2.5 text-sm font-medium text-amber-300/70 border-b-2 border-transparent hover:text-white transition whitespace-nowrap flex items-center space-x-2">
-                <i class="fa-solid fa-brain"></i> <span>Quiz & Entraînement</span>
+                <i class="fa-solid fa-brain"></i> <span>Quiz & CCF Blanc</span>
             </button>
             <button onclick="switchTab('simulator')" id="tab-simulator" class="tab-btn px-4 py-2.5 text-sm font-medium text-amber-300/70 border-b-2 border-transparent hover:text-white transition whitespace-nowrap flex items-center space-x-2">
                 <i class="fa-solid fa-store"></i> <span>Simulateur Vente & Lab</span>
             </button>
             <button onclick="switchTab('recipes')" id="tab-recipes" class="tab-btn px-4 py-2.5 text-sm font-medium text-amber-300/70 border-b-2 border-transparent hover:text-white transition whitespace-nowrap flex items-center space-x-2">
-                <i class="fa-solid fa-book-open"></i> <span>Fiches Techniques & Recettes</span>
+                <i class="fa-solid fa-book-open"></i> <span>Fiches Techniques Bilingues</span>
             </button>
         </nav>
     </header>
@@ -68,25 +68,27 @@
     <!-- MAIN CONTAINER -->
     <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 overflow-y-auto">
 
-        <!-- ================= TAB 1: FLASHCARDS (VOCABULAIRE XXL) ================= -->
+        <!-- ================= TAB 1: FLASHCARDS (VOCABULAIRE 8 CATÉGORIES x 20 MOTS) ================= -->
         <section id="section-flashcards" class="space-y-6">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-4 rounded-2xl shadow-sm border border-amber-100">
                 <div>
                     <h2 class="text-lg font-bold text-slate-800 flex items-center space-x-2">
                         <i class="fa-solid fa-book-bookmark text-amber-600"></i>
-                        <span>Banque de Vocabulaire Professionnel (CAP / BP / BTM)</span>
+                        <span>Banque de Vocabulaire Professionnel Vérifiée (8 Catégories)</span>
                     </h2>
-                    <p class="text-xs text-slate-500">Explore les catégories, écoute la prononciation et mémorise les termes indispensables en laboratoire.</p>
+                    <p class="text-xs text-slate-500">Clique sur l'icône audio pour écouter la prononciation correcte (accent britannique).</p>
                 </div>
                 <!-- Category Filter Buttons -->
                 <div class="flex flex-wrap gap-1.5" id="category-filters">
-                    <button onclick="filterCategory('all')" class="cat-filter-btn px-3 py-1 text-xs font-semibold rounded-lg bg-amber-600 text-white shadow-sm transition">Tout</button>
-                    <button onclick="filterCategory('tools')" class="cat-filter-btn px-3 py-1 text-xs font-semibold rounded-lg bg-amber-100 text-amber-800 hover:bg-amber-200 transition">🛠️ Matériel</button>
-                    <button onclick="filterCategory('ingredients')" class="cat-filter-btn px-3 py-1 text-xs font-semibold rounded-lg bg-amber-100 text-amber-800 hover:bg-amber-200 transition">🌾 Ingrédients</button>
-                    <button onclick="filterCategory('lamination')" class="cat-filter-btn px-3 py-1 text-xs font-semibold rounded-lg bg-amber-100 text-amber-800 hover:bg-amber-200 transition">🥐 Tourage</button>
-                    <button onclick="filterCategory('chemistry')" class="cat-filter-btn px-3 py-1 text-xs font-semibold rounded-lg bg-amber-100 text-amber-800 hover:bg-amber-200 transition">⚗️ Chimie</button>
-                    <button onclick="filterCategory('haccp')" class="cat-filter-btn px-3 py-1 text-xs font-semibold rounded-lg bg-amber-100 text-amber-800 hover:bg-amber-200 transition">🛡️ HACCP</button>
-                    <button onclick="filterCategory('sales')" class="cat-filter-btn px-3 py-1 text-xs font-semibold rounded-lg bg-amber-100 text-amber-800 hover:bg-amber-200 transition">🤝 Vente</button>
+                    <button onclick="filterCategory('all')" class="cat-filter-btn px-3 py-1 text-xs font-semibold rounded-lg bg-amber-600 text-white shadow-sm transition">Tout (160+)</button>
+                    <button onclick="filterCategory('tools')" class="cat-filter-btn px-3 py-1 text-xs font-semibold rounded-lg bg-amber-100 text-amber-800 hover:bg-amber-200 transition">🛠️ Matériel (20)</button>
+                    <button onclick="filterCategory('ingredients')" class="cat-filter-btn px-3 py-1 text-xs font-semibold rounded-lg bg-amber-100 text-amber-800 hover:bg-amber-200 transition">🌾 Ingrédients (20)</button>
+                    <button onclick="filterCategory('lamination')" class="cat-filter-btn px-3 py-1 text-xs font-semibold rounded-lg bg-amber-100 text-amber-800 hover:bg-amber-200 transition">🥐 Tourage (20)</button>
+                    <button onclick="filterCategory('chemistry')" class="cat-filter-btn px-3 py-1 text-xs font-semibold rounded-lg bg-amber-100 text-amber-800 hover:bg-amber-200 transition">⚗️ Chimie (20)</button>
+                    <button onclick="filterCategory('haccp')" class="cat-filter-btn px-3 py-1 text-xs font-semibold rounded-lg bg-amber-100 text-amber-800 hover:bg-amber-200 transition">🛡️ HACCP (20)</button>
+                    <button onclick="filterCategory('sales')" class="cat-filter-btn px-3 py-1 text-xs font-semibold rounded-lg bg-amber-100 text-amber-800 hover:bg-amber-200 transition">🤝 Vente (20)</button>
+                    <button onclick="filterCategory('decorations')" class="cat-filter-btn px-3 py-1 text-xs font-semibold rounded-lg bg-amber-100 text-amber-800 hover:bg-amber-200 transition">🎨 Décors (20)</button>
+                    <button onclick="filterCategory('equipment')" class="cat-filter-btn px-3 py-1 text-xs font-semibold rounded-lg bg-amber-100 text-amber-800 hover:bg-amber-200 transition">⚙️ Machines (20)</button>
                 </div>
             </div>
 
@@ -120,7 +122,7 @@
                     <i class="fa-solid fa-comments text-amber-600"></i>
                     <span>Simulateur de Situations Professionnelles (Front of House & Lab)</span>
                 </h2>
-                <p class="text-xs text-slate-500 mb-6">Mets-toi dans la peau d'un pâtissier ou d'un vendeur en boutique face à un client anglophone ou à un chef de laboratoire.</p>
+                <p class="text-xs text-slate-500 mb-6">Mets-toi dans la peau d'un pâtissier ou d'un vendeur en boutique face à un client anglophone ou à un chef.</p>
 
                 <div id="simulator-container" class="space-y-4">
                     <!-- Scénarios dynamiques -->
@@ -147,14 +149,14 @@
 
     <!-- FOOTER -->
     <footer class="bg-amber-950 text-amber-300/70 text-xs py-4 text-center border-t border-amber-900 mt-auto">
-        <p>Pastry English Pro 2.0 XXL — Conçu pour l'INSAV (CMA Formation Bordeaux) | Pédagogie Actionnelle & Référentiels Éducation Nationale</p>
+        <p>Pastry English Pro 2.0 XXL+ — Conçu pour l'INSAV (CMA Formation Bordeaux) | Pédagogie Actionnelle & Référentiels Éducation Nationale</p>
     </footer>
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        // ================= DONNÉES XXL (TRIPLEX / +50 ITEMS) =================
+        // ================= 8 CATÉGORIES DE 20 MOTS CHACUNE (160+ TERMES VÉRIFIÉS) =================
         const vocabularyData = [
-            // --- TOOLS ---
+            // --- 1. TOOLS (MATÉRIEL DE PÂTISSERIE) - 20 items ---
             { id: 1, cat: 'tools', en: 'Whisk', fr: 'Fouet (manuel ou électrique)', phonetic: '/wɪsk/', def: 'Tool made of wire loops used for whipping cream, egg whites or mixing batters.' },
             { id: 2, cat: 'tools', en: 'Rolling Pin', fr: 'Rouleau à pâtisserie', phonetic: '/ˈroʊlɪŋ pɪn/', def: 'Cylindrical food preparation utensil used to shape and flatten dough.' },
             { id: 3, cat: 'tools', en: 'Pastry Bag / Piping Bag', fr: 'Poche à douille', phonetic: '/ˈpeɪstri bæɡ/', def: 'Cone-shaped bag made of cloth or plastic used to pipe semi-solid foods.' },
@@ -165,54 +167,173 @@
             { id: 8, cat: 'tools', en: 'Wire Cooling Rack', fr: 'Grille de refroidissement', phonetic: '/ˈwaɪər ˈkuːlɪŋ ræk/', def: 'Raised wire mesh grid that allows air circulation under hot baked goods.' },
             { id: 9, cat: 'tools', en: 'Microplane / Zester', fr: 'Rape / Zesteur', phonetic: '/ˈmaɪkroʊpleɪn/', def: 'Fine rasp grater used for zesting citrus fruits or grating tonka bean and nutmeg.' },
             { id: 10, cat: 'tools', en: 'Pastry Brush', fr: 'Pinceau à pâtisserie', phonetic: '/ˈpeɪstri brʌʃ/', def: 'Brush used to apply egg wash, syrup or glaze onto pastries and breads.' },
+            { id: 11, cat: 'tools', en: 'Sieve / Flour Sifter', fr: 'Tamis / Passoire fine', phonetic: '/sɪv/', def: 'Mesh screen utensil used to aerate flour, remove lumps or dust powdered sugar.' },
+            { id: 12, cat: 'tools', en: 'Spotted Skimmer', fr: 'Écumoire', phonetic: '/ˈspɒtɪd ˈskɪmər/', def: 'Perforated shallow bowl spoon used for skimming or removing items from boiling liquids.' },
+            { id: 13, cat: 'tools', en: 'Paring Knife', fr: 'Couteau d’office', phonetic: '/ˈpærɪŋ naɪf/', def: 'Small, versatile knife with a plain edge used for peeling and precise cutting.' },
+            { id: 14, cat: 'tools', en: 'Offset Spatula', fr: 'Spatule coudée de glaçage', phonetic: '/ˈɔːfsɛt ˈspætʃələ/', def: 'Spatula featuring a bent blade to keep fingers away from frosting or hot caramel.' },
+            { id: 15, cat: 'tools', en: 'Mandoline Slicer', fr: 'Mandoline (coupe-légumes/fruits)', phonetic: '/ˈmændəliːn/', def: 'Flat-surfaced slicing utensil equipped with razor-sharp adjustable blades.' },
+            { id: 16, cat: 'tools', en: 'Pastry Wheel / Cutter', fr: 'Roulette à pâtisserie', phonetic: '/ˈpeɪstri wiːl/', def: 'Wheeled cutting tool used to slice dough into strips, squares or pastry lattices.' },
+            { id: 17, cat: 'tools', en: 'Silicone Mat (Silpat)', fr: 'Toile de cuisson silicone', phonetic: '/ˈsɪlɪkoʊn mæt/', def: 'Non-stick flexible baking liner placed on oven trays.' },
+            { id: 18, cat: 'tools', en: 'Digital Kitchen Scale', fr: 'Balance de cuisine numérique', phonetic: '/ˈdɪdʒɪtəl ˈkɪtʃən skeɪl/', def: 'Precise weighing instrument essential for accurate grams and recipe scaling.' },
+            { id: 19, cat: 'tools', en: 'Saucepan / Pot', fr: 'Casserole (pour crèmes et sirops)', phonetic: '/ˈsɔːspən/', def: 'Deep cooking pan with a handle used for boiling milk, boiling sugar and custards.' },
+            { id: 20, cat: 'tools', en: 'Candy Thermometer / Probe', fr: 'Thermomètre de cuisson / sonde', phonetic: '/ˈkændi θərˈmɒmɪtər/', def: 'Precision thermometer required for monitoring sugar boiling and chocolate tempering.' },
 
-            // --- INGREDIENTS ---
-            { id: 11, cat: 'ingredients', en: 'All-Purpose Flour / Plain Flour', fr: 'Farine de blé standard (T55)', phonetic: '/ɔːl ˈpɜːrpəs ˈflaʊər/', def: 'Versatile wheat flour with medium protein content suitable for various pastries.' },
-            { id: 12, cat: 'ingredients', en: 'Caster Sugar / Superfine Sugar', fr: 'Sucre en poudre fin', phonetic: '/ˈkæstər ˈʃʊɡər/', def: 'Fine-grained white sugar that dissolves quickly in batters and creams.' },
-            { id: 13, cat: 'ingredients', en: 'Unsalted Butter', fr: 'Beurre doux (non salé)', phonetic: '/ʌnˈsɔːltɪd ˈbʌtər/', def: 'Essential fat in French pastry providing flavor, texture and flaky lamination.' },
-            { id: 14, cat: 'ingredients', en: 'Heavy Cream / Whipping Cream', fr: 'Crème entière (35% MG)', phonetic: '/ˈhɛvi kriːm/', def: 'High-fat cream used for ganaches, chantilly and rich pastry creams.' },
-            { id: 15, cat: 'ingredients', en: 'Whole Milk', fr: 'Lait entier', phonetic: '/hoʊl mɪlk/', def: 'Fluid dairy product used in custards, brioche doughs and sauces.' },
-            { id: 16, cat: 'ingredients', en: 'Egg Wash', fr: 'Dorure (œuf battu + lait/sel)', phonetic: '/ɛɡ wɑːʃ/', def: 'Beat egg brushed onto pastry surface to give a shiny, golden-brown finish.' },
-            { id: 17, cat: 'ingredients', en: 'Almond Flour / Ground Almonds', fr: 'Poudre d’amandes', phonetic: '/ˈɑːmənd ˈflaʊər/', def: 'Finely ground blanched almonds used for frangipane, macarons and tart bases.' },
-            { id: 18, cat: 'ingredients', en: 'Icing Sugar / Confectioners Sugar', fr: 'Sucre glace', phonetic: '/ˈaɪsɪŋ ˈʃʊɡər/', def: 'Finely powdered white sugar used for icings, dusting and shortbreads.' },
-            { id: 19, cat: 'ingredients', en: 'Vanilla Bean / Pod', fr: 'Gousse de vanille', phonetic: '/vəˈnælə biːn/', def: 'Fragrant seed pod of an orchid used to flavor custards, syrups and creams.' },
-            { id: 20, cat: 'ingredients', en: 'Active Dry Yeast / Fresh Yeast', fr: 'Levure de boulanger (sèche / fraîche)', phonetic: '/ˈæktɪv draɪ jiːst/', def: 'Microscopic fungi used for leavening fermented doughs like brioche and croissants.' },
+            // --- 2. INGREDIENTS (INGRÉDIENTS DE BASE) - 20 items ---
+            { id: 21, cat: 'ingredients', en: 'All-Purpose Flour / Plain Flour', fr: 'Farine de blé standard (T55)', phonetic: '/ɔːl ˈpɜːrpəs ˈflaʊər/', def: 'Versatile wheat flour with medium protein content suitable for various pastries.' },
+            { id: 22, cat: 'ingredients', en: 'Caster Sugar / Superfine Sugar', fr: 'Sucre en poudre fin', phonetic: '/ˈkæstər ˈʃʊɡər/', def: 'Fine-grained white sugar that dissolves quickly in batters and creams.' },
+            { id: 23, cat: 'ingredients', en: 'Unsalted Butter', fr: 'Beurre doux (non salé)', phonetic: '/ʌnˈsɔːltɪd ˈbʌtər/', def: 'Essential fat in French pastry providing flavor, texture and flaky lamination.' },
+            { id: 24, cat: 'ingredients', en: 'Heavy Cream / Whipping Cream', fr: 'Crème entière (35% MG)', phonetic: '/ˈhɛvi kriːm/', def: 'High-fat cream used for ganaches, chantilly and rich pastry creams.' },
+            { id: 25, cat: 'ingredients', en: 'Whole Milk', fr: 'Lait entier', phonetic: '/hoʊl mɪlk/', def: 'Fluid dairy product used in custards, brioche doughs and sauces.' },
+            { id: 26, cat: 'ingredients', en: 'Egg Wash', fr: 'Dorure (œuf battu + lait/sel)', phonetic: '/ɛɡ wɑːʃ/', def: 'Beaten egg brushed onto pastry surface to give a shiny, golden-brown finish.' },
+            { id: 27, cat: 'ingredients', en: 'Almond Flour / Ground Almonds', fr: 'Poudre d’amandes', phonetic: '/ˈɑːmənd ˈflaʊər/', def: 'Finely ground blanched almonds used for frangipane, macarons and tart bases.' },
+            { id: 28, cat: 'ingredients', en: 'Icing Sugar / Confectioners Sugar', fr: 'Sucre glace', phonetic: '/ˈaɪsɪŋ ˈʃʊɡər/', def: 'Finely powdered white sugar used for icings, dusting and shortbreads.' },
+            { id: 29, cat: 'ingredients', en: 'Vanilla Bean / Pod', fr: 'Gousse de vanille', phonetic: '/vəˈnælə biːn/', def: 'Fragrant seed pod of an orchid used to flavor custards, syrups and creams.' },
+            { id: 30, cat: 'ingredients', en: 'Active Dry Yeast / Fresh Yeast', fr: 'Levure de boulanger (sèche / fraîche)', phonetic: '/ˈæktɪv draɪ jiːst/', def: 'Microscopic fungi used for leavening fermented doughs like brioche and croissants.' },
+            { id: 31, cat: 'ingredients', en: 'Dark Chocolate Couverture', fr: 'Chocolat de couverture noir', phonetic: '/dɑːrk ˈtʃɒklət ˈkuːvərtʃʊər/', def: 'High-cocoa butter chocolate used by professionals for enrobing and molding.' },
+            { id: 32, cat: 'ingredients', en: 'Cornstarch / Cornflour', fr: 'Fécule de maïs (Maïzena)', phonetic: '/ˈkɔːnstɑːrtʃ/', def: 'Starch powder used to thicken pastry creams, puddings and lighten cake flours.' },
+            { id: 33, cat: 'ingredients', en: 'Gelatin Sheets / Leaf Gelatin', fr: 'Gélatine en feuilles', phonetic: '/ˈdʒɛlətɪn ʃiːts/', def: 'Gelling agent extracted from collagen used for mousses, bavarois and mirrors.' },
+            { id: 34, cat: 'ingredients', en: 'Honey', fr: 'Miel', phonetic: '/ˈhʌni/', def: 'Natural sweet liquid produced by bees, used in gingerbread and soft ganaches.' },
+            { id: 35, cat: 'ingredients', en: 'Puff Pastry Fat / Tourage Butter', fr: 'Beurre de tourage (sec 84%)', phonetic: '/pʌf ˈpeɪstri fæt/', def: 'Special butter with low moisture content designed for lamination sheets.' },
+            { id: 36, cat: 'ingredients', en: 'Brown Sugar / Demerara', fr: 'Sucre roux / Cassonade', phonetic: '/braʊn ˈʃʊɡər/', def: 'Unrefined or partially refined cane sugar with rich molasses notes.' },
+            { id: 37, cat: 'ingredients', en: 'Pecan Nuts / Hazelnuts', fr: 'Noix de pécan / Noisettes', phonetic: '/ˈpiːkæn nʌts/', def: 'Tree nuts incorporated into pralines, tart fillings and cookie inclusions.' },
+            { id: 38, cat: 'ingredients', en: 'Glucose Syrup', fr: 'Sirop de glucose', phonetic: '/ˈɡluːkoʊs ˈsɪrəp/', def: 'Viscous sweetener that prevents sugar crystallization in caramels and ganaches.' },
+            { id: 39, cat: 'ingredients', en: 'Puff Pastry Scraps', fr: 'Chutes de feuilletage', phonetic: '/pʌf ˈpeɪstri skræps/', def: 'Leftover trimmings from puff pastry used for palmiers or mille-feuille bases.' },
+            { id: 40, cat: 'ingredients', en: 'Sea Salt Flakes (Fleur de Sel)', fr: 'Fleur de sel', phonetic: '/siː sɔːt fleɪks/', def: 'Hand-harvested crisp salt crystals used as finishing touch on caramels and chocolates.' },
 
-            // --- LAMINATION ---
-            { id: 21, cat: 'lamination', en: 'Détrempe', fr: 'Détrempe (pâte de base)', phonetic: '/deɪˈtrɑːmp/', def: 'Initial flour and water dough envelope wrapping the butter block in puff pastry.' },
-            { id: 22, cat: 'lamination', en: 'Butter Block / Beurrage', fr: 'Bloc de beurre manié / tourage', phonetic: '/ˈbʌtər blɑːk/', def: 'Butter prepared with a small amount of flour, shaped into a square for lamination.' },
-            { id: 23, cat: 'lamination', en: 'Single Turn / Half Turn (Tour Simple)', fr: 'Tour simple (portefeuille)', phonetic: '/ˈsɪŋɡəl tɜːrn/', def: 'Folding the dough into three layers like a letter (letter fold).' },
-            { id: 24, cat: 'lamination', en: 'Double Turn / Book Turn (Tour Double)', fr: 'Tour double (porte-fenêtre)', phonetic: '/ˈdʌbəl tɜːrn/', def: 'Folding the dough edges to the center and folding in half like a book (4 layers).' },
-            { id: 25, cat: 'lamination', en: 'Resting Time / Relaxation', fr: 'Temps de repos / détente', phonetic: '/ˈrɛstɪŋ taɪm/', def: 'Cooling period allowing gluten to relax and butter to firm up between turns.' },
-            { id: 26, cat: 'lamination', en: 'Flakiness / Layering', fr: 'Feuilletage / croustillant', phonetic: '/ˈfleɪkinəs/', def: 'Characteristic crispy texture of baked puff pastry composed of multiple thin layers.' },
-            { id: 27, cat: 'lamination', en: 'Lamination Process', fr: 'Processus de tourage', phonetic: '/ˌlæmɪˈneɪʃən/', def: 'Technique of repeatedly folding and rolling dough with butter layers.' },
+            // --- 3. LAMINATION (TOURAGE & FEUILLETAGE) - 20 items ---
+            { id: 41, cat: 'lamination', en: 'Détrempe', fr: 'Détrempe (pâte de base)', phonetic: '/deɪˈtrɑːmp/', def: 'Initial flour and water dough envelope wrapping the butter block in puff pastry.' },
+            { id: 42, cat: 'lamination', en: 'Butter Block / Beurrage', fr: 'Bloc de beurre manié / tourage', phonetic: '/ˈbʌtər blɑːk/', def: 'Butter prepared with a small amount of flour, shaped into a square for lamination.' },
+            { id: 43, cat: 'lamination', en: 'Single Turn / Half Turn (Tour Simple)', fr: 'Tour simple (portefeuille)', phonetic: '/ˈsɪŋɡəl tɜːrn/', def: 'Folding the dough into three layers like a letter (letter fold).' },
+            { id: 44, cat: 'lamination', en: 'Double Turn / Book Turn (Tour Double)', fr: 'Tour double (porte-fenêtre)', phonetic: '/ˈdʌbəl tɜːrn/', def: 'Folding the dough edges to the center and folding in half like a book (4 layers).' },
+            { id: 45, cat: 'lamination', en: 'Resting Time / Relaxation', fr: 'Temps de repos / détente', phonetic: '/ˈrɛstɪŋ taɪm/', def: 'Cooling period allowing gluten to relax and butter to firm up between turns.' },
+            { id: 46, cat: 'lamination', en: 'Flakiness / Layering', fr: 'Feuilletage / croustillant', phonetic: '/ˈfleɪkinəs/', def: 'Characteristic crispy texture of baked puff pastry composed of multiple thin layers.' },
+            { id: 47, cat: 'lamination', en: 'Lamination Process', fr: 'Processus de tourage', phonetic: '/ˌlæmɪˈneɪʃən/', def: 'Technique of repeatedly folding and rolling dough with butter layers.' },
+            { id: 48, cat: 'lamination', en: 'Encasement / Lock-in', fr: 'Enfermement du beurre', phonetic: '/ɪnˈkeɪsmənt/', def: 'Process of sealing the butter block completely inside the détrempe dough envelope.' },
+            { id: 49, cat: 'lamination', en: 'Rolling Pin Pressure', fr: 'Pression du rouleau', phonetic: '/ˈroʊlɪŋ pɪn ˈprɛʃər/', def: 'Even force applied during rolling to prevent butter breakthrough.' },
+            { id: 50, cat: 'lamination', en: 'Butter Breakthrough', fr: 'Fuite de beurre / déchirure', phonetic: '/ˈbʌtər ˈbrɛkθruː/', def: 'Fault where butter punctures through the dough layers during rolling.' },
+            { id: 51, cat: 'lamination', en: 'Inverted Puff Pastry (Feuilletage Inversé)', fr: 'Feuilletage inversé (beurre autour)', phonetic: '/ɪnˈvɜːrtɪd pʌf ˈpeɪstri/', def: 'Variant where the dough is encased inside a butter-flour mixture for ultra-crisp results.' },
+            { id: 52, cat: 'lamination', en: 'Croissant Croquant', fr: 'Croustillant du croissant', phonetic: '/krwɑːsɒ̃ krʊkənt/', def: 'Desired crisp outer shell of a properly baked croissant.' },
+            { id: 53, cat: 'lamination', en: 'Honeycomb Structure', fr: 'Alvéolage intérieur de la mie', phonetic: '/ˈhʌnikʌm ˈstrʌktʃər/', def: 'Open, airy crumb structure inside properly baked viennoiserie.' },
+            { id: 54, cat: 'lamination', en: 'Chilling Cabinet / Fridge', fr: 'Armoire réfrigérée / Tour de froid', phonetic: '/ˈtʃɪlɪŋ ˈkæbɪnɪt/', def: 'Refrigerated unit used to keep dough cold between lamination steps.' },
+            { id: 55, cat: 'lamination', en: 'Dough Extensibility', fr: 'Extensibilité de la pâte', phonetic: '/ɪkˌstɛnsəˈbɪləti/', def: 'Ability of dough to stretch without tearing under rolling.' },
+            { id: 56, cat: 'lamination', en: 'Dough Elasticity', fr: 'Élasticité (rétractation)', phonetic: '/ɪˌlæstɪˈsɪti/', def: 'Tendency of dough to spring back after being stretched or rolled.' },
+            { id: 57, cat: 'lamination', en: 'Trimming Edges', fr: 'Parage des bords (couper net)', phonetic: '/ˈtrɪmɪŋ ɛdʒɪz/', def: 'Cutting clean edges to expose the laminate layers before shaping.' },
+            { id: 58, cat: 'lamination', en: 'Baking Shrinkage', fr: 'Rétraction à la cuisson', phonetic: '/ˈbeɪkɪŋ ˈʃrɪŋkɪdʒ/', def: 'Unwanted reduction in pastry size caused by unrelaxed gluten networks.' },
+            { id: 59, cat: 'lamination', en: 'Steam Generation', fr: 'Production de vapeur au four', phonetic: '/stiːm ˌdʒɛnəˈreɪʃən/', def: 'Water in butter evaporating in the oven, creating lift and separate layers.' },
+            { id: 60, cat: 'lamination', en: 'Golden Brown Crust', fr: 'Coloration dorée / cuivrée', phonetic: '/ˈɡoʊldən braʊn krʌst/', def: 'Desired visual finish of baked pastry achieved via Maillard reaction and egg wash.' },
 
-            // --- CHEMISTRY ---
-            { id: 28, cat: 'chemistry', en: 'Gluten Network', fr: 'Réseau glutineux / élasticité', phonetic: '/ˈɡluːtən ˈnɛtwɜːrk/', def: 'Protein web formed when wheat flour is mixed with water, giving elasticity to dough.' },
-            { id: 29, cat: 'chemistry', en: 'Gelatinization', fr: 'Gélatinisation de l’amidon', phonetic: '/dʒəˌlætɪnɪˈzeɪʃən/', def: 'Process where starch granules absorb liquid and thicken when heated (e.g. pastry cream).' },
-            { id: 30, cat: 'chemistry', en: 'Caramelization', fr: 'Caramélisation des sucres', phonetic: '/ˌkærəməlaɪˈzeɪʃən/', def: 'Browning of sugar caused by heat application, creating complex nutty flavors.' },
-            { id: 31, cat: 'chemistry', en: 'Emulsification', fr: 'Émulsion (ganache, crème au beurre)', phonetic: /iˌmʌlsɪfɪˈkeɪʃən/, def: 'Binding fat and water-based liquids together into a smooth, homogeneous mixture.' },
-            { id: 32, cat: 'chemistry', en: 'Fermentation / Proofing', fr: 'Fermentation / Pousse', phonetic: '/ˌfɜːrmənˈteɪʃən/', def: 'Conversion of sugars into carbon dioxide by yeast to make dough rise.' },
-            { id: 33, cat: 'chemistry', en: 'Baking Powder / Chemical Leavening', fr: 'Poudre à lever / Levure chimique', phonetic: '/ˈbeɪkɪŋ ˈpaʊdər/', def: 'Dry chemical leavening agent used to increase volume in cakes and biscuits.' },
+            // --- 4. CHEMISTRY (CHIMIE & PHYSIQUE PÂTISSIÈRE) - 20 items ---
+            { id: 61, cat: 'chemistry', en: 'Gluten Network', fr: 'Réseau glutineux / élasticité', phonetic: '/ˈɡluːtən ˈnɛtwɜːrk/', def: 'Protein web formed when wheat flour is mixed with water, giving elasticity to dough.' },
+            { id: 62, cat: 'chemistry', en: 'Gelatinization', fr: 'Gélatinisation de l’amidon', phonetic: '/dʒəˌlætɪnɪˈzeɪʃən/', def: 'Process where starch granules absorb liquid and thicken when heated (e.g. pastry cream).' },
+            { id: 63, cat: 'chemistry', en: 'Caramelization', fr: 'Caramélisation des sucres', phonetic: '/ˌkærəməlaɪˈzeɪʃən/', def: 'Browning of sugar caused by heat application, creating complex nutty flavors.' },
+            { id: 64, cat: 'chemistry', en: 'Emulsification', fr: 'Émulsion (ganache, crème au beurre)', phonetic: '/ɪˌmʌlsɪfɪˈkeɪʃən/', def: 'Binding fat and water-based liquids together into a smooth, homogeneous mixture.' },
+            { id: 65, cat: 'chemistry', en: 'Fermentation / Proofing', fr: 'Fermentation / Pousse', phonetic: '/ˌfɜːrmənˈteɪʃən/', def: 'Conversion of sugars into carbon dioxide by yeast to make dough rise.' },
+            { id: 66, cat: 'chemistry', en: 'Baking Powder / Chemical Leavening', fr: 'Poudre à lever / Levure chimique', phonetic: '/ˈbeɪkɪŋ ˈpaʊdər/', def: 'Dry chemical leavening agent used to increase volume in cakes and biscuits.' },
+            { id: 67, cat: 'chemistry', en: 'Maillard Reaction', fr: 'Réaction de Maillard (brunissement)', phonetic: '/mɑːˈjɑːr riˈækʃən/', def: 'Chemical reaction between amino acids and reducing sugars giving browned food distinct flavor.' },
+            { id: 68, cat: 'chemistry', en: 'Inversion of Sugar', fr: 'Inversion du sucre (glucose + fructose)', phonetic: '/ɪnˈvɜːrʒən ɒv ˈʃʊɡər/', def: 'Splitting sucrose with acid and heat to retain moisture and prevent crystallization.' },
+            { id: 69, cat: 'chemistry', en: 'Coagulation of Proteins', fr: 'Coagulation des protéines (œufs)', phonetic: '/koʊˌæɡjʊˈleɪʃən/', def: 'Firming of egg proteins under heat, setting custards and quiches.' },
+            { id: 70, cat: 'chemistry', en: 'Water Activity (Aw)', fr: 'Activité de l’eau (conservation)', phonetic: '/ˈwɔːtər ækˈtɪvəti/', def: 'Measure of free moisture in food affecting microbial growth and shelf life.' },
+            { id: 71, cat: 'chemistry', en: 'pH Level / Acidity', fr: 'Niveau de pH / Acidité', phonetic: '/piː eɪtʃ ˈlɛvəl/', def: 'Measure of acidity or alkalinity affecting gelling agents like pectin.' },
+            { id: 72, cat: 'chemistry', en: 'Osmotic Pressure', fr: 'Pression osmotique (levure/sucre)', phonetic: '/ɒzˈmɒtɪk ˈprɛʃər/', def: 'High sugar concentrations drawing water out of yeast cells, slowing fermentation.' },
+            { id: 73, cat: 'chemistry', en: 'Syneresis / Weeping', fr: 'Synérèse / Exsudation de liquide', phonetic: '/sɪˈnɜːrəsɪs/', def: 'Release of water from a gel or curd over time (e.g. liquid under lemon curd).' },
+            { id: 74, cat: 'chemistry', en: 'Crystal Seed / Tempering', fr: 'Cristallisation du chocolat', phonetic: '/ˈkrɪstəl siːd/', def: 'Forming stable Beta V crystals in melted cocoa butter for glossy snap finish.' },
+            { id: 75, cat: 'chemistry', en: 'Thermal Conductivity', fr: 'Conductivité thermique des plaques', phonetic: '/ˈθɜːrməl kɒndʌkˈtɪvəti/', def: 'Rate at which baking trays transfer heat to pastry bottoms.' },
+            { id: 76, cat: 'chemistry', en: 'Aeration / Whisking', fr: 'Incorporation d’air / Sabayon', phonetic: '/ˌeərˈeɪʃən/', def: 'Trapping air bubbles into eggs or cream to create volume and light texture.' },
+            { id: 77, cat: 'chemistry', en: 'Fat Melting Point', fr: 'Point de fusion des graisses', phonetic: '/fæt ˈmɛltɪŋ pɔɪnt/', def: 'Temperature at which butter or cocoa butter turns from solid to liquid.' },
+            { id: 78, cat: 'chemistry', en: 'Viscosity', fr: 'Viscosité (épaisseur fluide)', phonetic: '/vɪsˈkɒsəti/', def: 'State of being thick, sticky and semifluid in consistency (e.g. warm glaze).' },
+            { id: 79, cat: 'chemistry', en: 'Retrogradation of Starch', fr: 'Rétrogradation de l’amidon (rassissement)', phonetic: '/ˌrɛtrəʊɡrəˈdeɪʃən/', def: 'Starch molecules recrystallizing over time, causing bread and cake to stale.' },
+            { id: 80, cat: 'chemistry', en: 'Enzymatic Activity', fr: 'Activité enzymatique (farine/levure)', phonetic: '/ˌɛnzaɪˈmætɪk ækˈtɪvəti/', def: 'Natural catalysts breaking down starches into simple sugars for yeast feed.' },
 
-            // --- HACCP ---
-            { id: 34, cat: 'haccp', en: 'Cross-Contamination', fr: 'Contamination croisée', phonetic: '/krɔːs kəˌtæntɪˈneɪʃən/', def: 'Transfer of harmful bacteria or allergens from one food item to another.' },
-            { id: 35, cat: 'haccp', en: 'Temperature Danger Zone', fr: 'Zone de danger thermique (+10°C à +63°C)', phonetic: '/ˈtɛmprətʃər ˈdeɪndʒər zoʊn/', def: 'Temperature range where bacteria multiply rapidly in perishable foods.' },
-            { id: 36, cat: 'haccp', en: 'Sanitize / Disinfect', fr: 'Désinfecter / Nettoyer', phonetic: '/ˈsænɪtaɪz/', def: 'Process of reducing microorganisms on food contact surfaces to safe levels.' },
-            { id: 37, cat: 'haccp', en: 'Traceability / Batch Number', fr: 'Traçabilité / Numéro de lot', phonetic: '/ˌtreɪsəˈbɪləti/', def: 'Ability to track food products through all stages of production and distribution.' },
-            { id: 38, cat: 'haccp', en: 'Allergen Labeling', fr: 'Étiquetage des allergènes (glten, œufs, fruits à coque)', phonetic: '/ˈælərdʒən ˈleɪbəlɪŋ/', def: 'Mandatory information indicating presence of major food allergens for consumers.' },
-            { id: 39, cat: 'haccp', en: 'Chilling / Blast Chilling', fr: 'Refroidissement rapide / Cellule', phonetic: '/ˈtʃɪlɪŋ/', def: 'Rapid cooling of cooked foods to prevent bacterial growth before storage.' },
+            // --- 5. HACCP (HYGIÈNE & SÉCURITÉ ALIMENTAIRE) - 20 items ---
+            { id: 81, cat: 'haccp', en: 'Cross-Contamination', fr: 'Contamination croisée', phonetic: '/krɔːs kəˌtæntɪˈneɪʃən/', def: 'Transfer of harmful bacteria or allergens from one food item to another.' },
+            { id: 82, cat: 'haccp', en: 'Temperature Danger Zone', fr: 'Zone de danger thermique (+10°C à +63°C)', phonetic: '/ˈtɛmprətʃər ˈdeɪndʒər zoʊn/', def: 'Temperature range where bacteria multiply rapidly in perishable foods.' },
+            { id: 83, cat: 'haccp', en: 'Sanitize / Disinfect', fr: 'Désinfecter / Nettoyer', phonetic: '/ˈsænɪtaɪz/', def: 'Process of reducing microorganisms on food contact surfaces to safe levels.' },
+            { id: 84, cat: 'haccp', en: 'Traceability / Batch Number', fr: 'Traçabilité / Numéro de lot', phonetic: '/ˌtreɪsəˈbɪləti/', def: 'Ability to track food products through all stages of production and distribution.' },
+            { id: 85, cat: 'haccp', en: 'Allergen Labeling', fr: 'Étiquetage des allergènes (gluten, œufs, fruits à coque)', phonetic: '/ˈælərdʒən ˈleɪbəlɪŋ/', def: 'Mandatory information indicating presence of major food allergens for consumers.' },
+            { id: 86, cat: 'haccp', en: 'Chilling / Blast Chilling', fr: 'Refroidissement rapide / Cellule', phonetic: '/ˈtʃɪlɪŋ/', def: 'Rapid cooling of cooked foods to prevent bacterial growth before storage.' },
+            { id: 87, cat: 'haccp', en: 'Personal Protective Equipment (PPE)', fr: 'Équipements de Protection Individuelle (EPI)', phonetic: '/ˈpɜːrsənəl prəˈtɛktɪv ɪˈkwɪpmənt/', def: 'Hairnets, aprons, clean jackets and gloves worn in food labs.' },
+            { id: 88, cat: 'haccp', en: 'Food Safety Management', fr: 'Gestion de la sécurité sanitaire', phonetic: '/fuːd ˈseɪfti ˈmænɪdʒmənt/', def: 'Systemic preventive approach to food safety hazards.' },
+            { id: 89, cat: 'haccp', en: 'Perishable Goods', fr: 'Denrées périssables (œufs, crème, lait)', phonetic: '/ˈpɛrɪʃəbəl ɡʊdz/', def: 'Foods that decay or spoil quickly if not refrigerated properly.' },
+            { id: 90, cat: 'haccp', en: 'Cold Chain Maintenance', fr: 'Respect de la chaîne du froid', phonetic: '/koʊld tʃeɪn ˈmeɪntənəns/', def: 'Keeping temperature-sensitive products within required low ranges.' },
+            { id: 91, cat: 'haccp', en: 'Pest Control', fr: 'Lutte contre les nuisibles (rongeurs/insectes)', phonetic: '/pɛst kənˈtroʊl/', def: 'Measures to prevent and eliminate pests in food production areas.' },
+            { id: 92, cat: 'haccp', en: 'Cleaning Protocol', fr: 'Protocole de nettoyage / plonge', phonetic: '/ˈkliːnɪŋ ˈproʊtəkɒl/', def: 'Step-by-step procedure for washing, rinsing and disinfecting equipment.' },
+            { id: 93, cat: 'haccp', en: 'Expiry Date / Use-By Date', fr: 'DLC (Date Limite de Consommation)', phonetic: '/ɪkˈspaɪəri deɪt/', def: 'Strict date after which perishable food is unsafe to consume.' },
+            { id: 94, cat: 'haccp', en: 'Best Before Date', fr: 'DLUO / Date de Durabilité Minimale', phonetic: '/bɛst bɪˈfɔːr deɪt/', def: 'Date until which food retains its optimal quality.' },
+            { id: 95, cat: 'haccp', en: 'Handwashing Procedure', fr: 'Lavage des mains réglementaire', phonetic: '/ˈhændˌwɒʃɪŋ prəˈsiːdʒər/', def: 'Rigorous soaping, scrubbing and rinsing protocol for food handlers.' },
+            { id: 96, cat: 'haccp', en: 'Sample Retention / Témoin', fr: 'Plat témoin (échantillonnage)', phonetic: '/ˈsɑːmpəl rɪˈtɛnʃən/', def: 'Keeping food samples from meals served in case of foodborne illness investigation.' },
+            { id: 97, cat: 'haccp', en: 'Waste Management', fr: 'Gestion des déchets et biodéchets', phonetic: '/weɪst ˈmænɪdʒmənt/', def: 'Proper disposal of organic scraps and packaging according to hygiene rules.' },
+            { id: 98, cat: 'haccp', en: 'Surface Sanitization', fr: 'Désinfection des plans de travail', phonetic: '/ˈsɜːrfɪs ˌsænɪtaɪˈzeɪʃən/', def: 'Applying food-safe disinfectant spray on stainless steel tables.' },
+            { id: 99, cat: 'haccp', en: 'Pathogenic Bacteria', fr: 'Bactéries pathogènes (Salmonelle, Listeria)', phonetic: '/ˌpæθəˈdʒɛnɪk bækˈtɪəriə/', def: 'Microorganisms causing food poisoning and infections.' },
+            { id: 100, cat: 'haccp', en: 'Food Hygiene Audit', fr: 'Audit d’hygiène et traçabilité', phonetic: '/fuːd ˈhaɪdʒiːn ˈɔːdɪt/', def: 'Official inspection of laboratory cleanliness and record logs.' },
 
-            // --- SALES ---
-            { id: 40, cat: 'sales', en: 'Box of Six Macarons', fr: 'Un ballotin / une boîte de six macarons', phonetic: '/bɒks ɒv sɪks ˌmækəˈrɒn/', def: 'Standard customer request for a gift box assortment of French macarons.' },
-            { id: 41, cat: 'sales', en: 'Is it for here or to go?', fr: 'Sur place ou à emporter ?', phonetic: '/ɪz ɪt fɔːr hɪər ɔːr tuː ɡoʊ/', def: 'Common polite question asked by front-of-house staff to bakery customers.' },
-            { id: 42, cat: 'sales', en: 'Contains Nuts / Dairy / Gluten', fr: 'Contient des fruits à coque / lactose / gluten', phonetic: '/kənˈteɪnz nʌts/', def: 'Allergen warning statement communicated to customers with dietary requirements.' },
-            { id: 43, cat: 'sales', en: 'Would you like a bag with that?', fr: 'Voulez-vous un sac avec ceci ?', phonetic: '/wʊd juː laɪk ə bæɡ wɪð ðæt/', def: 'Polite customer service phrase for packaging purchases.' },
-            { id: 44, cat: 'sales', en: 'Freshly Baked Croissants', fr: 'Croissants fraîchement sortis du four', phonetic: '/ˈfrɛʃli beɪkt ˈkrwɑːsɒ̃/', def: 'Marketing term highlighting warm, just-baked breakfast pastries.' },
-            { id: 45, cat: 'sales', en: 'Custom Birthday Cake', fr: 'Gâteau d’anniversaire personnalisé', phonetic: '/ˈkʌstəm ˈbɜːrθdeɪ keɪk/', def: 'Special order pastry tailored to specific customer themes and guest counts.' }
+            // --- 6. SALES (VENTE, ACCUEIL & RELATION CLIENT) - 20 items ---
+            { id: 101, cat: 'sales', en: 'Box of Six Macarons', fr: 'Un ballotin / une boîte de six macarons', phonetic: '/bɒks ɒv sɪks ˌmækəˈrɒn/', def: 'Standard customer request for a gift box assortment of French macarons.' },
+            { id: 102, cat: 'sales', en: 'Is it for here or to go?', fr: 'Sur place ou à emporter ?', phonetic: '/ɪz ɪt fɔːr hɪər ɔːr tuː ɡoʊ/', def: 'Common polite question asked by front-of-house staff to bakery customers.' },
+            { id: 103, cat: 'sales', en: 'Contains Nuts / Dairy / Gluten', fr: 'Contient des fruits à coque / lactose / gluten', phonetic: '/kənˈteɪnz nʌts/', def: 'Allergen warning statement communicated to customers with dietary requirements.' },
+            { id: 104, cat: 'sales', en: 'Would you like a bag with that?', fr: 'Voulez-vous un sac avec ceci ?', phonetic: '/wʊd juː laɪk ə bæɡ wɪð ðæt/', def: 'Polite customer service phrase for packaging purchases.' },
+            { id: 105, cat: 'sales', en: 'Freshly Baked Croissants', fr: 'Croissants fraîchement sortis du four', phonetic: '/ˈfrɛʃli beɪkt ˈkrwɑːsɒ̃/', def: 'Marketing term highlighting warm, just-baked breakfast pastries.' },
+            { id: 106, cat: 'sales', en: 'Custom Birthday Cake', fr: 'Gâteau d’anniversaire personnalisé', phonetic: '/ˈkʌstəm ˈbɜːrθdeɪ keɪk/', def: 'Special order pastry tailored to specific customer themes and guest counts.' },
+            { id: 107, cat: 'sales', en: 'Anything else for you today?', fr: 'Est-ce tout pour vous aujourd’hui ?', phonetic: '/ˈɛniθɪŋ ɛls fɔːr juː təˈdeɪ/', def: 'Standard closing question before totaling customer payment.' },
+            { id: 108, cat: 'sales', en: 'Cash or card?', fr: 'Espèces ou carte bancaire ?', phonetic: '/kæʃ ɔːr kɑːrd/', def: 'Inquiry regarding payment method at the cash register.' },
+            { id: 109, cat: 'sales', en: 'Here is your change and receipt', fr: 'Voici votre monnaie et votre ticket', phonetic: '/hɪər ɪz jʊər tʃeɪndʒ ənd rɪˈsiːt/', def: 'Polite handover statement concluding a transaction.' },
+            { id: 110, cat: 'sales', en: 'Enjoy your meal / Have a nice day', fr: 'Bonne dégustation / Bonne journée', phonetic: '/ɪnˈdʒɔɪ jʊər miːl/', def: 'Warm farewell wishing the customer a pleasant experience.' },
+            { id: 111, cat: 'sales', en: 'Gluten-Free Pastry', fr: 'Pâtisserie sans gluten', phonetic: '/ˈɡluːtən friː ˈpeɪstri/', def: 'Specialty pastry prepared without wheat flour for celiac customers.' },
+            { id: 112, cat: 'sales', en: 'Vegan Options', fr: 'Options végétaliennes (sans produits animaux)', phonetic: '/ˈviːɡən ˈɒpʃənz/', def: 'Plant-based baked goods prepared without dairy or eggs.' },
+            { id: 113, cat: 'sales', en: 'Traditional Baguette', fr: 'Baguette de tradition française', phonetic: '/trəˈdɪʃənl bæˈɡɛt/', def: 'Classic French crisp bread loaf sold in bakeries.' },
+            { id: 114, cat: 'sales', en: 'Sourdough Bread', fr: 'Pain au levain naturel', phonetic: '/ˈsaʊərdoʊ brɛd/', def: 'Naturally fermented bread with a tangy flavor profile.' },
+            { id: 115, cat: 'sales', en: 'Chocolate Éclair', fr: 'Éclair au chocolat', phonetic: '/ˈtʃɒklət ɪˈklɛər/', def: 'Choux pastry filled with cream and topped with chocolate fondant.' },
+            { id: 116, cat: 'sales', en: 'Fruit Tartlet', fr: 'Tartelette aux fruits frais', phonetic: '/fruːt tɑːrtɪt/', def: 'Individual pastry crust filled with pastry cream and glazed seasonal fruits.' },
+            { id: 117, cat: 'sales', en: 'Display Window / Showcase', fr: 'Vitrine de présentation', phonetic: '/dɪˈspleɪ ˈwɪndoʊ/', def: 'Glass refrigerated counter showcasing pastries and cakes.' },
+            { id: 118, cat: 'sales', en: 'Gift Wrapping', fr: 'Emballage cadeau / coffret élégant', phonetic: '/ɡɪft ˈræpɪŋ/', def: 'Special packaging for presentation boxes and gift purchases.' },
+            { id: 119, cat: 'sales', en: 'Special Order / Reservation', fr: 'Commande spéciale / Réservation', phonetic: '/ˈspɛʃəl ˈɔːrdər/', def: 'Booking a customized cake or large pastry order in advance.' },
+            { id: 120, cat: 'sales', en: 'Price Tag / Label', fr: 'Étiquette de prix et composition', phonetic: '/praɪs tæɡ/', def: 'Mandatory price and description display card next to products in showcase.' },
+
+            // --- 7. DECORATIONS (DÉCORATION & FINITIONS) - 20 items ---
+            { id: 121, cat: 'decorations', en: 'Mirror Glaze', fr: 'Glaçage miroir (brillant)', phonetic: '/ˈmɪrər ɡleɪz/', def: 'Glossy chocolate or fruit purée glaze reflecting light on modern entremets.' },
+            { id: 122, cat: 'decorations', en: 'Velvet Spray (Cocoa Butter)', fr: 'Pistolet à effet velours', phonetic: '/ˈvɛlvɪt spreɪ/', def: 'Sprayed mix of cocoa butter and chocolate creating a matte frosted texture.' },
+            { id: 123, cat: 'decorations', en: 'Edible Gold Leaf', fr: 'Feuille d’or comestible', phonetic: '/ˈɛdɪbəl ɡoʊld liːf/', def: 'Ultra-thin pure gold sheets used for luxury pastry decoration.' },
+            { id: 124, cat: 'decorations', en: 'Sugar Flowers / Pastillage', fr: 'Fleurs en sucre / Pastillage', phonetic: '/ˈʃʊɡər ˈflaʊərz/', def: 'Artistic sugar decorations shaped for wedding and competition cakes.' },
+            { id: 125, cat: 'decorations', en: 'Chocolate Transfer Sheet', fr: 'Feuille de transfert chocolat', phonetic: '/ˈtʃɒklət trænsˈfɜːr ʃiːt/', def: 'Plastic sheet with printed cocoa butter designs transferred onto tempered chocolate.' },
+            { id: 126, cat: 'decorations', en: 'Italian Meringue', fr: 'Meringue italienne (sucre cuit)', phonetic: '/ɪˈtæliən məˈræŋ/', def: 'Stiff meringue made by pouring hot sugar syrup into whipping egg whites.' },
+            { id: 127, cat: 'decorations', en: 'Chantilly Cream', fr: 'Crème chantilly (vanillée)', phonetic: '/ʃænˈtɪli kriːm/', def: 'Sweetened whipped cream flavored with vanilla bean.' },
+            { id: 128, cat: 'decorations', en: 'Praline Crunch / Feuilletine', fr: 'Croustillant praliné (paillet feuilletine)', phonetic: '/ˈprɑːliːn krʌntʃ/', def: 'Crispy layer made of praline paste, chocolate and crushed crêpes dentelles.' },
+            { id: 129, cat: 'decorations', en: 'Neutral Glaze / Nappage', fr: 'Nappage neutre (brillance)', phonetic: '/ˈnuːtrəl ɡleɪz/', def: 'Transparent apricot-based jelly brushed on tarts to keep fruit fresh and shiny.' },
+            { id: 130, cat: 'decorations', en: 'Tempered Chocolate Shards', fr: 'Éclats de chocolat tempéré', phonetic: '/ˈtɛmpərd ˈtʃɒklət ʃɑːrdz/', def: 'Crisp decorative shards placed on top of entremets and logs.' },
+            { id: 131, cat: 'decorations', en: 'Macaron Shells', fr: 'Coques de macarons lisses', phonetic: '/ˈmækəˌrɒn ʃɛlz/', def: 'Baked almond meringue shells featuring a smooth top and ruffled feet (collerette).' },
+            { id: 132, cat: 'decorations', en: 'Sugared Candied Fruit', fr: 'Fruits confits / glacés', phonetic: '/ˈʃʊɡərd ˈkændid fruːt/', def: 'Fruits preserved and coated in sugar syrup (e.g. orange peel, angelica).' },
+            { id: 133, cat: 'decorations', en: 'Pipework / Piping Design', fr: 'Décors pochés (crème ou glaçage)', phonetic: '/ˈpaɪpwɜːrk/', def: 'Decorative patterns piped with star or smooth nozzles.' },
+            { id: 134, cat: 'decorations', en: 'Stenciled Powder Sugar', fr: 'Décor au pochoir (sucre/cacao)', phonetic: '/ˈstɛnsəld ˈpaʊdər ˈʃʊɡər/', def: 'Decorative design powdered through a stencil mask onto tarts or cakes.' },
+            { id: 135, cat: 'decorations', en: 'Chocolate Cigarillos', fr: 'Cigarettes en chocolat', phonetic: '/ˈtʃɒklət ˌsɪɡəˈrɪloʊz/', def: 'Rolled thin cylinders of tempered chocolate used as garnishes.' },
+            { id: 136, cat: 'decorations', en: 'Caramel Cage', fr: 'Cage ou décors en caramel tiré', phonetic: '/ˈkærəmɛl keɪdʒ/', def: 'Artistic spun or pulled caramel ornaments for showcase pieces.' },
+            { id: 137, cat: 'decorations', en: 'Royal Icing', fr: 'Glaçage royal (sucre + blanc d’œuf + citron)', phonetic: '/ˈrɔɪəl ˈaɪsɪŋ/', def: 'Hard white icing used for piping intricate lace and gingerbread decorations.' },
+            { id: 138, cat: 'decorations', en: 'Glazed Chestnut (Marrons Glacés)', fr: 'Marrons glacés', phonetic: '/ɡleɪzd ˈtʃɛsnʌt/', def: 'Candied chestnuts wrapped individually for holiday season.' },
+            { id: 139, cat: 'decorations', en: 'Edible Flowers', fr: 'Fleurs comestibles (pensées, capucines)', phonetic: '/ˈɛdɪbəl ˈflaʊərz/', def: 'Fresh organic flowers used to garnish modern plated desserts and tarts.' },
+            { id: 140, cat: 'decorations', en: 'Garnish / Finishing Touch', fr: 'Finition / Garniture finale', phonetic: '/ˈɡɑːrnɪʃ/', def: 'Final aesthetic element added to complete a pastry presentation.' },
+
+            // --- 8. EQUIPMENT (MACHINES & GROS MATÉRIEL DE LABO) - 20 items ---
+            { id: 141, cat: 'equipment', en: 'Deck Oven / Hearth Oven', fr: 'Four à soles (boulangerie/pâtisserie)', phonetic: '/dɛk ˈʌvən/', def: 'Professional baking oven with stone decks providing direct bottom heat.' },
+            { id: 142, cat: 'equipment', en: 'Convection Oven', fr: 'Four à convection ventilé', phonetic: '/kənˈvɛkʃən ˈʌvən/', def: 'Oven with internal fans circulating hot air for uniform baking.' },
+            { id: 143, cat: 'equipment', en: 'Planetary Mixer', fr: 'Batteur mélangeur planétaire', phonetic: '/ˈplænɪtəri ˈmɪksər/', def: 'Heavy-duty machine with interchangeable whisk, paddle and hook attachments.' },
+            { id: 144, cat: 'equipment', en: 'Dough Sheeter / Laminator', fr: 'Laminoir à pâte (tourage)', phonetic: '/doʊ ˈʃiːtər/', def: 'Motorized conveyor belt machine used to roll out puff pastry and croissant sheets.' },
+            { id: 145, cat: 'equipment', en: 'Proofer / Proofing Cabinet', fr: 'Étuve / Chambre de pousse', phonetic: '/ˈpruːfər/', def: 'Controlled temperature and humidity cabinet for yeast fermentation.' },
+            { id: 146, cat: 'equipment', en: 'Blast Chiller / Freezer', fr: 'Cellule de refroidissement rapide', phonetic: '/blæst ˈtʃɪlər/', def: 'Rapid freezing and chilling unit complying with stringent HACCP laws.' },
+            { id: 147, cat: 'equipment', en: 'Refrigerated Display Counter', fr: 'Vitrine réfrigérée de laboratoire', phonetic: '/rɪˈfrɪdʒəreɪtɪd dɪˈspleɪ/', def: 'Temperature-controlled display keeping entremets chilled before service.' },
+            { id: 148, cat: 'equipment', en: 'Immersion Blender / Hand Blender', fr: 'Mixeur plongeant (girafe)', phonetic: '/ɪˈmɜːrʒən ˈblɛndər/', def: 'Handheld electric blender used to emulsify ganaches and glazes smoothly.' },
+            { id: 149, cat: 'equipment', en: 'Chocolate Tempering Machine', fr: 'Tempreuse à chocolat', phonetic: '/ˈtʃɒklət ˈtɛmpərɪŋ məˈʃiːn/', def: 'Automated machine melting and maintaining precise cocoa butter crystals.' },
+            { id: 150, cat: 'equipment', en: 'Ice Cream Maker / Batch Freezer', fr: 'Turbine à glace / Sorbetière pro', phonetic: '/aɪs kriːm ˈmeɪkər/', def: 'Refrigerated churn machine producing smooth ice creams and sorbets.' },
+            { id: 151, cat: 'equipment', en: 'Water Chiller / Meter', fr: 'Fontaine à eau réfrigérée / doseur', phonetic: '/ˈwɔːtər ˈtʃɪlər/', def: 'Plumbed unit dispensing exact water quantities at precise temperatures.' },
+            { id: 152, cat: 'equipment', en: 'Slicer Machine', fr: 'Trancheuse à pain / gâteaux', phonetic: '/ˈslaɪsər məˈʃiːn/', def: 'Motorized slicing equipment for sandwich breads and cakes.' },
+            { id: 153, cat: 'equipment', en: 'Stainless Steel Work Table', fr: 'Table de travail en inox', phonetic: '/ˈsteɪnləs stiːl wɜːrk ˈteɪbəl/', def: 'Sanitary hygienic food preparation station in professional labs.' },
+            { id: 154, cat: 'equipment', en: 'Rack Trolley / Sheet Pan Rack', fr: 'Chariot à glissières / echelle', phonetic: '/ræk ˈtrɒli/', def: 'Mobile metal frame holding multiple baking sheets and trays.' },
+            { id: 155, cat: 'equipment', en: 'Dishwasher / Utensil Washer', fr: 'Lave-vaisselle professionnel / plonge', phonetic: '/ˈdɪʃˌwɒʃər/', def: 'High-speed industrial washing unit for pans, bowls and whisks.' },
+            { id: 156, cat: 'equipment', en: 'Baking Sheets / Perforated Trays', fr: 'Plaques de cuisson perforées en aluminium', phonetic: '/ˈbeɪkɪŋ ʃiːts/', def: 'Perforated aluminum trays optimizing heat transfer in ovens.' },
+            { id: 157, cat: 'equipment', en: 'Sieve Shaker / Flour Sifter Machine', fr: 'Tamisoleuse électrique', phonetic: '/sɪv ˈʃeɪkər/', def: 'Motorized sifter for large quantities of pastry flour and almond powder.' },
+            { id: 158, cat: 'equipment', en: 'Gas Burner / Induction Stove', fr: 'Poele à gaz / Plaque induction', phonetic: '/ɡæs ˈbɜːrnər/', def: 'Cooking stove used for boiling syrups, cooking creams and making caramel.' },
+            { id: 159, cat: 'equipment', en: 'Vacuum Sealer', fr: 'Machine sous-vide professionnelle', phonetic: '/ˈvækjuːm ˈsiːlər/', def: 'Sealing unit used to store fruits, purees or ingredients safely.' },
+            { id: 160, cat: 'equipment', en: 'High-Speed Food Processor', fr: 'Cutter / Robot multifonction', phonetic: '/haɪ spiːd fuːd ˈprɒsɛsər/', def: 'Powerful chopping and blending machine for almond paste and pastry doughs.' }
         ];
 
-        // --- QUIZ BANK XXL (15 Questions) ---
+        // --- QUIZ BANK (15 Questions) ---
         const quizData = [
             {
                 q: "What is the English term for 'Poche à douille' used in pastry labs?",
@@ -314,7 +435,7 @@
                 client: "Hello! Excuse me, does the fruit tart contain dairy or nuts? My daughter has a severe peanut allergy.",
                 options: [
                     { text: "No, don't worry, eat everything.", score: 0, feedback: "⚠️ Dangereux ! Ne jamais minimiser les allergènes en boulangerie." },
-                    { text: "Our fruit tarts contain pastry cream with dairy, and the crust may contain traces of almonds and nuts. Let me check the exact ingredient label for you.", score: 10, feedback: "parfait ! Professionnel, précis et conforme aux normes HACCP/Vente." },
+                    { text: "Our fruit tarts contain pastry cream with dairy, and the crust may contain traces of almonds and nuts. Let me check the exact ingredient label for you.", score: 10, feedback: "🏆 Parfait ! Professionnel, précis et conforme aux normes HACCP/Vente." },
                     { text: "I don't speak English very well, sorry.", score: 2, feedback: "💡 Dommage, un apprenti formé en BP/CAP doit rassurer le client international." }
                 ]
             },
